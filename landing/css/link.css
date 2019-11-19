@@ -3,11 +3,12 @@
 }
 
 .link__wrapper {
-    position: fixed;
-    top: 300px;
-    left: 300px;
+    position: absolute;
+    top: 157px;
+    left: 558px;
     display: flex;
     width: 50px;
+    z-index: 5;
     transform: rotate(45deg)
 }
 .link__content {

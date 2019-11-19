@@ -1,39 +1,13 @@
 @import "link.css";
-
+@import "logo.css";
+/*@import "pyramid.less";*/
 
 .back {
+    background: #140E55;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: -1
 ;
-}
-.main__farewell-text {
-    /*font-family: Caveat Regular;*/
-    /*font-style: normal;*/
-    /*font-weight: normal;*/
-    /*font-size: 55px;*/
-    /*line-height: 124%;*/
-    /*!*!* or 68px *!*!*/
-
-    /*text-align: center;*/
-
-    /*!*!* main txt grd *!*!*/
-    /*transform: rotate(-3deg);*/
-    /*background: linear-gradient(180deg, #FFFFFF , #8477CE 82.81%);*/
-    /*-webkit-background-clip: text;*/
-    /*-webkit-text-fill-color: transparent;*/
-}
-
-.main__header {
-    /*font-family: Museo Sans Cyrl;*/
-    /*font-style: normal;*/
-    /*font-weight: 300;*/
-    /*font-size: 80px;*/
-    /*line-height: 96px;*/
-    /*!* identical to box height *!*/
-
-    /*text-align: center;*/
-    /*letter-spacing: 0.14em;*/
 }

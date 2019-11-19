@@ -1,0 +1,74 @@
+:root {
+  --crop-size: 900px;
+  --crop-move: 40px;
+}
+
+.pyramid_crop {
+  position: relative;
+  top: 0px;
+  left: -200px;
+  z-index: 2;
+  transform: rotate(45deg);
+  overflow: hidden;
+  width: var(--crop-size);
+  height: var(--crop-size);
+
+  &::before {
+    transition: opacity var(--link-animation-duration);
+    position: absolute;
+    top: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    opacity: 1;
+  }
+
+  .link__wrapper:hover + &::before {
+    opacity: 0;
+  }
+
+  .link__wrapper:hover + & {
+    top: -50px;
+    left: -150px;
+    transition: left var(--link-animation-duration), top var(--link-animation-duration);
+  }
+
+  & .pyramid_image {
+    transform: rotate(-45deg);
+    z-index: -10;
+    /*overflow: hidden;*/
+    position: relative;
+    top: -250px;
+    left: 0px;
+
+    .link__wrapper:hover + & {
+      top: -280px;
+      left: 0px;
+      transition: left var(--link-animation-duration), top var(--link-animation-duration);
+    }
+  }
+}
+
+
+.lottery_container {
+  /*width: calc(var(--crop-size) * 1.414);*/
+}
+
+.lottery_crop {
+  position: relative;
+  /*top: 100px;*/
+  left: -200px;
+  transform: rotate(45deg);
+  overflow: hidden;
+  width: var(--crop-size);
+  height: var(--crop-size);
+}
+
+.lottery_image {
+  transform: rotate(-45deg);
+  z-index: -10;
+  /*overflow: hidden;*/
+  position: relative;
+  top: -300px
+}
