@@ -12,6 +12,7 @@
   overflow: hidden;
   width: var(--crop-size);
   height: var(--crop-size);
+  transition: left var(--link-animation-duration), top var(--link-animation-duration);
 
   &::before {
     transition: opacity var(--link-animation-duration);
@@ -31,7 +32,6 @@
   .link__wrapper:hover + & {
     top: -50px;
     left: -150px;
-    transition: left var(--link-animation-duration), top var(--link-animation-duration);
   }
 
   & .pyramid_image {
@@ -41,19 +41,16 @@
     position: relative;
     top: -250px;
     left: 0px;
+    transition: left var(--link-animation-duration), top var(--link-animation-duration);
 
     .link__wrapper:hover + & {
       top: -280px;
       left: 0px;
-      transition: left var(--link-animation-duration), top var(--link-animation-duration);
+
     }
   }
 }
 
-
-.lottery_container {
-  /*width: calc(var(--crop-size) * 1.414);*/
-}
 
 .lottery_crop {
   position: relative;
