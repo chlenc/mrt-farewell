@@ -10,15 +10,13 @@
     <link href="css/index.css" rel="stylesheet"/>
 
     <link rel="stylesheet/less" type="text/css" href="./css/bigRhombus.less"/>
+    <link rel="stylesheet/less" href="css/pyramid.less">
     <script src="js/less.js" type="text/javascript"></script>
 
 </head>
 <body>
 <img class="back" src="assets/img/Main2.png" alt=""/>
 <!--<img class="main__header" src="assets/img/MRT.png" alt=""/>-->
-<!--<img class="main__farewell-text" src="assets/img/farefell%20party.png" alt=""/>-->
-<!--<p class="main__header"></p>-->
-<!--<p class="main__farewell-text"></p>-->
 
 <div class="rhombus_root">
     <div class="big_rhombus_root">
@@ -50,11 +48,33 @@
     </div>
 </div>
 
-<!--<span class="link__wrapper">-->
-<!--    <a href="#" class="link__content">-->
-<!--        <div class="link__arrow"></div>-->
-<!--    </a>-->
-<!--</span>-->
+<div style="display: flex;flex-direction: row; width: 100vw">
+    <div style="width: 50%; height: 500px;border: 1px solid red; box-sizing: border-box; direction: rtl; flex: 0 0 50%">
+        <div class="fomo__container">
+            <span class="button">
+                <a href="#" class="button-content">
+                    <div class="arrow"></div>
+                </a>
+            </span>
+            <div class="crop">
+                <img class="image" src="assets/img/pyramid.png"/>
+            </div>
+        </div>
+    </div>
+    <div style="width: 50%;height: 500px;border: 1px solid red; box-sizing: border-box; flex: 0 0 50%">
+        <div class="lottery__container">
+            <span class="button">
+                <a href="#" class="button-content">
+                    <div class="arrow"></div>
+                </a>
+            </span>
+            <div class="crop">
+                <img class="image" src="assets/img/lottery.png"/>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

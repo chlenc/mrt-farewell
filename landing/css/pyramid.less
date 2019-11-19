@@ -1,0 +1,153 @@
+@crop-size: 900px;
+@crop-move: 40px;
+@transition-duration: 2s;
+
+.crop {
+  position: relative;
+  box-sizing: border-box;
+  border: 1px solid black;
+  top: 0px;
+  right: calc(0.207 * @crop-size);
+  z-index: 2;
+  transform: rotate(45deg);
+  overflow: hidden;
+  width: @crop-size;
+  height: @crop-size;
+  transition: left @transition-duration, top @transition-duration;
+
+  .lottery__container > & {
+    right: 0;
+    left: calc(0.207 * @crop-size);
+  }
+
+  &::before {
+    transition: opacity @transition-duration;
+    position: absolute;
+    top: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    opacity: 1;
+  }
+
+  .fomo__container > .button:hover + &::before {
+    opacity: 0;
+  }
+
+  .fomo__container > .button:hover + & {
+    top: -50px;
+    left: -150px;
+  }
+
+  .lottery__container > .button:hover + &::before {
+    opacity: 0;
+  }
+
+  .lottery__container > .button:hover + & {
+    top: -50px;
+    left: -150px;
+  }
+
+  & .image {
+    transform: rotate(-45deg);
+    z-index: -10;
+    width: calc(100% * sqrt(2));
+    height: calc(100% * sqrt(2));
+    /*overflow: hidden;*/
+    position: relative;
+    left: calc(100% / 4.828);
+    top: calc(-100% / 4.828);
+    transition: left @transition-duration, top @transition-duration;
+
+    .lottery__container > & {
+      left: calc(-100% / 4.828);
+      top: calc(-100% / 4.828);
+    }
+
+    .link__wrapper:hover + & {
+      top: -280px;
+      left: 0px;
+
+    }
+  }
+}
+
+.button {
+  position: absolute;
+  //top: calc(100% / sqrt(2) / 2);
+  //left: calc(100% / 2);
+  border: 1px solid green;
+  display: flex;
+  width: 50px;
+  z-index: 5;
+  transform: rotate(45deg);
+
+  &-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    opacity: 100%;
+
+    z-index: 1; /* matters! */
+
+    -webkit-transition: all @transition-duration ease-out;
+    -moz-transition: all @transition-duration ease-out;
+    -o-transition: all @transition-duration ease-out;
+    transition: all @transition-duration ease-out;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(315deg, #532BF2 -0.41%, #7B5AFF 100%);
+      opacity: 0;
+      transition: opacity @transition-duration;
+      z-index: -1;
+    }
+
+    &:hover {
+      transform: scale(1.25);
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+
+    & .arrow {
+      z-index: 3;
+      position: relative;
+      left: 2px;
+      bottom: 2px;
+      width: 20px;
+      height: 20px;
+      border-left: 1px solid white;
+      border-bottom: 1px solid white;
+
+        .lottery__container & {
+            transform: rotate(180deg);
+            left: -2px;
+        }
+    }
+  }
+}
+
+
+.link__arrow {
+
+}
+
+.right_link > .link__arrow {
+  transform: rotate(180deg);
+  left: -2px;
+  bottom: -2px;
+}
+
+
