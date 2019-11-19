@@ -7,12 +7,14 @@
 
 @little_rhombus_side_length: 17vw;
 @little_rhombus_root_height: calc(@little_rhombus_side_length * sqrt(2));
-@little_rhombus_top_offset: calc((@little_rhombus_side_length * (sqrt(2) - 1) / 2));
+@little_rhombus_top_offset: calc((@little_rhombus_side_length * (sqrt(2) - 1) /2 ));
 
 
 .rhombus_root {
   position: relative;
   top: @rhombus_top_offset;
+  display: flex;
+  flex-direction: column;
 }
 
 .rhombus_border {
@@ -59,6 +61,7 @@
   justify-content: center;
   height: @big_rhombus_root_height;
   margin-bottom: 1px;
+  width: 100vw;
 
   .big_rhombus {
     transform: rotate(45deg);
@@ -111,13 +114,14 @@
 
 
 .little_rhombus_root {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: @little_rhombus_root_height;
+  justify-content: center;
+  width: 100vw;
+  //height: @little_rhombus_root_height;
 
-  .little_rhombus {
-    position: relative;
+  & > .little_rhombus {
+    position: absolute;
     top: @little_rhombus_top_offset;
 
     transform: rotate(45deg);
