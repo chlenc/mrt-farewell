@@ -6,7 +6,7 @@
 
 @offset-to-rhombus: -(@crop-size/2 - sqrt(2) * @little_rhombus_side_length);
 @offset-to-container: (sqrt(2) - 1) / 2 * @crop-size;
-@total-crop-offset:  @offset-to-container + @offset-to-rhombus;
+@total-crop-offset: @offset-to-container + @offset-to-rhombus;
 @crop-default-offset: calc(@total-crop-offset);
 @arrow-side: @button-side / 2.5;
 
@@ -16,8 +16,8 @@
 .crop {
   position: relative;
   box-sizing: border-box;
-  border: 1px solid black;
   top: 0;
+  margin-top: 2px;
 
   z-index: 2;
   transform: rotate(45deg);
@@ -32,8 +32,8 @@
   }
 
   .lottery__container > & {
-    left:@total-crop-offset;
-    transition: left @transition-duration,  top @transition-duration;
+    left: @total-crop-offset;
+    transition: left @transition-duration, top @transition-duration;
   }
 
   &::before {
@@ -88,15 +88,33 @@
   }
 }
 
+.side_button_root {
+
+  &_right {
+    width: 50%;
+    height: 500px;
+    box-sizing: border-box;
+    flex: 0 0 50%
+  }
+
+  &_left {
+    width: 50%;
+    height: 500px;
+    box-sizing: border-box;
+    direction: rtl;
+    flex: 0 0 50%;
+  }
+}
+
 .fomo__container, .lottery__container {
   position: relative;
 }
 
 .button {
   position: absolute;
+  margin-top: -1px;
   top: @button-top-offset;
   //left: calc(100% / 2);
-  border: 1px solid green;
   display: flex;
   //width: 50px;
   z-index: 5;

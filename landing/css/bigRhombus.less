@@ -1,5 +1,5 @@
 @rhombus_top_offset: -20vw;
-@rhombus-color: #ff1013;
+@rhombus-color: #fff;
 
 @big_rhombus_side_length: 41.3vw;
 @big_rhombus_title_top_offset: 6.5vw;
@@ -15,6 +15,14 @@
   top: @rhombus_top_offset;
   display: flex;
   flex-direction: column;
+}
+
+.font(){
+  font-family: 'Museo Sans Cyrl';
+  letter-spacing: 0.2px;
+  font-size: 1.2vw;
+  color: @rhombus-color;
+  line-height: 1.2;
 }
 
 .rhombus_border {
@@ -90,19 +98,11 @@
         padding-top: 4%;
 
         &_regular {
-          font-family: 'Museo Sans Cyrl';
-          letter-spacing: 0.2px;
-          font-size: 1.2vw;
-          color: @rhombus-color;
-          line-height: 1.2;
+          .font();
         }
 
-
         &_bold {
-          font-family: 'Museo Sans Cyrl';
-          letter-spacing: 0.2px;
-          font-size: 1.2vw;
-          color: @rhombus-color;
+          .font();
           line-height: 1.8;
           font-weight: bold;
         }
@@ -118,9 +118,8 @@
   display: flex;
   justify-content: center;
   width: 100vw;
-  //height: @little_rhombus_root_height;
 
-  & > .little_rhombus {
+  &  .little_rhombus {
     position: absolute;
     top: @little_rhombus_top_offset;
 
@@ -131,5 +130,20 @@
     align-items: center;
     display: flex;
     justify-content: center;
+
+    &_body {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-45deg);
+
+      &_text_regular{
+        .font();
+      }
+
+    }
   }
 }
