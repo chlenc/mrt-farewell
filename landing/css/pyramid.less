@@ -1,15 +1,19 @@
 @import (reference) "bigRhombus";
-@crop-size: 55vw;
-@x: sqrt(2)* @little_rhombus_side_length - (1 + sqrt(2)) * @crop-size - (1 /sqrt(2)) * 50vw;
-@crop-default-offset:  calc((sqrt(2) - 1) / 2 * @crop-size);
+
 @button-side: 5vw;
-@arrow-side: @button-side / 2.5;
+@crop-size: 55vw;
 @transition-duration: 2s;
+
+@offset-to-rhombus: -(@crop-size/2 - sqrt(2) * @little_rhombus_side_length);
+@offset-to-container: (sqrt(2) - 1) / 2 * @crop-size;
+@total-crop-offset: @offset-to-rhombus + @offset-to-container;
+@crop-default-offset: calc(@total-crop-offset);
+@arrow-side: @button-side / 2.5;
 .crop {
   position: relative;
   box-sizing: border-box;
   border: 1px solid black;
-  top: 0px;
+  top: calc(-(@crop-size / 2 - sqrt(2) * @little_rhombus_side_length));
 
   z-index: 2;
   transform: rotate(45deg);
@@ -25,7 +29,7 @@
 
   .lottery__container > & {
     left: @crop-default-offset;
-    transition: left @transition-duration,  top @transition-duration;
+    transition: left @transition-duration, top @transition-duration;
   }
 
   &::before {
@@ -44,8 +48,8 @@
   }
 
   .fomo__container > .button:hover + & {
-    top: -50px;
-    right: -150px;
+    top: -@button-side;
+    right: calc(@total-crop-offset - @button-side);
   }
 
   .lottery__container > .button:hover + &::before {
@@ -53,8 +57,8 @@
   }
 
   .lottery__container > .button:hover + & {
-    top: -50px;
-    left: -150px;
+    top: -@button-side;
+    left: calc(@total-crop-offset - @button-side);
   }
 
   & .image {
