@@ -10,7 +10,8 @@
 @crop-default-offset: calc(@total-crop-offset);
 @arrow-side: @button-side / 2.5;
 
-@button-offset: calc((sqrt(2) * (@button-side + @little_rhombus_side_length / 2)) / 2);
+@button-top-offset: calc((sqrt(2) * (@button-side + @little_rhombus_side_length / 2)) / 2);
+@button-vertical-offset: calc(@little_rhombus_side_length * sqrt(2) / 2 + 1px);
 
 .crop {
   position: relative;
@@ -87,14 +88,13 @@
   }
 }
 
-
 .fomo__container, .lottery__container {
   position: relative;
 }
 
 .button {
   position: absolute;
-  top: @button-offset;
+  top: @button-top-offset;
   //left: calc(100% / 2);
   border: 1px solid green;
   display: flex;
@@ -103,11 +103,11 @@
   transform: rotate(45deg);
 
   &_fomo {
-    right: 1vw;
+    right: @button-vertical-offset;
   }
 
   &_lottery {
-    left: 1vw;
+    left: @button-vertical-offset;
 
   }
 
@@ -166,7 +166,6 @@
     }
   }
 }
-
 
 .link__arrow {
 
