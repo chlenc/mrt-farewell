@@ -1,23 +1,31 @@
-@crop-size: 900px;
-@crop-move: 40px;
+@import (reference) "bigRhombus";
+@crop-size: 55vw;
+@x: sqrt(2)* @little_rhombus_side_length - (1 + sqrt(2)) * @crop-size - (1 /sqrt(2)) * 50vw;
+@crop-default-offset:  calc((sqrt(2) - 1) / 2 * @crop-size);
+@button-side: 5vw;
+@arrow-side: @button-side / 2.5;
 @transition-duration: 2s;
-
 .crop {
   position: relative;
   box-sizing: border-box;
   border: 1px solid black;
   top: 0px;
-  right: calc(0.207 * @crop-size);
+
   z-index: 2;
   transform: rotate(45deg);
   overflow: hidden;
   width: @crop-size;
   height: @crop-size;
-  transition: left @transition-duration, top @transition-duration;
+
+
+  .fomo__container > & {
+    right: @crop-default-offset;
+    transition: right @transition-duration, top @transition-duration;
+  }
 
   .lottery__container > & {
-    right: 0;
-    left: calc(0.207 * @crop-size);
+    left: @crop-default-offset;
+    transition: left @transition-duration,  top @transition-duration;
   }
 
   &::before {
@@ -37,7 +45,7 @@
 
   .fomo__container > .button:hover + & {
     top: -50px;
-    left: -150px;
+    right: -150px;
   }
 
   .lottery__container > .button:hover + &::before {
@@ -68,7 +76,6 @@
     .link__wrapper:hover + & {
       top: -280px;
       left: 0px;
-
     }
   }
 }
@@ -79,7 +86,7 @@
   //left: calc(100% / 2);
   border: 1px solid green;
   display: flex;
-  width: 50px;
+  //width: 50px;
   z-index: 5;
   transform: rotate(45deg);
 
@@ -87,18 +94,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: @button-side;
+    height: @button-side;
     border: 1px solid #FFFFFF;
     box-sizing: border-box;
     opacity: 100%;
 
     z-index: 1; /* matters! */
 
-    -webkit-transition: all @transition-duration ease-out;
-    -moz-transition: all @transition-duration ease-out;
-    -o-transition: all @transition-duration ease-out;
-    transition: all @transition-duration ease-out;
+    -webkit-transition: transform @transition-duration ease-out;
+    -moz-transition: transform @transition-duration ease-out;
+    -o-transition: transform @transition-duration ease-out;
+    transition: transform @transition-duration ease-out;
 
     &::before {
       content: "";
@@ -126,15 +133,15 @@
       position: relative;
       left: 2px;
       bottom: 2px;
-      width: 20px;
-      height: 20px;
+      width: @arrow-side;
+      height: @arrow-side;
       border-left: 1px solid white;
       border-bottom: 1px solid white;
 
-        .lottery__container & {
-            transform: rotate(180deg);
-            left: -2px;
-        }
+      .lottery__container & {
+        transform: rotate(180deg);
+        left: -2px;
+      }
     }
   }
 }
