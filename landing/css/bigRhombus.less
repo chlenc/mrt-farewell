@@ -1,6 +1,8 @@
 @rhombus_top_offset: -20vw;
 @rhombus-color: #fff;
 
+@font_title_size: 4vw;
+
 @big_rhombus_side_length: 41.3vw;
 @big_rhombus_title_top_offset: 6.5vw;
 @big_rhombus_root_height: calc(@big_rhombus_side_length * (sqrt(2) + 1) / 2);
@@ -23,6 +25,7 @@
   font-size: 1.2vw;
   color: @rhombus-color;
   line-height: 1.5;
+  user-select: none;
 }
 
 .font_bold(){
@@ -31,6 +34,17 @@
   font-size: 1.2vw;
   color: @rhombus-color;
   line-height: 1.5;
+  user-select: none;
+}
+
+.font_title(){
+  font-family: 'Museo Sans Cyrl';
+  font-size: @font_title_size;
+  background: linear-gradient(180deg, #fff 10%, #C1C3C6 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+
 }
 
 .rhombus_border {

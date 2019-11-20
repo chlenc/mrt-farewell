@@ -1,6 +1,7 @@
 @import (reference) "bigRhombus";
 
-@button-side: 5vw;
+@button-side: 4vw;
+@description-bg-side: 25vw;
 @crop-size: 60vw;
 @transition-duration: 2s;
 
@@ -10,99 +11,14 @@
 @crop-default-offset: calc(@total-crop-offset);
 @arrow-side: @button-side / 2.5;
 
-@button-top-offset: calc((sqrt(2) * (@button-side + @little_rhombus_side_length / 2)) / 2);
-@button-vertical-offset: calc(@little_rhombus_side_length * sqrt(2) / 2 + 1px);
+@button-top-offset: calc((sqrt(2) * @little_rhombus_side_length - @button-side) / 2);
+@button-vertical-offset: calc(@little_rhombus_side_length * sqrt(2) / 2 + ((sqrt(2) - 1) * @button-side / 2));
 
-.crop {
-  position: relative;
-  box-sizing: border-box;
-  top: 0;
-  margin-top: 2px;
-
-  z-index: 2;
-  transform: rotate(45deg);
-  overflow: hidden;
-  width: @crop-size;
-  height: @crop-size;
-
-
-  .fomo__container > & {
-    right: @total-crop-offset;
-    transition: right @transition-duration, top @transition-duration;
-  }
-
-  .lottery__container > & {
-    left: @total-crop-offset;
-    transition: left @transition-duration, top @transition-duration;
-  }
-
-  &::before {
-    transition: opacity @transition-duration;
-    position: absolute;
-    top: 0;
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.15);
-    opacity: 1;
-  }
-
-  .fomo__container > .button:hover + &::before {
-    opacity: 0;
-  }
-
-  .fomo__container > .button:hover + & {
-    top: -@button-side;
-    right: calc(@total-crop-offset - @button-side);
-  }
-
-  .lottery__container > .button:hover + &::before {
-    opacity: 0;
-  }
-
-  .lottery__container > .button:hover + & {
-    top: -@button-side;
-    left: calc(@total-crop-offset - @button-side);
-  }
-
-  & .image {
-    display: flex;
-    transform: rotate(-45deg);
-    z-index: -10;
-    width: calc(100% * sqrt(2));
-    height: calc(100% * sqrt(2));
-    /*overflow: hidden;*/
-    position: relative;
-    left: calc(100% / (2 + 2 * sqrt(2)));
-    top: calc(-100% / (2 + 2 * sqrt(2)));
-    transition: left @transition-duration, top @transition-duration;
-
-    .lottery__container > & {
-      left: calc(-100% / (2 + 2 * sqrt(2)));
-      top: calc(-100% / (2 + 2 * sqrt(2)));
-    }
-
-    &.lottery__image {
-      resize: both;
-      background-size: cover;
-      background-position: -30vw -7vw;
-      background-image: url("../assets/img/lottery bg.jpg");
-
-      .button_fomo:hover ~ .crop {
-        border: 2px solid green !important;
-      }
-    }
-
-    &.fomo__image {
-      resize: both;
-      background-size: cover;
-      background-position: 0vw -5vw;
-      background-image: url("../assets/img/fomo bg.jpg");
-    }
-
-
-  }
-}
+@description-bg-top-offset: calc((sqrt(2) * @little_rhombus_side_length - @description-bg-side) / 2);
+@description-bg-vertical-offset: calc(@little_rhombus_side_length * sqrt(2) / 2 + ((sqrt(2) - 1) * @description-bg-side / 2));
+@description-body-top-offset: calc(@little_rhombus_side_length * sqrt(2) / 2 - @font_title_size / 3 * 2);
+@description-text-vertical-offset: calc((@little_rhombus_side_length * sqrt(2) / 2 + ((sqrt(2) - 1) * @description-bg-side / 2)) / 2);
+@description-body-width: calc(@description-bg-side * sqrt(2) - ((sqrt(2) - 1) * @description-bg-side));
 
 .side_button_root {
 
@@ -124,25 +40,186 @@
 
 .fomo__container, .lottery__container {
   position: relative;
+
+  .fomo:first-of-type:hover ~ .fomo:nth-of-type(2), .lottery:first-of-type:hover ~ .lottery:nth-of-type(2) {
+    opacity: 1;
+  }
+
+  .fomo:first-of-type:hover ~ .fomo:nth-of-type(3), .lottery:first-of-type:hover ~ .lottery:nth-of-type(3) {
+    top: 1vw;
+
+    .description_body_text {
+      opacity: 1;
+    }
+
+  }
+
+}
+
+.crop {
+  position: relative;
+  box-sizing: border-box;
+  top: 0;
+  margin-top: 3px;
+
+  z-index: 2;
+  transform: rotate(45deg);
+  overflow: hidden;
+  width: @crop-size;
+  height: @crop-size;
+
+  .fomo__container > & {
+    right: @total-crop-offset;
+    transition: right @transition-duration, top @transition-duration;
+  }
+
+  .lottery__container > & {
+    left: @total-crop-offset;
+    transition: left @transition-duration, top @transition-duration;
+  }
+
+  .fomo__container > .button:hover + & {
+    top: -@button-side;
+    right: calc(@total-crop-offset - @button-side);
+  }
+
+  .lottery__container > .button:hover + & {
+    top: -@button-side;
+    left: calc(@total-crop-offset - @button-side);
+  }
+
+  & .image {
+    opacity: 0.2;
+    display: flex;
+    transform: rotate(-45deg);
+    z-index: -10;
+    width: calc(100% * sqrt(2));
+    height: calc(100% * sqrt(2));
+    /*overflow: hidden;*/
+    position: relative;
+    left: calc(100% / (2 + 2 * sqrt(2)));
+    top: calc(-100% / (2 + 2 * sqrt(2)));
+    transition: left @transition-duration, top @transition-duration, opacity @transition-duration, background-position @transition-duration;
+
+    .button:hover + & {
+      opacity: 0.8;
+    }
+
+    .lottery__container > & {
+      left: calc(-100% / (2 + 2 * sqrt(2)));
+      top: calc(-100% / (2 + 2 * sqrt(2)));
+    }
+
+
+    &.lottery__image {
+      background-size: 110vw;
+      background-repeat: no-repeat;
+      background-position: -15vw -3vw;
+      background-image: url("../assets/img/lottery bg.jpg");
+
+      .button:hover + & {
+        background-position: -17vw -4vw;
+      }
+
+    }
+
+    &.fomo__image {
+      background-size: 80vw;
+      background-repeat: no-repeat;
+      background-position: 16vw -1vw;
+      background-image: url("../assets/img/fomo bg.jpg");
+
+      .button:hover + & {
+        background-position: 18vw -2vw;
+      }
+
+    }
+
+
+  }
+
+}
+
+.description {
+
+  &_bg {
+    position: absolute;
+    background: #000;
+    width: @description-bg-side;
+    height: @description-bg-side;
+    top: @description-bg-top-offset;
+    display: flex;
+    z-index: 4;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity @transition-duration;
+
+    .fomo__container > & {
+      right: @description-bg-vertical-offset;
+    }
+
+    .lottery__container > & {
+      left: @description-bg-vertical-offset;
+    }
+
+  }
+
+  &_body {
+    position: absolute;
+    top: @description-body-top-offset;
+    z-index: 5;
+    transition: top @transition-duration;
+
+    width: @description-body-width;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    justify-content: space-around;
+
+    & > * {
+      margin-bottom: 1.5vw;
+    }
+
+    &_title {
+      .font_title();
+    }
+
+    &_text {
+      opacity: 0;
+      transition: opacity @transition-duration;
+      width: 80%;
+      height: auto;
+    }
+
+    .fomo__container > & {
+      right: @description-bg-vertical-offset;
+    }
+
+    .lottery__container > & {
+      left: @description-bg-vertical-offset;
+    }
+
+
+  }
+
+
 }
 
 .button {
   position: absolute;
   margin-top: -1px;
   top: @button-top-offset;
-  //left: calc(100% / 2);
   display: flex;
-  //width: 50px;
-  z-index: 5;
+  z-index: 6;
   transform: rotate(45deg);
 
-  &_fomo {
+  .fomo__container > & {
     right: @button-vertical-offset;
   }
 
-  &_lottery {
+  .lottery__container > & {
     left: @button-vertical-offset;
-
   }
 
   &-content {
