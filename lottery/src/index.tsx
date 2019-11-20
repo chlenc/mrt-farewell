@@ -1,5 +1,6 @@
 import {h, render} from "preact";
+import Index from './layout';
 
 render(
-    <div>Hello world</div>, document.getElementById('container')!
+    <Index>Hello world</Index>, document.getElementById('container')!
 );
