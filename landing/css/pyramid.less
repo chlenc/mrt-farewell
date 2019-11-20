@@ -6,7 +6,7 @@
 
 @offset-to-rhombus: -(@crop-size/2 - sqrt(2) * @little_rhombus_side_length);
 @offset-to-container: (sqrt(2) - 1) / 2 * @crop-size;
-@total-crop-offset:  @offset-to-container + @offset-to-rhombus;
+@total-crop-offset: @offset-to-container + @offset-to-rhombus;
 @crop-default-offset: calc(@total-crop-offset);
 @arrow-side: @button-side / 2.5;
 
@@ -32,8 +32,8 @@
   }
 
   .lottery__container > & {
-    left:@total-crop-offset;
-    transition: left @transition-duration,  top @transition-duration;
+    left: @total-crop-offset;
+    transition: left @transition-duration, top @transition-duration;
   }
 
   &::before {
@@ -66,25 +66,22 @@
   }
 
   & .image {
+    display: flex;
     transform: rotate(-45deg);
     z-index: -10;
     width: calc(100% * sqrt(2));
     height: calc(100% * sqrt(2));
     /*overflow: hidden;*/
     position: relative;
-    left: calc(100% / 4.828);
-    top: calc(-100% / 4.828);
+    left: calc(100% / (2 + 2 * sqrt(2)));
+    top: calc(-100% / (2 + 2 * sqrt(2)));
     transition: left @transition-duration, top @transition-duration;
 
     .lottery__container > & {
-      left: calc(-100% / 4.828);
-      top: calc(-100% / 4.828);
+      left: calc(-100% / (2 + 2 * sqrt(2)));
+      top: calc(-100% / (2 + 2 * sqrt(2)));
     }
 
-    .link__wrapper:hover + & {
-      top: -280px;
-      left: 0px;
-    }
   }
 }
 
@@ -162,6 +159,7 @@
       .lottery__container & {
         transform: rotate(180deg);
         left: -2px;
+        bottom: -2px;
       }
     }
   }
