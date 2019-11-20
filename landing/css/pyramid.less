@@ -1,7 +1,7 @@
 @import (reference) "bigRhombus";
 
 @button-side: 5vw;
-@crop-size: 55vw;
+@crop-size: 60vw;
 @transition-duration: 2s;
 
 @offset-to-rhombus: -(@crop-size/2 - sqrt(2) * @little_rhombus_side_length);
@@ -81,6 +81,25 @@
       left: calc(-100% / (2 + 2 * sqrt(2)));
       top: calc(-100% / (2 + 2 * sqrt(2)));
     }
+
+    &.lottery__image {
+      resize: both;
+      background-size: cover;
+      background-position: -30vw -7vw;
+      background-image: url("../assets/img/lottery bg.jpg");
+
+      .button_fomo:hover ~ .crop {
+        border: 2px solid green !important;
+      }
+    }
+
+    &.fomo__image {
+      resize: both;
+      background-size: cover;
+      background-position: 0vw -5vw;
+      background-image: url("../assets/img/fomo bg.jpg");
+    }
+
 
   }
 }
