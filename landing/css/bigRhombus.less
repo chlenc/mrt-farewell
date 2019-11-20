@@ -17,8 +17,16 @@
   flex-direction: column;
 }
 
-.font(){
-  font-family: 'Museo Sans Cyrl';
+.font_regular(){
+  font-family: 'Museo Sans Cyrl 300';
+  letter-spacing: 0.2px;
+  font-size: 1.2vw;
+  color: @rhombus-color;
+  line-height: 1.2;
+}
+
+.font_bold(){
+  font-family: 'Museo Sans Cyrl 900';
   letter-spacing: 0.2px;
   font-size: 1.2vw;
   color: @rhombus-color;
@@ -98,13 +106,11 @@
         padding-top: 4%;
 
         &_regular {
-          .font();
+          .font_regular();
         }
 
         &_bold {
-          .font();
-          line-height: 1.8;
-          font-weight: bold;
+          .font_bold();
         }
       }
     }
@@ -141,7 +147,7 @@
       transform: rotate(-45deg);
 
       &_text_regular{
-        .font();
+        .font_regular();
       }
 
     }
