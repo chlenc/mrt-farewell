@@ -1,0 +1,22 @@
+{
+    "ride_directory": "ride",
+    "test_directory": "test",
+    "envs": {
+        "custom": {
+            "API_BASE": "http://localhost:6869/",
+            "CHAIN_ID": "R",
+            "SEED": "waves private node seed with waves tokens",
+            "timeout": 60000
+        },
+        "testnet": {
+            "API_BASE": "https://testnodes.wavesnodes.com/",
+            "CHAIN_ID": "T",
+            "SEED": "scorpion early squirrel place father firm nothing warrior robot secret life blur fragile barrel task",
+            "timeout": 60000
+        }
+    },
+    "defaultEnv": "testnet",
+    "mocha": {
+        "timeout": 60000
+    }
+}
