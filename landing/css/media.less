@@ -1,0 +1,52 @@
+
+.desktop, .tablet, .mobile {
+  width: 100%;
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .desktop {
+    display: block;
+  }
+
+  .mobile, .tablet {
+    display: none;
+  }
+}
+
+
+@media (max-width: 760px) {
+  html, body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .back {
+    background: url("../assets/img/tablet_bg.svg") no-repeat center;
+    background-size: cover;
+    width: 100vw;
+  }
+
+}
+
+@media (max-width: 760px) and (min-width: 320px) {
+  .tablet {
+    display: block;
+  }
+
+  .mobile, .desktop {
+    display: none;
+  }
+}
+
+@media (max-width: 320px) {
+  .mobile {
+    display: block;
+  }
+
+
+  .tablet, .desktop {
+    display: none;
+  }
+}
+

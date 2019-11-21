@@ -2,95 +2,176 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="js/index.js"></script>
+    <title>MRT farewell party</title>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="js/jquery.js" type="text/javascript"></script>
+
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon"/>
+
     <link rel="stylesheet" href="assets/font/caveat-cufonfonts-webfont/style.css">
     <link href="assets/font/MuseoSans/stylesheet.css" rel="stylesheet"/>
     <link href="css/normalize.css" rel="stylesheet"/>
     <link href="css/index.css" rel="stylesheet"/>
 
-    <link rel="stylesheet/less" type="text/css" href="./css/bigRhombus.less"/>
-    <link rel="stylesheet/less" href="css/pyramid.less">
+    <link rel="stylesheet/less" type="text/css" href="./css/vars.less"/>
+    <link rel="stylesheet/less" type="text/css" href="./css/desktop.less"/>
+    <link rel="stylesheet/less" type="text/css" href="./css/tablet.less"/>
+    <link rel="stylesheet/less" type="text/css" href="./css/media.less"/>
     <script src="js/less.js" type="text/javascript"></script>
+    <script src="js/index.js" type="text/javascript"></script>
 
 </head>
 <body>
-<img class="back" src="assets/img/bg.svg" alt=""/>
+<div class="desktop">
+    <div class="langButtons">
+        <input class='rus' type=button value='rus'>
+        <input class='eng' type=button value='eng'>
+    </div>
+    <div class="back"></div>
+    <div class="rhombus_root">
+        <div class="big_rhombus_root">
+            <div class="big_rhombus">
 
-<div class="rhombus_root">
-    <div class="big_rhombus_root">
-        <div class="big_rhombus">
+                <div class="rhombus_border-leftBottom"></div>
+                <div class="rhombus_border-rightTop"></div>
+                <div class="rhombus_border-rightBottom"></div>
+                <div class="rhombus_border-leftTop"></div>
 
-            <div class="rhombus_border-leftBottom"></div>
-            <div class="rhombus_border-rightTop"></div>
-            <div class="rhombus_border-rightBottom"></div>
-            <div class="rhombus_border-leftTop"></div>
-
-            <div class="big_rhombus_body">
-                <img src="./assets/img/title.svg" alt="MRT farewell party" class="big_rhombus_body_title">
-                <div class="big_rhombus_body_text">
-                    <div class="big_rhombus_body_text_regular">In this regard,</div>
-                    <div class="big_rhombus_body_text_bold">1,000,000 WAVES</div>
-                    <div class="big_rhombus_body_text_regular">in leaseing will be ruffled off</div>
+                <div class="big_rhombus_body">
+                    <img src="./assets/img/title.svg" alt="MRT farewell party" class="big_rhombus_body_title">
+                    <div class="big_rhombus_body_text">
+                        <span class="localization regular-1_3" caption="subtitleChunk1"></span>
+                        <span class="localization bold-1_3" caption="subtitleChunk2"></span>
+                        <span class="localization regular-1_3"
+                              caption="subtitleChunk3"></span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="little_rhombus_root">
+        <div class="little_rhombus_root">
 
-        <div class="side_button_root_left">
-            <div class="fomo__container">
+            <div class="side_button_root_left">
+                <div class="fomo__container">
                 <span class="fomo button">
                     <a href="#" class="button-content">
                         <div class="arrow"></div>
                     </a>
                 </span>
-                <div class="fomo crop">
-                    <div class="image fomo__image"></div>
-                </div>
-                <div class="fomo description_bg"></div>
-                <div class="fomo description_body">
-                    <div class="description_body_title">Fomo</div>
-                    <img class="description_body_text" src="./assets/img/fomo_subtitle.svg" alt="fomo_subtitle">
-                    <img class="description_body_text" src="./assets/img/fomo_text.svg" alt="fomo_text">
+                    <div class="fomo crop">
+                        <div class="image fomo__image"></div>
+                    </div>
+                    <div class="fomo description_bg"></div>
+                    <div class="fomo description_body">
+                        <div class="title-4_1">Fomo</div>
+                        <br/>
+                        <diV class="description_body_text">
+                            <span class="localization regular-1_4" caption="fomoSubtitleChunk1"></span>&nbsp;
+                            <span class="localization bold-1_4" caption="fomoSubtitleChunk2"></span>&nbsp;
+                            <span class="localization regular-1_4" caption="fomoSubtitleChunk3"></span>&nbsp;
+                            <br/>
+                            <br/>
+                            <span class="localization regular-1_1" caption="fomoText"></span>
+                        </diV>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="little_rhombus">
-            <div class="rhombus_border-leftBottom"></div>
-            <div class="rhombus_border-rightTop"></div>
-            <div class="rhombus_border-rightBottom"></div>
-            <div class="rhombus_border-leftTop"></div>
-            <div class="little_rhombus_body">
-                <div class="little_rhombus_body_text_regular">Choose</div>
-                <div class="little_rhombus_body_text_regular">how to win</div>
+            <div class="little_rhombus">
+                <div class="rhombus_border-leftBottom"></div>
+                <div class="rhombus_border-rightTop"></div>
+                <div class="rhombus_border-rightBottom"></div>
+                <div class="rhombus_border-leftTop"></div>
+                <div class="little_rhombus_body">
+                    <div class="regular-1_3">Choose</div>
+                    <div class="regular-1_3">how to win</div>
+                </div>
             </div>
-        </div>
 
-        <div class="side_button_root_right">
-            <div class="lottery__container">
+            <div class="side_button_root_right">
+                <div class="lottery__container">
                 <span class="lottery button">
                     <a href="#" class="button-content">
                         <div class="arrow"></div>
                     </a>
                 </span>
-                <div class="lottery crop">
-                    <div class="image lottery__image"></div>
-                </div>
-                <div class="lottery description_bg"></div>
-                <div class="lottery description_body">
-                    <div class="description_body_title">Lottery</div>
-                    <img class="description_body_text" src="./assets/img/lottery_subtitle.svg" alt="fomo_subtitle">
-                    <img class="description_body_text" src="./assets/img/lottery_text.svg" alt="fomo_text">
+                    <div class="lottery crop">
+                        <div class="image lottery__image"></div>
+                    </div>
+                    <div class="lottery description_bg"></div>
+                    <div class="lottery description_body">
+                        <div class="title-4_1">Lottery</div>
+                        <br/>
+                        <diV class="description_body_text">
+                            <span class="localization regular-1_1" caption="lotterySubtitle"></span>
+                            <br/>
+                            <img src="./assets/img/lottery_text.svg" alt="lottery_text">
+                        </diV>
+                    </div>
                 </div>
             </div>
+
         </div>
 
     </div>
-
 </div>
+
+<div class="tablet">
+    <div class="back"></div>
+    <div class="big_rhombus_tablet_root">
+        <div class="big_rhombus_tablet">
+
+            <div class="rhombus_border-leftBottom"></div>
+            <div class="rhombus_border-rightBottom"></div>
+
+            <div class="big_rhombus_tablet_body">
+                <img class="big_rhombus_tablet_body_title" src="./assets/img/title.svg" alt="MRT farewell party">
+                <div class="big_rhombus_tablet_body_text">
+                    <div class="row">
+                        <div class="regular">In this regard,&nbsp;</div>
+                        <div class="bold">1,000,000 WAVES</div>
+                    </div>
+                    <div class="regular">in leaseing will be ruffled off</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title">Fomo</div>
+    <div class="row">
+        <div class="regular">Who bought the</div>&nbsp;
+        <div class="bold">last ticket won</div>&nbsp;
+        <div class="regular">the round</div>
+    </div>
+    <div class="regular">
+        If no one has bought a ticket within 15 minutes after your ticket purchase time, you win the round. At the end
+        of the round, the last ticket bought wins. The round lasts one day, the last round is January 13th
+    </div>
+    <div class="big_rhombus_tablet_root">
+        <div class="big_rhombus_tablet">
+
+            <div class="rhombus_border-leftBottom"></div>
+            <div class="rhombus_border-rightBottom"></div>
+
+            <div class="big_rhombus_tablet_body">
+                <img class="big_rhombus_tablet_body_title" src="./assets/img/title.svg" alt="MRT farewell party">
+                <div class="big_rhombus_tablet_body_text">
+                    <div class="row">
+                        <div class="regular">In this regard,&nbsp;</div>
+                        <div class="bold">1,000,000 WAVES</div>
+                    </div>
+                    <div class="regular">in leaseing will be ruffled off</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mobile">
+    <div class="back">mobile</div>
+</div>
+
+<!--<div class="keeper_error_field">¡€#</div>-->
 
 </body>
 </html>

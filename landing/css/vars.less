@@ -1,0 +1,92 @@
+@rhombus_top_offset: -20vw;
+@rhombus-color: #fff;
+
+@font_title_size: 4vw;
+
+@big_rhombus_side_length: 41.3vw;
+@big_rhombus_title_top_offset: 6.5vw;
+@big_rhombus_root_height: calc(@big_rhombus_side_length * (sqrt(2) + 1) / 2);
+
+@little_rhombus_side_length: 17vw;
+@little_rhombus_root_height: calc(@little_rhombus_side_length * sqrt(2));
+@little_rhombus_top_offset: calc((@little_rhombus_side_length * (sqrt(2) - 1) / 2));
+
+@button-side: 4vw;
+@description-bg-side: 30vw;
+@crop-size: 60vw;
+@transition-duration: 2s;
+
+@offset-to-rhombus: -(@crop-size/2 - sqrt(2) * @little_rhombus_side_length);
+@offset-to-container: (sqrt(2) - 1) / 2 * @crop-size;
+@total-crop-offset: @offset-to-container + @offset-to-rhombus;
+@crop-default-offset: calc(@total-crop-offset);
+@arrow-side: @button-side / 2.5;
+
+@button-top-offset: calc((sqrt(2) * @little_rhombus_side_length - @button-side) / 2);
+@button-vertical-offset: calc(@little_rhombus_side_length * sqrt(2) / 2 + ((sqrt(2) - 1) * @button-side / 2));
+
+@description-bg-top-offset: calc((sqrt(2) * @little_rhombus_side_length - @description-bg-side) / 2);
+@description-bg-vertical-offset: calc(@little_rhombus_side_length * sqrt(2) / 2 + ((sqrt(2) - 1) * @description-bg-side / 2));
+@description-body-top-offset: calc(@little_rhombus_side_length * sqrt(2) / 2 - @font_title_size / 3 * 2);
+@description-text-vertical-offset: calc((@little_rhombus_side_length * sqrt(2) / 2 + ((sqrt(2) - 1) * @description-bg-side / 2)) / 2);
+@description-body-width: calc(@description-bg-side * sqrt(2) - ((sqrt(2) - 1) * @description-bg-side));
+
+.font_regular() {
+  font-family: 'Museo Sans Cyrl 300';
+  color: @rhombus-color;
+  //user-select: none;
+}
+.font_bold() {
+  font-family: 'Museo Sans Cyrl 900';
+  color: @rhombus-color;
+  //user-select: none;
+}
+
+
+.font_title() {
+  font-family: 'Museo Sans Cyrl';
+  background: linear-gradient(180deg, #fff 10%, #C1C3C6 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+
+}
+
+.regular-1_3{
+  .font_regular();
+  font-size: 1.3vw;
+  line-height: 1.8vw;
+}
+
+.bold-1_3{
+  .font_bold();
+  font-size: 1.3vw;
+  line-height: 1.8vw;
+}
+
+.regular-1_1{
+  .font_regular();
+  font-size: 1.1vw;
+  line-height: 1.6vw;
+}
+.regular-1_4{
+  .font_regular();
+  font-size: 1.4vw;
+  line-height: 1.8vw;
+}
+
+.bold-1_4{
+  .font_bold();
+  font-size: 1.4vw;
+  line-height: 1.8vw;
+}
+
+.title-4_1{
+  .font_title();
+  font-size: 4.1vw;
+
+}
+
+.row{
+  display: flex;
+}
