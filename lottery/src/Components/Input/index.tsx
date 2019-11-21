@@ -5,12 +5,20 @@ import cn from 'classnames'
 export interface IInputProps {
     className?: string
     placeholder?: string
+    error?: boolean
+    errorMessage?: string
+    onInput: (e: any) => void
+    type?: 'number'
+    value?: string | number
 }
 
-const Input: FunctionComponent<IInputProps> = ({className, placeholder}) => {
+const Input: FunctionComponent<IInputProps> = ({className, placeholder, error, type, value, onInput}) => {
     return <input placeholder={placeholder}
-                  class={cn(styles.root, className)}
-                  onInput={()=>{}}/>
+                  spellcheck={false}
+                  type={type}
+                  value={value}
+                  class={cn(styles.root, className, {[styles.error]: error})}
+                  onInput={onInput}/>
 };
 
 export default Input;

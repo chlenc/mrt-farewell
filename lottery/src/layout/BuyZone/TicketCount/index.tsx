@@ -1,9 +1,12 @@
 import { h, FunctionComponent } from 'preact';
 import styles from './styles.less';
 
-const TicketCount: FunctionComponent = () => {
-    const ticketCount = 248;
-    const digitsArray = ticketCount.toString().split('');
+
+interface IProps {
+    totalTickets: number
+}
+const TicketCount: FunctionComponent<IProps> = ({totalTickets}) => {
+    const digitsArray = totalTickets.toString().split('');
     return <div className={styles.root}>
         <div class={styles.countRow}>
             {digitsArray.map((d, i) => <Digit key={i} digit={d}/>)}

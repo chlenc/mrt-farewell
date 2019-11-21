@@ -8,9 +8,10 @@ import BuyForm from './BuyForm';
 const noop = () => {
 };
 
+const TOTAL_TICKETS =1241
 export default class BuyZone extends Component<{}, { isForm: boolean }> {
     state = {
-        isForm: true
+        isForm: false
     };
 
     render() {
@@ -18,7 +19,7 @@ export default class BuyZone extends Component<{}, { isForm: boolean }> {
             {this.state.isForm
                 ? <BuyForm onSubmit={noop} onBack={() => this.setState({isForm: false})}/>
                 : <Fragment>
-                    <TicketCount/>
+                    <TicketCount totalTickets={TOTAL_TICKETS}/>
                     <Button onClick={() => this.setState({isForm: true})}
                             className={styles.buyButton}
                             title="BUY TICKET FOR 25 MRT" action/>
@@ -27,8 +28,4 @@ export default class BuyZone extends Component<{}, { isForm: boolean }> {
         </div>;
     }
 }
-// const BuyZone: FunctionComponent = () => {
-//
-// };
-//
-// export default BuyZone;
+
