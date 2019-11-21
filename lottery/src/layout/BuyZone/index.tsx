@@ -1,7 +1,6 @@
 import { h, Component, Fragment } from 'preact';
 import styles from './styles.less';
 import TicketCount from './TicketCount';
-import BuyTicket from './BuyForm';
 import Button from '@src/Components/Button';
 import Input from '@src/Components/Input';
 import ArrowLeft from '@src/icons/ArrowLeft';
@@ -13,10 +12,6 @@ const TOTAL_TICKETS = 1241;
 
 const TICKET_PRICE = 25;
 
-interface IProps {
-    onSubmit: (ticketNumber: number, leaseAddress: string) => any
-    onBack: () => any
-}
 
 interface IState {
     isForm: boolean
@@ -24,22 +19,21 @@ interface IState {
     leaseAddress: string
     ticketAmount?: number
     mrtAmount?: number
-    init: boolean
 }
 
-export default class BuyZone extends Component<IProps, IState> {
+export default class BuyZone extends Component<{}, IState> {
     state: IState = {
         isForm: false,
-        init: false,
         leaseAddress: ''
     };
 
-    handleAddress = (e: any) => {
+
+    handleAddressChange = (e: any) => {
         const leaseAddress: string = e.target.value;
         this.setState({leaseAddress});
     };
 
-    handleAmount = (type: 'ticket' | 'mrt') => (e: any) => {
+    handleAmountChange = (type: 'ticket' | 'mrt') => (e: any) => {
         const v = e.target.value;
         if (v === '') {
             this.setState({mrtAmount: undefined, ticketAmount: undefined});
@@ -51,16 +45,17 @@ export default class BuyZone extends Component<IProps, IState> {
         }
     };
 
+    handleBuy = () => {}; //todo: implement
+
     render() {
-        const {ticketAmount, mrtAmount, leaseAddress, init, isForm} = this.state;
+        const {ticketAmount, mrtAmount, leaseAddress, isForm} = this.state;
         const isValidAddress = validateAddress(leaseAddress);
-        const {onSubmit, onBack} = this.props;
 
         return <div class={styles.root}>
             <TicketCount className={cn(styles.count, {[styles.countShow]: !isForm})} totalTickets={TOTAL_TICKETS}/>
             <div className={cn(styles.form, {[styles.formShow]: isForm})}>
                 <Input placeholder="Write address to which the lease will be sent"
-                       onInput={this.handleAddress}
+                       onInput={this.handleAddressChange}
                        value={leaseAddress}
                        error={leaseAddress !== '' && !isValidAddress}
                        errorMessage="Invalid address"
@@ -70,13 +65,13 @@ export default class BuyZone extends Component<IProps, IState> {
                     <Input placeholder="Number of tickets"
                            type="number"
                            value={ticketAmount}
-                           onInput={this.handleAmount('ticket')}
+                           onInput={this.handleAmountChange('ticket')}
                            className={styles.topInput}/>
                     <div class={styles.orText}>or</div>
                     <Input placeholder="Amount in MRT"
                            type="number"
                            value={mrtAmount}
-                           onInput={this.handleAmount('mrt')}
+                           onInput={this.handleAmountChange('mrt')}
                            className={styles.topInput}/>
                 </div>
             </div>
@@ -86,7 +81,7 @@ export default class BuyZone extends Component<IProps, IState> {
                     ?
                     <Fragment><ArrowLeft onClick={() => this.setState({isForm: false})}
                                          className={styles.buttonSurrounding}/>
-                        <Button className={styles.buyButton} onClick={() => onSubmit(ticketAmount!, leaseAddress!)}
+                        <Button className={styles.buyButton} onClick={this.handleBuy}
                                 disabled={!(isValidAddress && ticketAmount && ticketAmount > 0)} title="BUY TICKETS"
                                 action/>
                         <div class={styles.buttonSurrounding}/>
