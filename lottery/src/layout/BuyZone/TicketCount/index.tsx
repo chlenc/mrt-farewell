@@ -1,13 +1,15 @@
 import { h, FunctionComponent } from 'preact';
 import styles from './styles.less';
-
+import cn from 'classnames'
 
 interface IProps {
     totalTickets: number
+    className?: string
 }
-const TicketCount: FunctionComponent<IProps> = ({totalTickets}) => {
+
+const TicketCount: FunctionComponent<IProps> = ({totalTickets, className}) => {
     const digitsArray = totalTickets.toString().split('');
-    return <div className={styles.root}>
+    return <div className={cn(styles.root, className)}>
         <div class={styles.countRow}>
             {digitsArray.map((d, i) => <Digit key={i} digit={d}/>)}
         </div>
