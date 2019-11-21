@@ -80,7 +80,6 @@ const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ";
     await broadcast(SetSctiptHub);
     await waitForTx(SetSctiptHub.id);
     console.log("Hub successfully scripted\n");
-    
     compiledLottery = compile(getScriptLottery(addressHubLottery, addressLottery, addressRandomizer, pubKeyOwner))
     const SetSctiptLottery = setScript({script:compiledLottery},seedLottery)
     await broadcast(SetSctiptLottery);

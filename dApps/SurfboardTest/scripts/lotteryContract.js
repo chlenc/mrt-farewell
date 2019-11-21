@@ -3,7 +3,7 @@ const getScriptLottery = (addressHubLottery, addressLottery, addressRandomizer, 
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
 
-let lotteryTicketHolder = Address(base58'${addressHubLottery}')
+let lotteryTicketHub = Address(base58'${addressHubLottery}')
 let lotteryOwner = "${addressLottery}"
 let ownerPubKey = base58'${pubKeyOwner}'
 let dAppRandomAddress = Address(base58'${addressRandomizer}')
@@ -36,22 +36,27 @@ func checkRandom() = {
     else throw("Incorrect random result")
     } 
 
-@Callable(contextObj)
-func defineTheWinner() = {
-    let randomResult = this.getIntegerValue("randomResult")
-    if lotteryTicketHolder.getInteger("winningTicket" +  toString(randomResult)).isDefined() then
-        let ticketAmount = lotteryTicketHolder.getIntegerValue("ticketAmount")
-        let randomResultUpdate = if ((randomResult) == ticketAmount ) then 1 else randomResult +1
-        WriteSet([
-            DataEntry("randomResult", randomResultUpdate)
-        ])
-    else
-        let winnerAddress = lotteryTicketHolder.getStringValue("ticket" + toString(randomResult))
-        WriteSet([
-            DataEntry("winnerTicket", randomResult),
-            DataEntry("winnerAddress", winnerAddress)
-        ])
-}
+
+    @Callable(contextObj)
+    func defineTheWinner(ticketsInHubKey: String) = {
+        let randomResult = this.getIntegerValue("randomResult")
+        if lotteryTicketHub.getInteger("winningTicket" +  toString(randomResult)).isDefined() then
+            let ticketAmount = lotteryTicketHub.getIntegerValue("ticketAmount")
+            let randomResultUpdate = if ((randomResult) == ticketAmount ) then 1 else randomResult +1
+            WriteSet([
+                DataEntry("randomResult", randomResultUpdate)
+            ])
+        else
+            let ticketFrom = parseIntValue(ticketsInHubKey.split("To")[0].split("ticketsFrom")[1])
+            let ticketTo= parseIntValue(ticketsInHubKey.split("To")[1])
+            if ( randomResult>=ticketFrom && randomResult<=ticketTo) then
+                let winnerAddress = lotteryTicketHub.getStringValue(ticketsInHubKey)
+                WriteSet([
+                    DataEntry("winnerTicket", randomResult),
+                    DataEntry("winnerAddress", winnerAddress)
+                ])
+            else throw("these tickets didn't win")
+    }
 
 @Verifier(tx)
 func verify() = {
