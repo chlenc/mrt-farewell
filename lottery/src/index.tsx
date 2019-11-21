@@ -1,6 +1,6 @@
 import {h, render} from "preact";
-import Index from './layout';
-
+import App from './layout';
+import './styles.less';
 render(
-    <Index>Hello world</Index>, document.getElementById('container')!
+    <App/>, document.getElementById('container')!
 );
