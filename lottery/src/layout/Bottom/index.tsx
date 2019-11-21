@@ -4,7 +4,7 @@ import TextWithLines from '@src/Components/TextWithLines';
 import Tickets from '@src/layout/Bottom/Tickets';
 
 const Bottom: FunctionComponent = () => {
-    const tickets:any[] = [];
+    const tickets = [{id: 100}, {id: 101}, {id: 102}, {startId: 104, endId: 1002}];
     return <div className={styles.root}>
         {tickets.length === 0
             ? <NoTickets/>
