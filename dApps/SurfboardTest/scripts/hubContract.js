@@ -3,9 +3,10 @@ const getScriptHub = (MRTid) => `
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
 let ticketPrice = 3 #100.00 MRT,
-let MRTid = base58'${MRTid}'
+let MRTid = base58'8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ'
+
 func getTicketAmount() = {
-    match(this.getInteger("ticketAmount")) {
+    match(this.getInteger("ticketAmountTotal")) {
         case a : Int => a
         case _ => 0
     }
@@ -14,16 +15,19 @@ func getTicketAmount() = {
 @Callable(contextObj)
 func buyTicket(addresToLease: String) = {
     match(contextObj.payment) {
-        case p:AttachedPayment => if ((p.amount == ticketPrice) && (p.assetId == MRTid)) then
-            let ticketAmountNew = getTicketAmount() + 1
+        case p:AttachedPayment => if ((p.amount >= ticketPrice) && (p.assetId == MRTid)) then
+            let ticketsBuyingAmount = p.amount/ticketPrice
+            let ticketAmountTotalCurrent = getTicketAmount()
+            let ticketAmountTotalNew = ticketAmountTotalCurrent+ ticketsBuyingAmount
+            let ticketsFrom = toString(ticketAmountTotalCurrent+1)
+            let ticketsTo = toString(ticketAmountTotalCurrent+ticketsBuyingAmount)
             WriteSet([
-                DataEntry("ticket"+toString(ticketAmountNew), addresToLease),
-                DataEntry("ticketAmount", ticketAmountNew)
+                DataEntry("ticketsFrom"+ticketsFrom+"To"+ticketsTo, addresToLease),
+                DataEntry("ticketAmountTotal", ticketAmountTotalNew)
                 ])
         else throw("Incorrect amount or assetId in payment")
         case _ => throw("Payment not attached")}
-
-    }   
+    } 
 
 @Callable(contextObj)
 func addWinner(lottery: String) = {

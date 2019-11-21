@@ -3,10 +3,10 @@ const wvs = 10 ** 8;
 describe('MRT test', async function () {
 
     this.timeout(100000);
-    const addressHub = "3N2n8gAGHs7scFcgAGSg2jmWKjrmpiJRHRx"
-    const addressLottery = "3Mt2gEtUgX2Yi4oftjKefqXKkfj7a95aJ5w"
-    const seedHub = "abandon weasel mango cabin army audit hospital sock term screen hurt cycle pitch visa fault"
-    const seedLottery = "advice yard seminar hour cause work flush action elite famous can belt bunker hamster require"
+    const addressHub = "3MpVnebMwopWJBrpBsJSzWahFTBuuYQWVvq"
+    const addressLottery = "3ND2jUBQhw9x7djQrn7bi3X7WcCvwoEcNx1"
+    const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
+    const seedLottery = "ill enough elevator file ceiling try coral feed visit grief marine cancel traffic skate picnic"
     
     const player = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
     const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ"
@@ -19,14 +19,14 @@ describe('MRT test', async function () {
                 args: [{ type: "string", value:  toLeaseAddress  }],
                 function: 'buyTicket',
             },
-            payment: [{amount: 3,assetId: MRTid}],
+            payment: [{amount: 9,assetId: MRTid}],
             dApp: addressHub,
             fee: 900000,
             }    
-            const BuyTicketTx1 = invokeScript(params, player);
-            await broadcast(BuyTicketTx1);
-            await waitForTx(BuyTicketTx1.id);
-            console.log("successfully buy ticket 1")
+        const BuyTicketTx1 = invokeScript(params, player);
+        await broadcast(BuyTicketTx1);
+        await waitForTx(BuyTicketTx1.id);
+        console.log("successfully buy ticket 1")
 
         
         params = {
@@ -42,6 +42,20 @@ describe('MRT test', async function () {
         await broadcast(BuyTicketTx2);
         await waitForTx(BuyTicketTx2.id);
         console.log("successfully buy ticket 2")
+
+        params = {
+            call: {
+                args: [{ type: "string", value:  toLeaseAddress }],
+                function: 'buyTicket',
+            },
+            payment: [{amount: 3,assetId: MRTid}],
+            dApp: addressHub,
+            fee: 900000,
+            }    
+        const BuyTicketTx3 = invokeScript(params, player);
+        await broadcast(BuyTicketTx3);
+        await waitForTx(BuyTicketTx3.id);
+        console.log("successfully buy ticket 3")
 
         params = {
             call: {
@@ -73,7 +87,7 @@ describe('MRT test', async function () {
                 
         params = {
                 call: {
-                args: [],
+                args: [{ type: "string", value:  "ticketsFrom1To3" }],
                 function: 'defineTheWinner',
                 },
                 payment: [],
@@ -87,7 +101,7 @@ describe('MRT test', async function () {
 
         params = {
                 call: {
-                args: [{type: "string", value: addressLottery, }],
+                args: [{type: "string", value: addressLottery }],
                 function: 'addWinner',
                 },
                 payment: [],
@@ -113,5 +127,5 @@ describe('MRT test', async function () {
         console.log("leaseTx succsessfully sent")     
     });
 
-    
+ 
 });
