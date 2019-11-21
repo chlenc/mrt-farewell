@@ -1,0 +1,39 @@
+@import (reference) "../../../styles";
+
+.root {
+  & > * {
+    width: 100%;
+  }
+
+  & > :not(:first-child) {
+    margin-top: 40px;
+  }
+
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > .topInput {
+  }
+
+  & > .secondRow {
+    display: flex;
+    flex-direction: row;
+
+    & > :not(:first-child) {
+      margin-left: 32px;
+    }
+
+    & > .orText {
+      display: flex;
+      align-items: center;
+      .museo-font();
+    }
+  }
+
+  & > .thirdRow {
+
+  }
+}

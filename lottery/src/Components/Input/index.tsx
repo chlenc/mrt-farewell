@@ -4,10 +4,13 @@ import cn from 'classnames'
 
 export interface IInputProps {
     className?: string
+    placeholder?: string
 }
 
-const Input: FunctionComponent<IInputProps> = ({className}) => {
-    return <input class={cn(styles.root, className)} onInput={()=>{}}></input>
+const Input: FunctionComponent<IInputProps> = ({className, placeholder}) => {
+    return <input placeholder={placeholder}
+                  class={cn(styles.root, className)}
+                  onInput={()=>{}}/>
 };
 
 export default Input;

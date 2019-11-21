@@ -10,9 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "classnames": "^2.2.6",
+    "mobx": "^5.15.0",
+    "mobx-preact": "^3.0.0",
     "preact": "^10.0.5"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.9",
     "@waves/waveskeeper-types": "0.0.6",
     "autoprefixer": "^9.7.2",
     "clean-webpack-plugin": "^3.0.0",
