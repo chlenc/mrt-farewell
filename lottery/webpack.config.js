@@ -42,7 +42,10 @@ module.exports = (env, argv) => {
 
         resolve: {
             //Add '.ts' and '.tsx' as resolvable extensions.
-            extensions: ['.ts', '.tsx', '.js', '.json', '.jsx', '.css']
+            extensions: ['.ts', '.tsx', '.js', '.json', '.jsx', '.css'],
+            alias: {
+                '@src': path.resolve(__dirname, "./src"),
+            }
         },
         optimization: {
             minimize: true,
