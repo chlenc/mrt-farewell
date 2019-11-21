@@ -20,7 +20,8 @@ export default class BuyZone extends Component<{}, { isForm: boolean }> {
                 : <Fragment>
                     <TicketCount/>
                     <Button onClick={() => this.setState({isForm: true})}
-                            title="BUY TICKET FOR 25 MRT" type="big"/>
+                            className={styles.buyButton}
+                            title="BUY TICKET FOR 25 MRT" action/>
                 </Fragment>
             }
         </div>;

@@ -5,9 +5,9 @@ import Title from './Title';
 
 const Header: FunctionComponent = () => {
     return <div className={styles.root}>
-        <Button onClick={() => {}} title="FAQ" type="small"/>
+        <Button className={styles.button} onClick={() => {}} title="FAQ"/>
         <Title/>
-        <Button onClick={() => {}} title="Log in" type="small"/>
+        <Button className={styles.button} onClick={() => {}} title="Log in"/>
     </div>;
 };
 

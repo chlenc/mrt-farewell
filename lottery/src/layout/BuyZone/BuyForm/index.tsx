@@ -28,8 +28,9 @@ export default class BuyForm extends Component<IProps> {
                        className={styles.topInput}/>
             </div>
             <div class={styles.thirdRow}>
-                <ArrowLeft/>
-                <Button onClick={noop} title="BUY TICKETS" type="big"/>
+                <ArrowLeft onClick={onBack} className={styles.buttonSurrounding}/>
+                <Button className={styles.buyButton} onClick={noop} title="BUY TICKETS" action/>
+                <div class={styles.buttonSurrounding}/>
             </div>
         </div>;
     }
