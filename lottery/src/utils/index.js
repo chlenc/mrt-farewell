@@ -1,5 +1,3 @@
-export const checkSlash = (url) => url[url.length - 1] === '/' ? url : url + '/';
-
 export function getCurrentBrowser() {
     // Opera 8.0+
     const isOpera = (!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -41,19 +39,3 @@ export function getCurrentBrowser() {
 
     return '';
 };
-export const loadState = () => {
-    try {
-        const state = JSON.parse(localStorage.getItem('store'));
-        return state || undefined;
-
-    } catch (error) {
-        console.error(error);
-        return undefined;
-    }
-
-};
-
-export const saveState = (state) => {
-    localStorage.setItem('store', JSON.stringify(state));
-};
-
