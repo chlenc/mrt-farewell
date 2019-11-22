@@ -13,7 +13,9 @@
     "classnames": "^2.2.6",
     "mobx": "^5.15.0",
     "mobx-preact": "^3.0.0",
-    "preact": "^10.0.5"
+    "preact": "^10.0.5",
+    "rc-notification": "^3.3.1",
+    "react-perfect-scrollbar": "^1.5.3"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
@@ -22,6 +24,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.5",
     "css-loader": "^3.2.0",
+    "file-loader": "^4.3.0",
     "fork-ts-checker-webpack-plugin": "^3.1.0",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.10.3",
