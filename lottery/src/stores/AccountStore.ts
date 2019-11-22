@@ -1,6 +1,9 @@
-import { action, autorun, computed, observable, set } from 'mobx';
+import { action, autorun, computed, observable, reaction, runInAction, set } from 'mobx';
+import { nodeInteraction } from '@waves/waves-transactions';
 import { SubStore } from './SubStore';
 import { checkSlash, getCurrentBrowser } from '@src/utils';
+import { RootStore } from '@src/stores/RootStore';
+import { MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
 
 interface IWavesKeeperAccount {
     address: string
@@ -39,9 +42,30 @@ class AccountStore extends SubStore {
 
     @observable isWavesKeeperInitialized: boolean = false;
     @observable isWavesKeeperInstalled: boolean = false;
-
     @observable isApplicationAuthorizedInWavesKeeper: boolean = false;
 
+    @observable mrtBalance = 0;
+    @observable scripted = false;
+
+    private pollTimeout?: ReturnType<typeof setTimeout>;
+
+    constructor(rootStore: RootStore) {
+        super(rootStore);
+
+        reaction(() => this.wavesKeeperAccount, async (acc) => {
+            if (this.pollTimeout) {
+                clearTimeout(this.pollTimeout);
+                this.pollTimeout = undefined;
+            }
+            if (acc == null) {
+                this.mrtBalance = 0;
+                this.scripted =false;
+                return;
+            }
+            this.updateAccountInfo(acc.address);
+            this.pollTimeout = this.scheduleNextUpdate(acc.address);
+        });
+    }
 
     @computed
     get isBrowserSupportsWavesKeeper(): boolean {
@@ -127,6 +151,11 @@ class AccountStore extends SubStore {
         await window['WavesKeeper'].publicState().catch(e => this.rootStore.notificationStore.notify(e.message));
     };
 
+    logout = () => {
+        this.wavesKeeperAccount = undefined;
+        this.isWavesKeeperInitialized = false;
+    };
+
     subscribeToWavesKeeperUpdate() {
         window['WavesKeeper'].on('update', async (publicState: any) => {
             this.updateWavesKeeper(publicState).catch(e => {
@@ -136,6 +165,21 @@ class AccountStore extends SubStore {
         });
     }
 
+    updateAccountInfo = async (address: string) => {
+        const mrtBalance = await nodeInteraction.assetBalance(MRT_ASSET_ID, address, NODE_URL);
+        const scripted = (await nodeInteraction.scriptInfo(address, NODE_URL)).script != null;
+        runInAction(() => {
+            this.mrtBalance = mrtBalance;
+            this.scripted = scripted;
+        });
+    };
+
+    scheduleNextUpdate(address: string) {
+        return setTimeout(async () => {
+            await this.updateAccountInfo(address);
+            this.pollTimeout = this.scheduleNextUpdate(address);
+        }, POLL_INTERVAL * 1000);
+    }
 }
 
 export default AccountStore;

@@ -12,7 +12,7 @@ const Ticket = ({className, onClick, name}: IProps) => <div style={{cursor: onCl
                                                       onClick={onClick} className={cn(styles.ticket, className)}>
     {name && <div class={styles.text}>{name}</div>}
     <svg width="156" height="81" viewBox="0 0 156 81" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g filter="url(#filter0_d)">
+        <g >
             <path fill-rule="evenodd" clip-rule="evenodd"
                   d="M11 -0.000732422C5.47715 -0.000732422 1 4.47642 1 9.99927V23.4368C8.7665 23.4368 15.0625 29.7328 15.0625 37.4993C15.0625 45.2658 8.7665 51.5618 1 51.5618V64.9993C1 70.5221 5.47715 74.9993 11 74.9993H141C146.523 74.9993 151 70.5221 151 64.9993V51.5618C143.233 51.5618 136.938 45.2658 136.938 37.4993C136.938 29.7328 143.233 23.4368 151 23.4368V9.99927C151 4.47642 146.523 -0.000732422 141 -0.000732422H11Z"
                   fill="url(#paint0_linear)"/>

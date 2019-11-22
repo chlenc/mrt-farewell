@@ -17,10 +17,11 @@ interface IProps extends IInjectedProps {
 
 const _Header: FunctionComponent<IProps> = ({accountStore}) => {
 
-    const login = () => {
-        accountStore!.login();
-    };
+    const login = () => accountStore!.login();
+    const logout = () => accountStore!.logout();
+
     const account = accountStore!.wavesKeeperAccount;
+    const balance = accountStore!.mrtBalance;
     return <div className={styles.root}>
         <div class={styles.buttonWrapper}>
             <Button className={cn(styles.button)} onClick={() => {
@@ -31,8 +32,11 @@ const _Header: FunctionComponent<IProps> = ({accountStore}) => {
             ? <div class={styles.buttonWrapper}>
                 <div className={styles.account}>
                     <div className={styles.avatar}/>
-                    <div className={styles.address}>{account.address}</div>
-                    <div className={styles.icn}/>
+                    <div className={styles.addressBalance}>
+                        <div className={styles.address}>{account.address}</div>
+                        <div className={styles.balance}>Balance: {balance} MRT</div>
+                    </div>
+                    <div className={styles.icn} onClick={logout}/>
                 </div>
             </div>
             :

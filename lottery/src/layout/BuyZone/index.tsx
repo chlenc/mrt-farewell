@@ -5,13 +5,11 @@ import Button from '@src/Components/Button';
 import Input from '@src/Components/Input';
 import ArrowLeft from '@src/icons/ArrowLeft';
 import cn from 'classnames';
-
-
-const TOTAL_TICKETS = 1241;
-
-
-const TICKET_PRICE = 25;
-
+import {libs} from '@waves/waves-transactions';
+import { inject, observer } from "mobx-preact";
+import AccountStore from '@src/stores/AccountStore';
+import DappStore from '@src/stores/DappStore';
+import { TICKET_PRICE } from '@src/constants';
 
 interface IState {
     isForm: boolean
@@ -20,8 +18,14 @@ interface IState {
     ticketAmount?: number
     mrtAmount?: number
 }
+interface IProps {
+    accountStore?: AccountStore
+    dappStore?: DappStore
+}
 
-export default class BuyZone extends Component<{}, IState> {
+@inject('accountStore', 'dappStore')
+@observer
+export default class BuyZone extends Component<IProps, IState> {
     state: IState = {
         isForm: false,
         leaseAddress: ''
@@ -45,14 +49,25 @@ export default class BuyZone extends Component<{}, IState> {
         }
     };
 
-    handleBuy = () => {}; //todo: implement
+    handleBuy = () => {
+
+        this.props.dappStore!.buyTicket(this.state.leaseAddress, this.state.mrtAmount!);
+        this.setState({isForm: false})
+    }; //todo: implement
 
     render() {
-        const {ticketAmount, mrtAmount, leaseAddress, isForm} = this.state;
-        const isValidAddress = validateAddress(leaseAddress);
+        const {ticketAmount, mrtAmount, leaseAddress, isForm: _isForm} = this.state;
+        const { accountStore, dappStore } = this.props;
+        const isForm = _isForm && accountStore!.wavesKeeperAccount;
+        const chainId = accountStore!.wavesKeeperAccount && accountStore!.wavesKeeperAccount.networkCode;
+        const mrtBalance = accountStore!.mrtBalance;
+        const isInsufficientFunds = mrtBalance <( mrtAmount || 0);
+
+        const isValidAddress = validateAddress(leaseAddress, chainId || '1');
 
         return <div class={styles.root}>
-            <TicketCount className={cn(styles.count, {[styles.countShow]: !isForm})} totalTickets={TOTAL_TICKETS}/>
+            <TicketCount className={cn(styles.count, {[styles.countShow]: !isForm})}
+                         totalTickets={dappStore!.totalAmountSold}/>
             <div className={cn(styles.form, {[styles.formShow]: isForm})}>
                 <Input placeholder="Write address to which the lease will be sent"
                        onInput={this.handleAddressChange}
@@ -63,12 +78,14 @@ export default class BuyZone extends Component<{}, IState> {
 
                 <div class={styles.secondRow}>
                     <Input placeholder="Number of tickets"
+                           error={isInsufficientFunds}
                            type="number"
                            value={ticketAmount}
                            onInput={this.handleAmountChange('ticket')}
                            className={styles.topInput}/>
                     <div class={styles.orText}>or</div>
                     <Input placeholder="Amount in MRT"
+                           error={isInsufficientFunds}
                            type="number"
                            value={mrtAmount}
                            onInput={this.handleAmountChange('mrt')}
@@ -88,6 +105,7 @@ export default class BuyZone extends Component<{}, IState> {
                     </Fragment>
                     :
                     <Button onClick={() => this.setState({isForm: true})}
+                            disabled={accountStore!.wavesKeeperAccount == null}
                             className={styles.buyButton}
                             title="BUY TICKET FOR 25 MRT" action/>
                 }
@@ -96,4 +114,14 @@ export default class BuyZone extends Component<{}, IState> {
     }
 }
 
-const validateAddress = (a: string) => a.length > 10;
+const validateAddress = (a: string, chainId: string): boolean => {
+    try {
+        const bytes = libs.crypto.base58Decode(a);
+        const sum = bytes.slice(-4);
+        const raw = bytes.slice(0, -4);
+        const hash = libs.crypto.keccak(libs.crypto.blake2b(raw));
+        return bytes[1] === chainId.charCodeAt(0) && sum.toString() === hash.slice(0,4).toString()
+    }catch (e) {
+        return false
+    }
+}

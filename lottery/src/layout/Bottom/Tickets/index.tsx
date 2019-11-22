@@ -9,23 +9,23 @@ export type TTicket = {
 }
 
 export type TTicketRange = {
-    startId: number
+    id: number
     endId: number
 }
 
-const isTicketRange = (t: TTicket | TTicketRange): t is TTicketRange => 'startId' in t;
+const isTicketRange = (t: TTicket | TTicketRange): t is TTicketRange => 'endId' in t;
 
 interface IProps {
     data: (TTicket | TTicketRange)[]
 }
 
 const Tickets: FunctionalComponent<IProps> = ({data}) => {
-    const ticketCount = data.reduce((acc, item) => acc + (isTicketRange(item) ? item.startId : 1), 0);
+    const ticketCount = data.reduce((acc, item) => acc + (isTicketRange(item) ? item.id : 1), 0);
     return <div class={styles.root}>
         <TextWithLines className={styles.text} children={`Your tickets (${ticketCount}):`}/>
         <div class={styles.tickets}>
             {data.map(item => isTicketRange(item)
-                ? <TicketMany range={`${item.startId} - ${item.endId}`}/>
+                ? <TicketMany range={`${item.id} - ${item.endId}`}/>
                 : <Ticket name={item.id.toString()}/>)}
         </div>
     </div>;
