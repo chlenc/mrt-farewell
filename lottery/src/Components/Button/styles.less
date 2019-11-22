@@ -1,0 +1,42 @@
+@import (reference) "../../styles";
+
+.root {
+  cursor: pointer;
+  .museo-font();
+  height: 50px;
+  border-radius: 60px;
+  box-sizing: border-box;
+  border: 1px solid #7746F8;
+  background: transparent;
+
+  &:hover {
+    background: #6637E2;
+  }
+
+  &.action {
+    &.disabled {
+      cursor: unset;
+      background: #F44915;
+      box-shadow: none;
+      opacity: 0.5;
+    }
+    background: #FF5D2C;
+    box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.2);
+
+    &:hover:not(.disabled) {
+      background: #F44915;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+//.big {
+//  cursor: pointer;
+//
+//  .museo-font();
+//  width: 400px;
+//  height: 50px;
+//
+//
+//  border-radius: 60px;
+//}

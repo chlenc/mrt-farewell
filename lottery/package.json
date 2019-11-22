@@ -1,0 +1,42 @@
+{
+  "name": "lottery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.config.js --env",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@waves/waves-transactions": "^3.24.0",
+    "classnames": "^2.2.6",
+    "mobx": "^5.15.0",
+    "mobx-preact": "^3.0.0",
+    "preact": "^10.0.5",
+    "rc-notification": "^3.3.1",
+    "react-perfect-scrollbar": "^1.5.3"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.9",
+    "@waves/waveskeeper-types": "0.0.6",
+    "autoprefixer": "^9.7.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.5",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.3.0",
+    "fork-ts-checker-webpack-plugin": "^3.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "postcss-loader": "^3.0.0",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}
