@@ -99,7 +99,7 @@ export default class BuyZone extends Component<IProps, IState> {
                     <Fragment><ArrowLeft onClick={() => this.setState({isForm: false})}
                                          className={styles.buttonSurrounding}/>
                         <Button className={styles.buyButton} onClick={this.handleBuy}
-                                disabled={!(isValidAddress && ticketAmount && ticketAmount > 0)} title="BUY TICKETS"
+                                disabled={!isValidAddress || !ticketAmount || ticketAmount <= 0 || isInsufficientFunds} title="BUY TICKETS"
                                 action/>
                         <div class={styles.buttonSurrounding}/>
                     </Fragment>

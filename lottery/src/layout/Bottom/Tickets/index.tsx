@@ -20,7 +20,7 @@ interface IProps {
 }
 
 const Tickets: FunctionalComponent<IProps> = ({data}) => {
-    const ticketCount = data.reduce((acc, item) => acc + (isTicketRange(item) ? item.id : 1), 0);
+    const ticketCount = data.reduce((acc, item) => acc + (isTicketRange(item) ? item.endId - item.id + 1 : 1), 0);
     return <div class={styles.root}>
         <TextWithLines className={styles.text} children={`Your tickets (${ticketCount}):`}/>
         <div class={styles.tickets}>

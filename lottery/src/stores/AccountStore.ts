@@ -39,18 +39,19 @@ class AccountStore extends SubStore {
     constructor(rootStore: RootStore) {
         super(rootStore);
 
-        reaction(() => this.wavesKeeperAccount, async (acc) => {
+        reaction(() => this.wavesKeeperAccount && this.wavesKeeperAccount.address, async (address) => {
+            console.log('reacted')
             if (this.pollTimeout) {
                 clearTimeout(this.pollTimeout);
                 this.pollTimeout = undefined;
             }
-            if (acc == null) {
+            if (address == null) {
                 this.mrtBalance = 0;
                 this.scripted =false;
                 return;
             }
-            this.updateAccountInfo(acc.address);
-            this.pollTimeout = this.scheduleNextUpdate(acc.address);
+            this.updateAccountInfo(address);
+            this.pollTimeout = this.scheduleNextUpdate(address);
         });
     }
 
