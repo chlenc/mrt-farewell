@@ -1,3 +1,4 @@
+@import "vars";
 
 .desktop, .tablet, .mobile {
   width: 100%;
@@ -12,6 +13,7 @@
   .mobile, .tablet {
     display: none;
   }
+
 }
 
 
@@ -27,6 +29,22 @@
     width: 100vw;
   }
 
+  .button-content {
+    background: linear-gradient(315deg, #532BF2 -0.41%, #7B5AFF 100%);
+    border: 1px solid transparent;
+    transform: scale(1.25);
+    width: @button-tablet-side;
+    height: @button-tablet-side;
+
+    & .arrow {
+      transform: rotate(180deg);
+      left: -2px;
+      bottom: -2px;
+      width: @arrow-tablet-side;
+      height: @arrow-tablet-side;
+    }
+  }
+
 }
 
 @media (max-width: 760px) and (min-width: 320px) {
@@ -37,6 +55,7 @@
   .mobile, .desktop {
     display: none;
   }
+
 }
 
 @media (max-width: 320px) {
