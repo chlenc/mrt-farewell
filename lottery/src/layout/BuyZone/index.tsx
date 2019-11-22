@@ -107,7 +107,7 @@ export default class BuyZone extends Component<IProps, IState> {
                     <Button onClick={() => this.setState({isForm: true})}
                             disabled={accountStore!.wavesKeeperAccount == null}
                             className={styles.buyButton}
-                            title="BUY TICKET FOR 25 MRT" action/>
+                            title={`BUY TICKET FOR ${TICKET_PRICE} MRT`} action/>
                 }
             </div>
         </div>;
