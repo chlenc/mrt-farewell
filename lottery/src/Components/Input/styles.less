@@ -1,0 +1,27 @@
+@import "../../styles.less";
+.root {
+
+
+  height: 50px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.2);
+  border: 2px solid transparent;
+  border-radius: 60px;
+
+  &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    .museo-font();
+    opacity: 0.5; /* Firefox */
+  }
+
+  &:focus{
+    border: 2px solid #7746F8;
+    outline: none;
+  }
+
+  &.error {
+    border: 2px solid #F44915;
+  }
+
+  .museo-font();
+}
