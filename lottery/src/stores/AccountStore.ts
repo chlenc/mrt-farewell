@@ -1,7 +1,6 @@
 import { action, autorun, computed, observable, set } from 'mobx';
 import { SubStore } from './SubStore';
 import { checkSlash, getCurrentBrowser } from '@src/utils';
-import { base58Decode } from '@waves/ts-lib-crypto'
 
 interface IWavesKeeperAccount {
     address: string

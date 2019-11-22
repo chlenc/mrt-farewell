@@ -4,7 +4,11 @@ import TextWithLines from '@src/Components/TextWithLines';
 import Tickets from '@src/layout/Bottom/Tickets';
 
 const Bottom: FunctionComponent = () => {
-    const tickets = [{id: 100}, {id: 101}, {id: 102}, {startId: 104, endId: 1002}];
+    const tickets = [{id: 100}, {id: 101}, {id: 102}, {startId: 12204, endId: 10202},{id: 100},
+        {id: 101}, {id: 102}, {startId: 12204, endId: 10202},{id: 100}, {id: 101},
+        {id: 102}, {startId: 12204, endId: 10202},{id: 100}, {id: 101}, {id: 102}, {startId: 12204, endId: 10202},
+        {id: 100}, {id: 101}, {id: 102}, {startId: 12204, endId: 10202},{id: 100}, {id: 101}, {id: 102}, {startId: 12204, endId: 10202}
+        ];
     return <div className={styles.root}>
         {tickets.length === 0
             ? <NoTickets/>
