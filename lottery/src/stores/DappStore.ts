@@ -57,10 +57,7 @@ class DappStore extends SubStore {
             payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount}]
         };
 
-        const tx: any = {
-            type: 16,
-            data: transactionData
-        };
+        const tx: any = {type: 16, data: transactionData};
 
         window['WavesKeeper'].signAndPublishTransaction(tx).then((tx: any) => {
 
