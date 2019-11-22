@@ -22,9 +22,11 @@ interface IProps {
 const Tickets: FunctionalComponent<IProps> = ({data}) => {
     const ticketCount = data.reduce((acc, item) => acc + (isTicketRange(item) ? item.startId : 1), 0);
     return <div class={styles.root}>
-        <TextWithLines children={`Your tickets ${ticketCount}`}/>
+        <TextWithLines className={styles.text} children={`Your tickets (${ticketCount}):`}/>
         <div class={styles.tickets}>
-            {data.map(item => isTicketRange(item) ? <TicketMany/> : <Ticket/>)}
+            {data.map(item => isTicketRange(item)
+                ? <TicketMany range={`${item.startId} - ${item.endId}`}/>
+                : <Ticket name={item.id.toString()}/>)}
         </div>
     </div>;
 };

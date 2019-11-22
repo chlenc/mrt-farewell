@@ -1,12 +1,16 @@
 import { FunctionComponent, h } from 'preact';
+import styles from '@src/icons/styles.less';
+import cn from 'classnames';
 
 interface IProps {
     className?: string
     onClick?: () => void
+    name?: string
 }
 
-const Ticket = ({className, onClick}: IProps) => <div style={{cursor: onClick ? 'pointer' : 'inherit'}}
-                                                      onClick={onClick} className={className}>
+const Ticket = ({className, onClick, name}: IProps) => <div style={{cursor: onClick ? 'pointer' : 'inherit'}}
+                                                      onClick={onClick} className={cn(styles.ticket, className)}>
+    {name && <div class={styles.text}>{name}</div>}
     <svg width="156" height="81" viewBox="0 0 156 81" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g filter="url(#filter0_d)">
             <path fill-rule="evenodd" clip-rule="evenodd"

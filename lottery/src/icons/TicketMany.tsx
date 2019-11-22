@@ -1,13 +1,18 @@
 import { FunctionComponent, h } from 'preact';
+import styles from './styles.less';
+import cn from 'classnames';
 
 interface IProps {
     className?: string
     onClick?: () => void
+    range?: string
 }
 
-const TicketMany = ({className, onClick}: IProps) => <div style={{cursor: onClick ? 'pointer' : 'inherit'}}
-                                                      onClick={onClick} className={className}>
-    <svg width="176" height="131" viewBox="0 0 176 131" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+const TicketMany = ({className, onClick, range}: IProps) => <div style={{cursor: onClick ? 'pointer' : 'inherit'}}
+                                                      onClick={onClick} className={cn(styles.ticket, className)}>
+    {range && <div class={styles.text}>{range}</div>}
+    <svg style={{position: 'relative', top: '-4px'}} width="176" height="131" viewBox="0 0 176 131" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M12.1355 57.6778C7.09008 59.9241 4.82102 65.8352 7.06737 70.8806L12.5329 83.1563C19.6279 79.9974 27.9404 83.1883 31.0994 90.2833C34.2583 97.3784 31.0674 105.691 23.9724 108.85L29.4379 121.126C31.6842 126.171 37.5953 128.44 42.6407 126.194L161.402 73.3179C166.447 71.0716 168.716 65.1605 166.47 60.1151L161.004 47.8393C153.909 50.9982 145.597 47.8074 142.438 40.7123C139.279 33.6173 142.47 25.3048 149.565 22.1458L144.099 9.87008C141.853 4.8247 135.942 2.55564 130.896 4.80199L12.1355 57.6778Z" fill="url(#paint0_linear)"/>
         <g filter="url(#filter0_d)">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M14.95 47.3672C9.64112 48.8895 6.57147 54.4272 8.09378 59.7362L11.7977 72.6531C19.2633 70.5124 27.0508 74.8291 29.1915 82.2947C31.3323 89.7603 27.0156 97.5479 19.55 99.6886L23.2538 112.606C24.7761 117.914 30.3139 120.984 35.6228 119.462L160.587 83.6289C165.896 82.1066 168.965 76.5688 167.443 71.2599L163.739 58.343C156.274 60.4837 148.486 56.167 146.345 48.7014C144.205 41.2358 148.521 33.4482 155.987 31.3075L152.283 18.3905C150.761 13.0816 145.223 10.012 139.914 11.5343L14.95 47.3672Z" fill="url(#paint1_linear)"/>
