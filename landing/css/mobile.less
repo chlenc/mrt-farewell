@@ -1,0 +1,55 @@
+@import (reference) "./vars.less";
+
+.mobile_rhombus_border {
+
+  &-leftBottom {
+    background-image: linear-gradient(90deg, @rhombus-color, rgba(255, 255, 255, 0.1), @rhombus-color);
+    position: absolute;
+    top: 78vw;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: rotate(-15deg);
+  }
+
+  &-rightBottom {
+    background-image: linear-gradient(0deg, @rhombus-color, rgba(255, 255, 255, 0.1), @rhombus-color);
+    position: absolute;
+    left: 78vw;
+    bottom: 0;
+    height: 100%;
+    width: 2px;
+    transform: rotate(15deg);
+  }
+}
+
+.mobile_btn {
+  transform: rotate(45deg);
+}
+
+.mobile_bg_container {
+  position: relative;
+  box-sizing: border-box;
+  transform: rotate(30deg);
+  overflow: hidden;
+  height: @crop-size;
+  background-color: aquamarine;
+  & .image {
+    display: flex;
+    transform: rotate(-30deg);
+    width: 100%;
+    height: auto;
+    position: relative;
+
+    //100vw = w * cos(a) - h * sin(a)
+    //where
+    // w - width of image
+    // h - height of image
+
+    &.fomo__image {
+      background-repeat: no-repeat;
+      background-image: url("../assets/img/fomo bg.jpg");
+    }
+
+  }
+}
