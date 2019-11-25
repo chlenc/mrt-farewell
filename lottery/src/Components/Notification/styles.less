@@ -1,0 +1,89 @@
+
+@error-notification-icon-url: url("../../assets/icons/err.svg") center no-repeat;
+@success-notification-icon-url: url("../../assets/icons/succ.svg") center no-repeat;
+@warning-notification-icon-url: url("../../assets/icons/warning.svg") center no-repeat;
+@info-notification-icon-url: url("../../assets/icons/info.svg") center no-repeat;
+
+.text-font {
+  font-family: Roboto;
+  font-size: 14px;
+  color: #6F7582;
+}
+
+.title-font {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.13;
+  color: #000000;
+}
+
+.root {
+  padding: 18px 25px 16px 25px;
+  display: flex;
+  width: 400px;
+  height: fit-content;
+  align-items: center;
+  .text-font();
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 4;
+    word-wrap: break-word;
+    width: 80%;
+
+    .content {
+      max-height: 30vh;
+    }
+
+    .title {
+      .title-font();
+      padding-bottom: 12px;
+    }
+
+  }
+}
+
+.icon {
+  margin-right: 16px;
+  flex: 1
+}
+
+.errorIcn {
+  width: 58px;
+  height: 58px;
+  background: @error-notification-icon-url;
+}
+
+.successIcn {
+  width: 38px;
+  height: 38px;;
+  background: @success-notification-icon-url;
+}
+
+.warningIcn {
+  width: 41px;
+  height: 36px;
+  background: @warning-notification-icon-url;
+}
+
+.infoIcn {
+  width: 38px;
+  height: 38px;
+  background: @info-notification-icon-url;
+}
+
+:global {
+  .rc-notification {
+    right: 30px !important;
+    top: unset !important;
+    bottom: 65px !important;
+    left: unset !important;
+  }
+
+  .rc-notification-notice {
+    background: #fff !important;
+  }
+}

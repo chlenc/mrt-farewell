@@ -1,9 +1,8 @@
-import { h, Component, Fragment } from 'preact';
+import { Component, h } from 'preact';
 import styles from './styles.less';
 import TicketCount from './TicketCount';
 import Button from '@src/Components/Button';
 import Input from '@src/Components/Input';
-import ArrowLeft from '@src/icons/ArrowLeft';
 import cn from 'classnames';
 // import { libs } from '@waves/waves-transactions';
 import { inject, observer } from "mobx-preact";
@@ -45,8 +44,8 @@ export default class BuyZone extends Component<IProps, IState> {
     //     }
     // };
 
-    handleBuy = (amount: number, address: string) => {
-        this.props.dappStore!.buyTicket(address, amount);
+    handleBuy = (amount: number) => {
+        this.props.dappStore!.buyTicket(amount * TICKET_PRICE);
     }; //todo: implement
 
     render() {
@@ -66,10 +65,11 @@ export default class BuyZone extends Component<IProps, IState> {
                    value={this.state.ticketAmount}
                    error={isInsufficientFunds && this.state.ticketAmount !== undefined}
                    onInput={(e) => this.setState({ticketAmount: e.target.value && +e.target.value})}/>
-            <Button onClick={() => this.handleBuy(ticketAmount || 0, address || '')}
+            <Button onClick={() => this.handleBuy(ticketAmount || 0)}
                     disabled={accountStore!.wavesKeeperAccount == null || isInsufficientFunds || !ticketAmount}
                     className={styles.button}
-                    title={`BUY TICKETS FOR ${TICKET_PRICE} MRT`} action/>
+                    title={`BUY TICKETS${ticketAmount ? ` FOR ${(ticketAmount || 1) * TICKET_PRICE} MRT` : ''}`}
+                    action/>
         </div>;
     }
 }

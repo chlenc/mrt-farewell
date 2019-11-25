@@ -45,6 +45,9 @@ module.exports = (env, argv) => {
             extensions: ['.ts', '.tsx', '.js', '.json', '.jsx', '.css'],
             alias: {
                 '@src': path.resolve(__dirname, "./src"),
+                // 'react': 'preact-compat',
+                // 'react-dom': 'preact-compat',
+
             }
         },
         optimization: {

@@ -1,8 +1,8 @@
 import { SubStore } from './SubStore';
-import { data, IDataEntry, nodeInteraction } from '@waves/waves-transactions';
+import { IDataEntry, nodeInteraction } from '@waves/waves-transactions';
 import { computed, observable, runInAction } from 'mobx';
 import { RootStore } from '@src/stores/RootStore';
-import { MRT_ASSET_ID, DAPP, NODE_URL, POLL_INTERVAL } from '@src/constants';
+import { DAPP, MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
 
 const {accountData} = nodeInteraction;
 
@@ -28,7 +28,7 @@ class DappStore extends SubStore {
         const currentAccount = this.rootStore.accountStore.wavesKeeperAccount!;
         if (currentAccount == null) return [];
         return this.dappData
-            .filter(data => data.key.includes(currentAccount.address))
+            .filter(data => data.key.includes('ticketsFrom') &&  data.value === currentAccount.address)
             .map(data => {
                 const [start, end] = data.key.split('_')[0]
                     .replace('ticketsFrom', '').split('To');
@@ -38,7 +38,7 @@ class DappStore extends SubStore {
             });
     }
 
-    buyTicket = (address: string, mrtAmount: number) => {
+    buyTicket = ( mrtAmount: number) => {
 
         const {accountStore} = this.rootStore;
 
@@ -51,18 +51,17 @@ class DappStore extends SubStore {
             dApp: DAPP,
             call: {
                 function: 'buyTicket',
-                args: [{type: 'string', value: address}]
+                args: []
             },
             fee: {tokens: this.rootStore.accountStore.scripted ? '0.009' : '0.005', assetId: 'WAVES'},
             payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount}]
         };
 
         const tx: any = {type: 16, data: transactionData};
-
+console.log(tx)
         window['WavesKeeper'].signAndPublishTransaction(tx).then((tx: any) => {
 
             const transaction = JSON.parse(tx);
-            const {network} = accountStore.wavesKeeperAccount!;
             console.log(transaction);
             this.rootStore.notificationStore
                 .notify(`Transaction sent: ${transaction.id}\n`,
