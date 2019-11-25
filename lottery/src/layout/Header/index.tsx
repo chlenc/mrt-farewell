@@ -6,6 +6,7 @@ import { inject, observer } from "mobx-preact";
 import { RootStore } from "@src/stores";
 import AccountStore from "@src/stores/AccountStore";
 import cn from 'classnames';
+import Avatar from '@src/Components/Avatar';
 
 interface IInjectedProps {
     accountStore?: AccountStore
@@ -31,7 +32,7 @@ const _Header: FunctionComponent<IProps> = ({accountStore}) => {
         {account
             ? <div class={styles.buttonWrapper}>
                 <div className={styles.account}>
-                    <div className={styles.avatar}/>
+                    <Avatar size={20} address={account.address}/>
                     <div className={styles.addressBalance}>
                         <div className={styles.address}>{account.address}</div>
                         <div className={styles.balance}>Balance: {balance} MRT</div>

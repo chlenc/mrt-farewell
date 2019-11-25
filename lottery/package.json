@@ -12,6 +12,7 @@
   "dependencies": {
     "@waves/waves-transactions": "^3.24.0",
     "classnames": "^2.2.6",
+    "identity-img": "^2.0.0",
     "mobx": "^5.15.0",
     "mobx-preact": "^3.0.0",
     "preact": "^10.0.5",
