@@ -3,10 +3,10 @@ const wvs = 10 ** 8;
 describe('MRT test', async function () {
 
     this.timeout(100000);
-    const addressHub = "3NB16Vhiy3Y4eerrABvzUBxbNj5AnAgdzTP"
-    const addressLottery = "3NAbJghaLDsA2GQQjttBqYGKeBH2CJoNGjH"
+    const addressHub = "3MpgxP1FUAwJjUtxkUF7os4pTb57g3FtnrM"
+    const addressLottery = "3Mwgt9yXmLTx9L6D2jA5xXwMM4wNaMjBcmV"
     const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
-    const seedLottery = "bracket shiver erase egg depart gap pride derive before genre fire bullet pistol annual sun"
+    const seedLottery = "perfect cement town awesome obtain jelly round insane mystery gas actor brand trouble nerve change"
     
     const player = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
     const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ"
