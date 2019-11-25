@@ -6,7 +6,7 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (env, argv) => {
 
@@ -49,9 +49,7 @@ module.exports = (env, argv) => {
         },
         optimization: {
             minimize: true,
-            minimizer: [
-
-            ]
+            minimizer: [new TerserPlugin()],
         },
 
         module: {

@@ -40,7 +40,6 @@ class AccountStore extends SubStore {
         super(rootStore);
 
         reaction(() => this.wavesKeeperAccount && this.wavesKeeperAccount.address, async (address) => {
-            console.log('reacted')
             if (this.pollTimeout) {
                 clearTimeout(this.pollTimeout);
                 this.pollTimeout = undefined;

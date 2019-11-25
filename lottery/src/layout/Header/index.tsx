@@ -6,16 +6,23 @@ import { inject, observer } from "mobx-preact";
 import { RootStore } from "@src/stores";
 import AccountStore from "@src/stores/AccountStore";
 import cn from 'classnames';
+import Avatar from '@src/Components/Avatar';
+import FAQ from '@src/layout/FAQ';
+import { observable } from 'mobx';
+import ModalStore from '@src/stores/ModalStore';
 
 interface IInjectedProps {
     accountStore?: AccountStore
+    modalStore?: ModalStore
 }
 
 interface IProps extends IInjectedProps {
 
 }
 
-const _Header: FunctionComponent<IProps> = ({accountStore}) => {
+let isFaq = observable.box(true);
+
+const _Header: FunctionComponent<IProps> = ({accountStore, modalStore}) => {
 
     const login = () => accountStore!.login();
     const logout = () => accountStore!.logout();
@@ -23,15 +30,15 @@ const _Header: FunctionComponent<IProps> = ({accountStore}) => {
     const account = accountStore!.wavesKeeperAccount;
     const balance = accountStore!.mrtBalance;
     return <div className={styles.root}>
+
         <div class={styles.buttonWrapper}>
-            <Button className={cn(styles.button)} onClick={() => {
-            }} title="FAQ"/>
+            <Button className={cn(styles.button)} onClick={() => modalStore!.modal = 'faq'} title="FAQ"/>
         </div>
         <Title/>
         {account
             ? <div class={styles.buttonWrapper}>
                 <div className={styles.account}>
-                    <div className={styles.avatar}/>
+                    <Avatar size={20} address={account.address}/>
                     <div className={styles.addressBalance}>
                         <div className={styles.address}>{account.address}</div>
                         <div className={styles.balance}>Balance: {balance} MRT</div>
@@ -47,6 +54,6 @@ const _Header: FunctionComponent<IProps> = ({accountStore}) => {
     </div>;
 };
 
-const Header = inject((stores: RootStore) => ({accountStore: stores.accountStore}))(observer(_Header));
+const Header = inject('accountStore', 'modalStore')(observer(_Header));
 
 export default Header;
