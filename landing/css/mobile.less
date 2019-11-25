@@ -1,5 +1,51 @@
 @import (reference) "./vars.less";
 
+@mobile_bg_image_height: 60vw;
+@alpha: 25deg;
+@mobile_bg_image_width: calc((102vw + @mobile_bg_image_height * sin(@alpha)) / cos(@alpha));
+
+
+.big_rhombus_mobile_root {
+  .big_rhombus_tablet_body_title {
+    width: 60vw;
+  }
+}
+
+
+.big_rhombus_tablet_fomo_root {
+
+  .fomo_block {
+    & > * {
+    }
+
+    & > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .big_rhombus_tablet_body {
+    top: -5vw;
+    left: -5vw;
+
+  }
+
+  top: 30vw !important;
+}
+
+.big_rhombus_tablet_lottery_root {
+  top: 100vw !important;
+
+  .big_rhombus_tablet_body{
+    top: -10vw;
+    left: -10vw;
+  }
+
+
+  .lottery_text_img{
+    width: 70vw !important;
+  }
+}
+
 .mobile_rhombus_border {
 
   &-leftBottom {
@@ -27,28 +73,57 @@
   transform: rotate(45deg);
 }
 
-.mobile_bg_container {
+.mobile_bg_fomo_container {
   position: relative;
   box-sizing: border-box;
-  transform: rotate(30deg);
+  transform: rotate(@alpha);
   overflow: hidden;
-  height: @crop-size;
-  background-color: aquamarine;
+  height: @mobile_bg_image_height;
+  width: @mobile_bg_image_width;
+  left: -20vw;
+  top: 5vw;
+
   & .image {
     display: flex;
-    transform: rotate(-30deg);
-    width: 100%;
-    height: auto;
+    transform: rotate(-@alpha);
     position: relative;
+    top: -30vw;
 
-    //100vw = w * cos(a) - h * sin(a)
-    //where
-    // w - width of image
-    // h - height of image
-
-    &.fomo__image {
+    &, .fomo__image {
       background-repeat: no-repeat;
+      background-position-x: -10vw;
+      background-position-y: -20vw;
+      height: 150vw;
+      background-size: cover;
       background-image: url("../assets/img/fomo bg.jpg");
+    }
+
+  }
+}
+
+.mobile_bg_lottery_container {
+  position: relative;
+  box-sizing: border-box;
+  transform: rotate(-@alpha);
+  overflow: hidden;
+  height: @mobile_bg_image_height;
+  width: @mobile_bg_image_width;
+  top: 60vw;
+  left: -20vw;
+
+  & .image {
+    display: flex;
+    transform: rotate(@alpha);
+    position: relative;
+    top: -30vw;
+
+    &, .lottery__image {
+      background-repeat: no-repeat;
+      background-position-x: -10vw;
+      background-position-y: -20vw;
+      height: 150vw;
+      background-size: cover;
+      background-image: url("../assets/img/lottery bg.jpg");
     }
 
   }

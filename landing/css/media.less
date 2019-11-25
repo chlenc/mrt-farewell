@@ -58,14 +58,40 @@
 
 }
 
-@media (max-width: 320px) {
+
+@btnSize: 10vw;
+@media (max-width: 380px) {
   .mobile {
     display: block;
   }
 
 
+  .button-content {
+    position: relative;
+    width: @btnSize;
+    height: @btnSize;
+    top: 7vw;
+    left: 7vw;
+    & .arrow {
+      transform: rotate(180deg);
+      left: -2px;
+      bottom: -2px;
+      width: @btnSize  / 2.5;
+      height: @btnSize  / 2.5;
+    }
+  }
+
   .tablet, .desktop {
     display: none;
   }
+
+  .big_rhombus_tablet_root {
+    top: -20vw;
+  }
+
+  .big_rhombus_tablet > .big_rhombus_tablet_body {
+    justify-content: center;
+  }
+
 }
 
