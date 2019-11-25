@@ -10,11 +10,13 @@ export interface IInputProps {
     onInput: (e: any) => void
     type?: 'number'
     value?: string | number
+    disabled?: boolean
 }
 
-const Input: FunctionComponent<IInputProps> = ({className, placeholder, error, type, value, onInput}) => {
+const Input: FunctionComponent<IInputProps> = ({className, placeholder, error, type, value, onInput, disabled}) => {
     return <input placeholder={placeholder}
                   spellcheck={false}
+                  disabled={disabled}
                   type={type}
                   value={value}
                   class={cn(styles.root, className, {[styles.error]: error})}

@@ -9,62 +9,11 @@
   justify-content: center;
   position: relative;
 
-  & > .count {
-    opacity: 0;
-    transition: opacity @duration;
-    &.countShow{
-      opacity: 1;
-    }
-  }
-  & > .form {
-    position: absolute;
-    top: -1000px;
-    transition: top @duration;
-
-    &.formShow{
-      top: 0px;
-    }
-    & > * {
-      width: 100%;
-    }
-
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    & > .secondRow {
-      margin-top: 40px;
-      display: flex;
-      flex-direction: row;
-
-      & > :not(:first-child) {
-        margin-left: 32px;
-      }
-
-      & > .orText {
-        display: flex;
-        align-items: center;
-        .museo-font();
-      }
-    }
-
-  }
-
-  & > .buttonContainer {
-    width: 500px;
-    margin-top: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    & > .buttonSurrounding {
-      display: flex;
-      justify-content: center;
-      flex: 1;
-    }
-    &  > .buyButton {
-      width: 300px;
+  .input, .button {
+    width: 100%;
+    max-width: 300px;
+    &:last-child {
+      margin-top: 1vh;
     }
   }
 }
