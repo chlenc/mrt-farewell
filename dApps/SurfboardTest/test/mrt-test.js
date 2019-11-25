@@ -3,10 +3,10 @@ const wvs = 10 ** 8;
 describe('MRT test', async function () {
 
     this.timeout(100000);
-    const addressHub = "3N19PKpzfkdFgg3woWcvrepyAHUb6MPHhJs"
-    const addressLottery = "3N6GvXTastqBbeV9SnCfs8LJ1P1NuAKTAKi"
+    const addressHub = "3NB16Vhiy3Y4eerrABvzUBxbNj5AnAgdzTP"
+    const addressLottery = "3NAbJghaLDsA2GQQjttBqYGKeBH2CJoNGjH"
     const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
-    const seedLottery = "vote close vast accident forum museum sword antenna oppose hurt caught shield behind pizza borrow"
+    const seedLottery = "bracket shiver erase egg depart gap pride derive before genre fire bullet pistol annual sun"
     
     const player = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
     const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ"
@@ -67,8 +67,8 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const registerRandomRequestTx = invokeScript(params, seedLottery);
-        //await broadcast(registerRandomRequestTx);
-        //await waitForTx(registerRandomRequestTx.id);
+        await broadcast(registerRandomRequestTx);
+        await waitForTx(registerRandomRequestTx.id);
         console.log("successfully register tx which invoke randomizer")
 
         params = {
