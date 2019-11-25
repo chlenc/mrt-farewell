@@ -21,7 +21,7 @@ func buyTicket(addresToLease: String) = {
             let ticketsFrom = toString(ticketAmountTotalCurrent+1)
             let ticketsTo = toString(ticketAmountTotalCurrent+ticketsBuyingAmount)
             WriteSet([
-                DataEntry("ticketsFrom"+ticketsFrom+"To"+ticketsTo, addresToLease),
+                DataEntry("ticketsFrom"+ticketsFrom+"To"+ticketsTo+"_"+toString(contextObj.caller), addresToLease),
                 DataEntry("ticketAmountTotal", ticketAmountTotalNew)
                 ])
         else throw("Incorrect amount or assetId in payment")

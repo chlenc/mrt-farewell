@@ -20,7 +20,7 @@ func registerRandomRequestTx(randomRequestTx: String) ={
         if contextObj.caller ==  addressFromString(lotteryOwner) then
             WriteSet([DataEntry("randomRequestTx", randomRequestTx)])
         else
-            throw("only owner can start the lottery")   
+            throw("only loteryOwner can start the lottery")   
 }
 
 @Callable(contextObj)
@@ -34,48 +34,43 @@ func checkRandom() = {
             DataEntry("randomResult", parseIntValue(randomResult))
         ])
     else throw("Incorrect random result")
-    } 
+}
 
 
-    @Callable(contextObj)
-    func defineTheWinner(ticketsInHubKey: String) = {
-        let randomResult = this.getIntegerValue("randomResult")
-        if lotteryTicketHub.getInteger("winningTicket" +  toString(randomResult)).isDefined() then
-            let ticketAmount = lotteryTicketHub.getIntegerValue("ticketAmount")
-            let randomResultUpdate = if ((randomResult) == ticketAmount ) then 1 else randomResult +1
+@Callable(contextObj)
+func defineTheWinner(ticketsInHubKey: String) = {
+    let randomResult = this.getIntegerValue("randomResult")
+    if lotteryTicketHub.getInteger("winningTicket" +  toString(randomResult)).isDefined() then
+        let ticketAmount = lotteryTicketHub.getIntegerValue("ticketAmount")
+        let randomResultUpdate = if ((randomResult) == ticketAmount ) then 1 else randomResult +1
+        WriteSet([
+            DataEntry("randomResult", randomResultUpdate)
+        ])
+    else
+        let ticketFrom = parseIntValue(ticketsInHubKey.split("To")[0].split("ticketsFrom")[1])
+        let ticketTo= parseIntValue(ticketsInHubKey.split("To")[1])
+        if ( randomResult>=ticketFrom && randomResult<=ticketTo) then
+            let winnerAddress = lotteryTicketHub.getStringValue(ticketsInHubKey)
             WriteSet([
-                DataEntry("randomResult", randomResultUpdate)
+                DataEntry("winnerTicket", randomResult),
+                DataEntry("winnerAddress", winnerAddress),
+                DataEntry("winHeight", height)
             ])
-        else
-            let ticketFrom = parseIntValue(ticketsInHubKey.split("To")[0].split("ticketsFrom")[1])
-            let ticketTo= parseIntValue(ticketsInHubKey.split("To")[1])
-            if ( randomResult>=ticketFrom && randomResult<=ticketTo) then
-                let winnerAddress = lotteryTicketHub.getStringValue(ticketsInHubKey)
-                WriteSet([
-                    DataEntry("winnerTicket", randomResult),
-                    DataEntry("winnerAddress", winnerAddress)
-                ])
-            else throw("these tickets didn't win")
-    }
+        else throw("these tickets didn't win")
+}
 
-@Verifier(tx)
-func verify() = {
-    let heightStartLease = 1
-    let heightEndLease = 1000000000000
-    match(tx)  {
-        case l:LeaseTransaction => 
-            height>heightStartLease &&
-            height<heightEndLease &&
-            this.getString("winnerAddress").isDefined() &&
-            l.recipient == addressFromString(this.getStringValue("winnerAddress"))
-        case lc:LeaseCancelTransaction => 
-            height>heightEndLease &&
-            sigVerify(tx.bodyBytes,tx.proofs[0],ownerPubKey)
-        case t:TransferTransaction => 
-            height>heightEndLease &&
-            sigVerify(tx.bodyBytes,tx.proofs[0],ownerPubKey) 
-        case _ => sigVerify(tx.bodyBytes,tx.proofs[0],ownerPubKey)  #!false!
-    }
+@Callable(contextObj)
+func withdraw() = {
+    let winnerAddress = addressFromStringValue(this.getStringValue("winnerAddress"))
+    let winHeight = this.getIntegerValue("winHeight")
+    let ownerAddress = addressFromPublicKey(ownerPubKey)
+    let month = 43200
+    if (contextObj.caller == winnerAddress && height <= winHeight+month) then
+        TransferSet([ScriptTransfer(winnerAddress, this.assetBalance(unit), unit)])
+    else
+        if ((contextObj.caller == addressFromStringValue(lotteryOwner)) && height > winHeight+month) then
+             TransferSet([ScriptTransfer(ownerAddress, this.assetBalance(unit), unit)])
+        else throw("you can't withdraw the funds")
 }
 `;
 module.exports = getScriptLottery
