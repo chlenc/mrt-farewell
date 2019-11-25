@@ -3,10 +3,10 @@ const wvs = 10 ** 8;
 describe('MRT test', async function () {
 
     this.timeout(100000);
-    const addressHub = "3MpgxP1FUAwJjUtxkUF7os4pTb57g3FtnrM"
-    const addressLottery = "3Mwgt9yXmLTx9L6D2jA5xXwMM4wNaMjBcmV"
+    const addressHub = "3MtUZdvG4tBEa2KeQVkn3c7pVWs9WVYW4rW"
+    const addressLottery = "3MuAPdTfexi1hHG4K11kNe2p9t8CCB97J9B"
     const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
-    const seedLottery = "perfect cement town awesome obtain jelly round insane mystery gas actor brand trouble nerve change"
+    const seedLottery = "inch broom wheel heavy advice window kid mistake yard good flower cinnamon viable social valley"
     
     const player = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
     const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ"
@@ -16,7 +16,7 @@ describe('MRT test', async function () {
     it('Positive scenаrio', async function () {
         params = {
             call: {
-                args: [{ type: "string", value:  toLeaseAddress  }],
+                args: [],
                 function: 'buyTicket',
             },
             payment: [{amount: 9,assetId: MRTid}],
@@ -31,7 +31,7 @@ describe('MRT test', async function () {
         
         params = {
             call: {
-                args: [{ type: "string", value:  toLeaseAddress }],
+                args: [],
                 function: 'buyTicket',
             },
             payment: [{amount: 3,assetId: MRTid}],
@@ -45,7 +45,7 @@ describe('MRT test', async function () {
 
         params = {
             call: {
-                args: [{ type: "string", value:  toLeaseAddress }],
+                args: [],
                 function: 'buyTicket',
             },
             payment: [{amount: 3,assetId: MRTid}],
@@ -67,8 +67,8 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const registerRandomRequestTx = invokeScript(params, seedLottery);
-        await broadcast(registerRandomRequestTx);
-        await waitForTx(registerRandomRequestTx.id);
+        //await broadcast(registerRandomRequestTx);
+        //await waitForTx(registerRandomRequestTx.id);
         console.log("successfully register tx which invoke randomizer")
 
         params = {
@@ -87,7 +87,7 @@ describe('MRT test', async function () {
                 
         params = {
                 call: {
-                args: [{ type: "string", value:  "ticketsFrom1To3_3MrC1oqVCoLkfHabhJtrLJS6GxcooQwRWuP" }],
+                args: [{ type: "string", value:  "ticketsFrom1To3" }],
                 function: 'defineTheWinner',
                 },
                 payment: [],
@@ -113,19 +113,19 @@ describe('MRT test', async function () {
         await waitForTx(addWinner.id);
         console.log("winner ticket added to hub")
 
-        lotteryWavesBalance = await(balance(addressLottery))
-
 
         params = {
-                amount: lotteryWavesBalance,
-                recipient: toLeaseAddress,
-                fee : 500000
-            }
-        const leaseTx = lease(params, player)
-        await broadcast(leaseTx);
-        await waitForTx(leaseTx.id);
-        console.log("leaseTx succsessfully sent")     
+            call: {
+            args: [],
+            function: 'withdraw',
+            },
+            payment: [],
+            dApp: addressLottery,
+            fee: 900000,
+            }    
+        const withdrawByWinner = invokeScript(params, player);
+        await broadcast(withdrawByWinner);
+        await waitForTx(withdrawByWinner.id);
+        console.log("successfully withdrawn")
     });
-
- 
 });

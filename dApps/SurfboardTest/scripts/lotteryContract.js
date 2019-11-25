@@ -20,7 +20,7 @@ func registerRandomRequestTx(randomRequestTx: String) ={
         if contextObj.caller ==  addressFromString(lotteryOwner) then
             WriteSet([DataEntry("randomRequestTx", randomRequestTx)])
         else
-            throw("only owner can start the lottery")   
+            throw("only loteryOwner can start the lottery")   
 }
 
 @Callable(contextObj)
@@ -53,7 +53,8 @@ func defineTheWinner(ticketsInHubKey: String) = {
             let winnerAddress = lotteryTicketHub.getStringValue(ticketsInHubKey)
             WriteSet([
                 DataEntry("winnerTicket", randomResult),
-                DataEntry("winnerAddress", winnerAddress)
+                DataEntry("winnerAddress", winnerAddress),
+                DataEntry("winHeight", height)
             ])
         else throw("these tickets didn't win")
 }

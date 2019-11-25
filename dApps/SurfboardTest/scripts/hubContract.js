@@ -13,7 +13,7 @@ func getTicketAmount() = {
 }
 
 @Callable(contextObj)
-func buyTicket(addresToLease: String) = {
+func buyTicket() = {
     match(contextObj.payment) {
         case p:AttachedPayment => if ((p.amount >= ticketPrice) && (p.assetId == MRTid)) then
             let ticketsBuyingAmount = p.amount/ticketPrice
@@ -21,8 +21,9 @@ func buyTicket(addresToLease: String) = {
             let ticketAmountTotalNew = ticketAmountTotalCurrent+ ticketsBuyingAmount
             let ticketsFrom = toString(ticketAmountTotalCurrent+1)
             let ticketsTo = toString(ticketAmountTotalCurrent+ticketsBuyingAmount)
+            let caller = toString(contextObj.caller)
             WriteSet([
-                DataEntry("ticketsFrom"+ticketsFrom+"To"+ticketsTo, addresToLease),
+                DataEntry("ticketsFrom"+ticketsFrom+"To"+ticketsTo, caller),
                 DataEntry("ticketAmountTotal", ticketAmountTotalNew)
                 ])
         else throw("Incorrect amount or assetId in payment")
