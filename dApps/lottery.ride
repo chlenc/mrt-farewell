@@ -74,4 +74,5 @@ func verify() = {
             sigVerify(tx.bodyBytes,tx.proofs[0],ownerPubKey) 
         case _ => sigVerify(tx.bodyBytes,tx.proofs[0],ownerPubKey)  #!false!
     }
+    
 }
