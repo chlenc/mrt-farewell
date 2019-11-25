@@ -12,6 +12,11 @@
 @little_rhombus_top_offset: calc((@little_rhombus_side_length * (sqrt(2) - 1) / 2));
 
 @button-side: 4vw;
+
+@button-tablet-side: 6vw;
+@arrow-tablet-side: @button-tablet-side / 2.5;
+
+
 @description-bg-side: 30vw;
 @crop-size: 60vw;
 @transition-duration: 2s;
@@ -71,22 +76,57 @@
 }
 .regular-1_4{
   .font_regular();
-  font-size: 1.4vw;
+  font-size: 2.2vw;
   line-height: 1.8vw;
 }
 
 .bold-1_4{
   .font_bold();
-  font-size: 1.4vw;
+  font-size: 2.2vw;
   line-height: 1.8vw;
 }
-
 .title-4_1{
   .font_title();
   font-size: 4.1vw;
+}
 
+.regular-15{
+  .font_regular();
+  font-size: 2.5vw;
+  line-height: 3vw;
+}
+
+.bold-15{
+  .font_bold();
+  font-size: 2.5vw;
+  line-height: 3vw;
+}
+
+.title-44{
+  .font_title();
+  font-size: 10vw;
+  line-height: 15vw;
+}
+
+.regular-18{
+  .font_regular();
+  font-size: 2.3vw;
+  line-height: 3vw;
+}
+
+.bold-18{
+  .font_bold();
+  font-size: 2.3vw;
+  line-height: 3vw;
+}
+
+.regular-14{
+  .font_regular();
+  font-size: 2vw;
+  line-height: 3vw;
 }
 
 .row{
   display: flex;
+  justify-content: center;
 }
