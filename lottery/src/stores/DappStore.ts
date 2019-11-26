@@ -43,7 +43,7 @@ class DappStore extends SubStore {
         const {accountStore} = this.rootStore;
 
         if (!accountStore.isApplicationAuthorizedInWavesKeeper) {
-            this.rootStore.notificationStore.notify('Application is not authorized in WavesKeeper', {type: 'warning'});
+            this.rootStore.notificationStore.notify('Application is not authorized in WavesKeeper', 'warning');
             return;
         }
 
@@ -64,14 +64,11 @@ console.log(tx)
             const transaction = JSON.parse(tx);
             console.log(transaction);
             this.rootStore.notificationStore
-                .notify(`Transaction sent: ${transaction.id}\n`,
-                    {
-                        type: 'success',
-                    });
+                .notify(`Transaction sent: ${transaction.id}\n`,'success');
 
         }).catch((error: any) => {
             console.error(error);
-            this.rootStore.notificationStore.notify(error.data, {type: 'error', title: error.message});
+            this.rootStore.notificationStore.notify(`${error.message}\n\n${error.data}`, 'error');
         });
     };
 

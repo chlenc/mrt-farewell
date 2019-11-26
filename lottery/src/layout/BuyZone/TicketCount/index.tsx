@@ -1,19 +1,27 @@
 import { h, FunctionComponent } from 'preact';
 import styles from './styles.less';
 import cn from 'classnames'
+import { inject, observer } from "mobx-preact";
+import AccountStore from "@src/stores/AccountStore";
+import ModalStore from "@src/stores/ModalStore";
+import LanguageStore from "@src/stores/LanguageStore";
 
-interface IProps {
+interface IInjectedProps {
+    languageStore?: LanguageStore
+}
+
+interface IProps extends IInjectedProps{
     totalTickets: number
     className?: string
 }
 
-const TicketCount: FunctionComponent<IProps> = ({totalTickets, className}) => {
+const _TicketCount: FunctionComponent<IProps> = ({totalTickets, className, languageStore}) => {
     const digitsArray = totalTickets.toString().split('');
     return <div className={cn(styles.root, className)}>
         <div class={styles.countRow}>
             {digitsArray.map((d, i) => <Digit key={i} digit={d}/>)}
         </div>
-        <div class={styles.text}>tickets already sold</div>
+        <div class={styles.text}>{languageStore!.t('ticketsSold')}</div>
     </div>;
 };
 
@@ -25,6 +33,8 @@ const Digit: FunctionComponent<IDigitProps> = ({digit}) => (<div class={styles.d
     <div class={styles.digit}>{digit}</div>
     <div class={styles.line}/>
 </div>);
+
+const TicketCount = inject('languageStore')(observer(_TicketCount));
 
 
 export default TicketCount;

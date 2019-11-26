@@ -9,6 +9,7 @@ import { inject, observer } from "mobx-preact";
 import AccountStore from '@src/stores/AccountStore';
 import DappStore from '@src/stores/DappStore';
 import { TICKET_PRICE } from '@src/constants';
+import { LanguageStore } from "@src/stores";
 
 interface IState {
     ticketAmount?: number
@@ -17,9 +18,10 @@ interface IState {
 interface IProps {
     accountStore?: AccountStore
     dappStore?: DappStore
+    languageStore?: LanguageStore
 }
 
-@inject('accountStore', 'dappStore')
+@inject('accountStore', 'dappStore', 'languageStore')
 @observer
 export default class BuyZone extends Component<IProps, IState> {
     state: IState = {
@@ -50,7 +52,7 @@ export default class BuyZone extends Component<IProps, IState> {
 
     render() {
         const {ticketAmount} = this.state;
-        const {accountStore, dappStore} = this.props;
+        const {accountStore, dappStore, languageStore} = this.props;
         const address = accountStore!.wavesKeeperAccount && accountStore!.wavesKeeperAccount.address;
         const mrtBalance = accountStore!.mrtBalance;
         const isInsufficientFunds = mrtBalance < (ticketAmount || 0) * TICKET_PRICE;
@@ -60,7 +62,7 @@ export default class BuyZone extends Component<IProps, IState> {
                          totalTickets={dappStore!.totalAmountSold}/>
             <Input type="number"
                    className={styles.input}
-                   placeholder="Number of tickets you want to buy"
+                   placeholder={languageStore!.t('inputPlaceholder')}
                    disabled={address == null}
                    value={this.state.ticketAmount}
                    error={isInsufficientFunds && this.state.ticketAmount !== undefined}
@@ -68,7 +70,10 @@ export default class BuyZone extends Component<IProps, IState> {
             <Button onClick={() => this.handleBuy(ticketAmount || 0)}
                     disabled={accountStore!.wavesKeeperAccount == null || isInsufficientFunds || !ticketAmount}
                     className={styles.button}
-                    title={`BUY TICKETS${ticketAmount ? ` FOR ${(ticketAmount || 1) * TICKET_PRICE} MRT` : ''}`}
+                    title={!ticketAmount
+                        ? languageStore!.t('buy')
+                        : languageStore!.t('buyWithPrice', {price: (ticketAmount || 1) * TICKET_PRICE})
+                    }
                     action/>
         </div>;
     }

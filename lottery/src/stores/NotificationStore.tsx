@@ -1,66 +1,29 @@
-// import notification from 'rc-notification';
-import {SubStore} from '@src/stores/SubStore';
-import {RootStore} from '@src/stores/RootStore';
-// import { buildNotification } from '@src/components/Notification';
-
-export type TNotifyOptions = Partial<{
-    duration: number,
-    closable: boolean,
-    key: string
-
-    type: 'error' | 'info' | 'warning' | 'success'
-    title: string
-}>;
-
-const style = {
-    borderRadius: '0',
-    padding: 0,
-
-
-};
-
-const styles = {
-    error: {
-        ...style,
-        borderTop: '2px solid #EF7362'
-    },
-    warning: {
-        ...style,
-        borderTop: '2px solid #FFD56A'
-    },
-    info: {
-        ...style,
-        borderTop: '2px solid #5A8AFF'
-    },
-    success: {
-        ...style,
-        borderTop: '2px solid #7ECF81'
-    }
-};
+import { h } from 'preact'
+import { SubStore } from '@src/stores/SubStore';
+import { RootStore } from '@src/stores/RootStore';
+import { StatusAlertService } from "preact-status-alert";
 
 class NotificationsStore extends SubStore {
-    _instance?: any;
 
     constructor(rootStore: RootStore) {
         super(rootStore);
-        // notification.newInstance({}, (notification: any) => this._instance = notification);
     }
 
-    notify(content: string | any , opts: TNotifyOptions = {}) {
-        alert(content)
-        // if (opts.key) {
-        //     this._instance.removeNotice(opts.key);
-        // }
-        //
-        // const type = opts.type || 'info';
-        //
-        // this._instance && this._instance.notice({
-        //     content: buildNotification(content, {...opts, type}),
-        //     style: {...styles[type]},
-        //     duration: opts.duration || 10,
-        //     key: opts.key,
-        //     closable: opts.closable
-        // });
+    notify(content: string | any,  type?: 'error' | 'info' | 'warning' | 'success') {
+        const options = {autoHideTime: 1000000, removeAllBeforeShow: false, withCloseIcon: false};
+        switch (type) {
+            case "warning":
+                StatusAlertService.showWarning(content, options);
+                break;
+            case "success":
+                StatusAlertService.showSuccess(content, options);
+                break;
+            case "error":
+                StatusAlertService.showError(content, options);
+                break;
+            default:
+                StatusAlertService.showInfo(content, options);
+        }
     }
 }
 

@@ -1,5 +1,5 @@
-import styles from './styles.less';
 import { h, FunctionComponent } from 'preact';
+import styles from './styles.less';
 import cn from 'classnames';
 
 interface IProps {
