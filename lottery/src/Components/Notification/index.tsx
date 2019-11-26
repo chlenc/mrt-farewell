@@ -1,9 +1,9 @@
 import {  FunctionComponent, h } from 'preact';
 import styles from './styles.less';
 import { TNotifyOptions } from '@src/stores/NotificationStore';
-import ScrollBar from 'react-perfect-scrollbar';
+// import ScrollBar from 'react-perfect-scrollbar';
 import cn from "classnames";
-import { IInputProps } from "@src/Components/Input";
+// import { IInputProps } from "@src/Components/Input";
 
 interface IProps {
     type: 'error' | 'info' | 'warning' | 'success',

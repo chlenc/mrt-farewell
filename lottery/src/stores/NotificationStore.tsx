@@ -1,7 +1,7 @@
 // import notification from 'rc-notification';
 import {SubStore} from '@src/stores/SubStore';
 import {RootStore} from '@src/stores/RootStore';
-import { buildNotification } from '@src/components/Notification';
+// import { buildNotification } from '@src/components/Notification';
 
 export type TNotifyOptions = Partial<{
     duration: number,

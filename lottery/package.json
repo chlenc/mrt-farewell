@@ -18,8 +18,7 @@
     "mobx-preact": "^3.0.0",
     "preact": "^10.0.5",
     "preact-status-alert": "^0.2.7",
-    "rc-notification": "^3.3.1",
-    "react-perfect-scrollbar": "^1.5.3"
+    "rc-notification": "^3.3.1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
