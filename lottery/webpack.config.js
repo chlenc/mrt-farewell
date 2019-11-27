@@ -61,7 +61,7 @@ module.exports = (env, argv) => {
                     loader: "url-loader?limit=1000&name=assets/img/[name].[ext]",
                 },
                 {
-                    test: /\.tsx?$/,
+                    test: /\.(tsx|ts)?$/,
                     exclude: /node_modules/,
                     use: [
                         {
