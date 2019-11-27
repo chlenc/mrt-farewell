@@ -89,7 +89,7 @@ class AccountStore extends SubStore {
                 if (attemptsCount === 2) {
                     reaction.dispose();
                     console.error('keeper is not installed');
-                    this.rootStore.notificationStore.notify('keeper is not installed', {type: 'warning',});
+                    this.rootStore.notificationStore.notify('keeper is not installed', 'warning');
                 } else if (window['WavesKeeper']) {
                     reaction.dispose();
                     this.isWavesKeeperInstalled = true;
@@ -112,7 +112,7 @@ class AccountStore extends SubStore {
             .then((publicState: any) => {
                 this.isApplicationAuthorizedInWavesKeeper = true;
                 this.updateWavesKeeper(publicState).catch(e => {
-                    this.rootStore.notificationStore.notify(e, {type: 'error'});
+                    this.rootStore.notificationStore.notify(e, 'error');
                     console.error(e);
                 });
                 this.subscribeToWavesKeeperUpdate();
@@ -142,7 +142,7 @@ class AccountStore extends SubStore {
     subscribeToWavesKeeperUpdate() {
         window['WavesKeeper'].on('update', async (publicState: any) => {
             this.updateWavesKeeper(publicState).catch(e => {
-                this.rootStore.notificationStore.notify(e, {type: 'error'});
+                this.rootStore.notificationStore.notify(e, 'error');
                 console.error(e);
             });
         });
