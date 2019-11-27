@@ -1,11 +1,11 @@
-const getScriptLottery = (addressHubLottery, addressLottery, addressRandomizer, pubKeyOwner) => `
+const getScriptLottery = (addressHubLottery, lotteryAdminAddress, addressRandomizer, ownerAddress) => `
 {-# STDLIB_VERSION 3 #-}
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
 
+let ownerAddress = Address(base58'${ownerAddress}')
 let lotteryTicketHub = Address(base58'${addressHubLottery}')
-let lotteryOwner = "${addressLottery}"
-let ownerPubKey = base58'${pubKeyOwner}'
+let lotteryAdminAddress =Address(base58'${lotteryAdminAddress}')
 let dAppRandomAddress = Address(base58'${addressRandomizer}')
 
 
@@ -17,7 +17,7 @@ func registerRandomRequestTx(randomRequestTx: String) ={
     if transactionHeightById(fromBase58String(randomRequestTx)).isDefined()
         then throw("You try register tx which is already in blockchain")
     else
-        if contextObj.caller ==  addressFromString(lotteryOwner) then
+        if contextObj.caller ==  lotteryAdminAddress then
             WriteSet([DataEntry("randomRequestTx", randomRequestTx)])
         else
             throw("only loteryOwner can start the lottery")   
@@ -63,12 +63,11 @@ func defineTheWinner(ticketsInHubKey: String) = {
 func withdraw() = {
     let winnerAddress = addressFromStringValue(this.getStringValue("winnerAddress"))
     let winHeight = this.getIntegerValue("winHeight")
-    let ownerAddress = addressFromPublicKey(ownerPubKey)
     let month = 43200
     if (contextObj.caller == winnerAddress && height <= winHeight+month) then
         TransferSet([ScriptTransfer(winnerAddress, this.assetBalance(unit), unit)])
     else
-        if ((contextObj.caller == addressFromStringValue(lotteryOwner)) && height > winHeight+month) then
+        if ((contextObj.caller == ownerAddress) && height > winHeight+month) then
              TransferSet([ScriptTransfer(ownerAddress, this.assetBalance(unit), unit)])
         else throw("you can't withdraw the funds")
 }

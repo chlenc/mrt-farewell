@@ -15,6 +15,9 @@ const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ";
     const addressHubLottery = wavesCrypto.address(seedHubLottery, 'T');
     const addressLottery = wavesCrypto.address(seedLottery, 'T');
     const addressRandomizer = wavesCrypto.address(seedRandomizer, 'T');
+
+    const addressAdminLottery = "3MrC1oqVCoLkfHabhJtrLJS6GxcooQwRWuP"
+    const addressOwner = addressAdminLottery
     // You can set env varibles via cli arguments. E.g.: `surfboard run path/to/script  --variables 'dappSeed=seed phrase,secondVariable=200'`
 
 
@@ -80,7 +83,7 @@ const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ";
     await broadcast(SetSctiptHub);
     await waitForTx(SetSctiptHub.id);
     console.log("Hub successfully scripted\n");
-    compiledLottery = compile(getScriptLottery(addressHubLottery, addressLottery, addressRandomizer, pubKeyOwner))
+    compiledLottery = compile(getScriptLottery(addressHubLottery, addressAdminLottery, addressRandomizer, addressOwner))
     const SetSctiptLottery = setScript({script:compiledLottery},seedLottery)
     await broadcast(SetSctiptLottery);
     await waitForTx(SetSctiptLottery.id);

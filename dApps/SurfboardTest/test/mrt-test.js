@@ -3,16 +3,15 @@ const wvs = 10 ** 8;
 describe('MRT test', async function () {
 
     this.timeout(100000);
-    const addressHub = "3MtUZdvG4tBEa2KeQVkn3c7pVWs9WVYW4rW"
-    const addressLottery = "3MuAPdTfexi1hHG4K11kNe2p9t8CCB97J9B"
+    const addressHub = "3MtZCoAHpDYdFrgk8r4RwyiKHtqJXsE3XSM"
+    const addressLottery = "3MwgwDZnLzb7q84gJeig6D1arburw3DpV4z"
     const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
     const seedLottery = "inch broom wheel heavy advice window kid mistake yard good flower cinnamon viable social valley"
-    
     const player = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
     const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ"
     const randomTxId = "2vmvnr79De1Y9GtMM3NQfhzrbwt93UuUMCER6GbBTFsj"
-    const toLeaseAddress = "3Mp1GGUhbaJVu7Eaf8bKMGr3B29GVjrketT"
-    
+
+    const lotteryAdminSeed = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
     it('Positive scenаrio', async function () {
         params = {
             call: {
@@ -66,7 +65,7 @@ describe('MRT test', async function () {
             dApp: addressLottery,
             fee: 900000,
             }    
-        const registerRandomRequestTx = invokeScript(params, seedLottery);
+        const registerRandomRequestTx = invokeScript(params, lotteryAdminSeed);
         //await broadcast(registerRandomRequestTx);
         //await waitForTx(registerRandomRequestTx.id);
         console.log("successfully register tx which invoke randomizer")
@@ -80,7 +79,7 @@ describe('MRT test', async function () {
                 dApp: addressLottery,
                 fee: 900000,
                 }
-        const checkRandom = invokeScript(params, seedLottery);
+        const checkRandom = invokeScript(params, lotteryAdminSeed);
         await broadcast(checkRandom);
         await waitForTx(checkRandom.id);
         console.log("random checked and written in the lottery state")
@@ -94,7 +93,7 @@ describe('MRT test', async function () {
                 dApp: addressLottery,
                 fee: 900000,
                 }
-        const defineTheWinner = invokeScript(params, player);
+        const defineTheWinner = invokeScript(params, lotteryAdminSeed);
         await broadcast(defineTheWinner);
         await waitForTx(defineTheWinner.id);
         console.log("winner defiend or new random value setted")
@@ -108,7 +107,7 @@ describe('MRT test', async function () {
                 dApp: addressHub,
                 fee: 900000,
                 }    
-        const addWinner = invokeScript(params, player);
+        const addWinner = invokeScript(params, lotteryAdminSeed);
         await broadcast(addWinner);
         await waitForTx(addWinner.id);
         console.log("winner ticket added to hub")
