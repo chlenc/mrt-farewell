@@ -8,6 +8,16 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
+
+const babelLoaderOptions = {
+    presets: ['es2015', 'stage-0'],
+    plugins: [
+        ['transform-react-jsx', {
+            pragma: 'h'
+        }],
+    ]
+};
+
 module.exports = (env, argv) => {
 
     const outputPath = path.resolve(__dirname, 'dist');

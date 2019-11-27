@@ -5,7 +5,6 @@ import { RootStore } from "@src/stores";
 import { Provider as MobxProvider } from 'mobx-preact';
 const mobXStore = new RootStore();
 
-console.log('test')
 render(
     <MobxProvider {...mobXStore}> <App/></MobxProvider>, document.getElementById('container')!
 );
