@@ -2,50 +2,46 @@
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
 
-let ownerAddress = Address(base58'3MrC1oqVCoLkfHabhJtrLJS6GxcooQwRWuP')
-let lotteryTicketHub = Address(base58'3MrC1oqVCoLkfHabhJtrLJS6GxcooQwRWuP')
-let lotteryAdminAddress = Address(base58'3MxtzncKM9x1kKpLP3sp8WZPvg1cza8jHGm')
-let dAppRandomAddress = Address(base58'3Mt1uo5ieYK8Pk9XyVZp88HBLMfprrq515z')
+let ticketHub = Address(fromBase58String(this.getStringValue("address_hub")))
+let ownerAddress = Address(fromBase58String(ticketHub.getStringValue("address_owner")))
+let lotteryAdminAddress = Address(fromBase58String(ticketHub.getStringValue("address_admin")))
+let dAppRandomAddress = Address(fromBase58String(ticketHub.getStringValue("address_oracle")))
 
 @Callable(contextObj)
-func registerRandomRequestTx(randomRequestTx: String) ={
-    if this.getString("randomRequestTx").isDefined()
-        then throw("randomRequestTx is already in the state")
-    else 
-    if transactionHeightById(fromBase58String(randomRequestTx)).isDefined()
-        then throw("You try register tx which is already in blockchain")
-    else
-        if contextObj.caller ==  lotteryAdminAddress then
-            WriteSet(
-            [DataEntry("randomRequestTx", randomRequestTx),
-            DataEntry("startHeight", height)]
-            )
-        else
-            throw("only loteryOwner can start the lottery")   
+func registerRandomRequestTx(randomRequestTx: String) = {
+    if this.getString("randomRequestTx").isDefined() then
+        throw("randomRequestTx is already in the state")
+    else if transactionHeightById(fromBase58String(randomRequestTx)).isDefined() then
+        throw("You try register tx which is already in blockchain")
+    else if contextObj.caller == lotteryAdminAddress then
+        WriteSet([
+            DataEntry("randomRequestTx", randomRequestTx),
+            DataEntry("startHeight", height)
+        ])
+    else throw("only loteryOwner can start the lottery")
 }
 
 @Callable(contextObj)
 func defineTheWinner(ticketsInHubKey: String) = {
-    let randomRequestCommitedTxId= this.getStringValue("randomRequestTx")   
+    let randomRequestCommitedTxId = this.getStringValue("randomRequestTx")
     let randomResponse = dAppRandomAddress.getStringValue(randomRequestCommitedTxId)
     let status = randomResponse.split("_")[0]
     let randomResultString = randomResponse.split("--")[1]
     let randomResult = parseIntValue(randomResultString)
-    if lotteryTicketHub.getInteger("winningTicket" +  randomResultString).isDefined() then
-        let ticketAmount = lotteryTicketHub.getIntegerValue("ticketAmount")
-        let randomResultUpdate = if (randomResult == ticketAmount ) then 1 else randomResult +1
+    if ticketHub.getInteger("winningTicket" + randomResultString).isDefined() then
+        let ticketAmount = ticketHub.getIntegerValue("ticketAmountTotal")
+        let randomResultUpdate = if (randomResult == ticketAmount ) then 1 else randomResult + 1
         WriteSet([
             DataEntry("randomResult", randomResultUpdate)
         ])
     else
         let ticketFrom = parseIntValue(ticketsInHubKey.split("To")[0].split("ticketsFrom")[1])
         let ticketTo= parseIntValue(ticketsInHubKey.split("To")[1])
-        if ( randomResult>=ticketFrom && randomResult<=ticketTo) then
-            let winnerAddress = lotteryTicketHub.getStringValue(ticketsInHubKey)
+        if ( randomResult >= ticketFrom && randomResult <= ticketTo) then
+            let winnerAddress = ticketHub.getStringValue(ticketsInHubKey)
             WriteSet([
                 DataEntry("winnerTicket", randomResult),
                 DataEntry("winnerAddress", winnerAddress)
-                
             ])
         else throw("these tickets didn't win")
 }
