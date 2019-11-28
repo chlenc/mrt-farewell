@@ -3,10 +3,10 @@ const wvs = 10 ** 8;
 describe('MRT test', async function () {
 
     this.timeout(100000);
-    const addressHub = "3MtZCoAHpDYdFrgk8r4RwyiKHtqJXsE3XSM"
-    const addressLottery = "3MwgwDZnLzb7q84gJeig6D1arburw3DpV4z"
-    const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
-    const seedLottery = "inch broom wheel heavy advice window kid mistake yard good flower cinnamon viable social valley"
+    const addressHub = "3NCjRb9DzrDYwnCjmd15tbwLgwr4ER9HF7q"
+    const addressLottery = "3NBWph6rBzt3hznKTMA2iVeuCbofAegCxCE"
+    //const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
+    //const seedLottery = "inch broom wheel heavy advice window kid mistake yard good flower cinnamon viable social valley"
     const player = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
     const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ"
     const randomTxId = "2vmvnr79De1Y9GtMM3NQfhzrbwt93UuUMCER6GbBTFsj"
@@ -66,8 +66,8 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const registerRandomRequestTx = invokeScript(params, lotteryAdminSeed);
-        //await broadcast(registerRandomRequestTx);
-        //await waitForTx(registerRandomRequestTx.id);
+        await broadcast(registerRandomRequestTx);
+        await waitForTx(registerRandomRequestTx.id);
         console.log("successfully register tx which invoke randomizer")
 
         params = {
@@ -100,7 +100,7 @@ describe('MRT test', async function () {
 
         params = {
                 call: {
-                args: [{type: "string", value: addressLottery }],
+                args: [{type: "string", value:  addressLottery }],
                 function: 'addWinner',
                 },
                 payment: [],

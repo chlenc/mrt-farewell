@@ -14,26 +14,31 @@ func getTicketAmount() = {
 
 @Callable(contextObj)
 func buyTicket() = {
-    match(contextObj.payment) {
-        case p:AttachedPayment => if ((p.amount >= ticketPrice) && (p.assetId == MRTid)) then
-            let ticketsBuyingAmount = p.amount/ticketPrice
-            let ticketAmountTotalCurrent = getTicketAmount()
-            let ticketAmountTotalNew = ticketAmountTotalCurrent+ ticketsBuyingAmount
-            let ticketsFrom = toString(ticketAmountTotalCurrent+1)
-            let ticketsTo = toString(ticketAmountTotalCurrent+ticketsBuyingAmount)
-            let caller = toString(contextObj.caller)
-            WriteSet([
-                DataEntry("ticketsFrom"+ticketsFrom+"To"+ticketsTo, caller),
-                DataEntry("ticketAmountTotal", ticketAmountTotalNew)
-                ])
-        else throw("Incorrect amount or assetId in payment")
-        case _ => throw("Payment not attached")}
+    if contextObj.caller == this then throw("ticket hub can't call this function") 
+    else
+        if this.getStringValue("status") == "ticketingPeriod" then
+            match(contextObj.payment) {       
+                case p:AttachedPayment => if ((p.amount >= ticketPrice) && (p.assetId == MRTid)) then
+                    let ticketsBuyingAmount = p.amount/ticketPrice
+                    let ticketAmountTotalCurrent = getTicketAmount()
+                    let ticketAmountTotalNew = ticketAmountTotalCurrent+ ticketsBuyingAmount
+                    let ticketsFrom = toString(ticketAmountTotalCurrent+1)
+                    let ticketsTo = toString(ticketAmountTotalCurrent+ticketsBuyingAmount)
+                    let caller = toString(contextObj.caller)
+                    WriteSet([
+                        DataEntry("ticketsFrom"+ticketsFrom+"To"+ticketsTo, caller),
+                        DataEntry("ticketAmountTotal", ticketAmountTotalNew)
+                        ])
+                else throw("Incorrect amount or assetId in payment")
+                case _ => throw("Payment not attached")}
+        else
+            throw("It isn't ticketing period")
     } 
 
 @Callable(contextObj)
 func addWinner(lottery: String) = {
         let lotteryAddress = addressFromStringValue(lottery)
-        if (this.getBoolean(lottery).isDefined()) then 
+        if (this.getBoolean("lottery_" +lottery).isDefined()) then 
             let winnerAddress = lotteryAddress.getStringValue("winnerAddress")
             let winnerTicket = lotteryAddress.getIntegerValue("winnerTicket")
             WriteSet([

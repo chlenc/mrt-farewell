@@ -41,11 +41,12 @@ const MRTid = "8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ";
 
     const paramsFotData = {
         data: [
-          { key: addressLottery, value: true },
+          { key: "lottery_" + addressLottery, value: true },
+          { key: "status" , value: "ticketingPeriod" },
         ],
         fee: 1400000 
       }
-
+    
     const addLotteryAddtessToHub = data(
         paramsFotData, 
         seedHubLottery);
