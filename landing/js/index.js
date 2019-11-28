@@ -81,25 +81,26 @@ function getCurrentBrowser() {
 
 
 $(document).ready(function () {
-    $(".invalidBrowser").fadeOut();
+    $(".invalidBrowser").hide();
+
     function isBrowserSupportsWavesKeeper() {
         const browser = getCurrentBrowser();
         let i = 0;
-        if (['chrome', 'firefox', 'opera', 'edge'].includes(browser)) {
 
+        if (!['chrome', 'firefox', 'opera', 'edge'].includes(browser)) {
+            showInvalidBrowserMsg();
+            return
         }
+
         const interval = setInterval(() => {
             const keeper = window['WavesKeeper']
             i++;
             if (keeper !== undefined) clearInterval(interval);
-            if (i === 3 && keeper === undefined) {
+            if (i === 5 && keeper === undefined) {
                 showInvalidBrowserMsg();
                 clearInterval(interval)
             }
         }, 1000);
-
-        console.log();
-        return
     }
 
     function showInvalidBrowserMsg() {
