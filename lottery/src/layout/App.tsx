@@ -12,6 +12,7 @@ import ModalStore from '@src/stores/ModalStore';
 import Notification from "@src/Components/Notification";
 import LanguageStore, { TLangs } from "@src/stores/LanguageStore";
 import DappStore from "@src/stores/DappStore";
+import Raffle from "@src/layout/Raffle";
 
 interface IProps {
     accountStore?: AccountStore
@@ -44,26 +45,8 @@ export default class App extends Component<IProps> {
 
         let body = null;
 
-        if (status && status.value === 'raffle') {
-            body = <Fragment>
-                <div>
-                    1 Round: 12  ×  5,000 <br/>
-                    tickets
-                </div>
-                <div>
-                    1 Round: 12  ×  5,000 <br/>
-                    tickets
-                </div>
-                <div>
-                    1 Round: 12  ×  5,000 <br/>
-                    tickets
-                </div>
-            </Fragment>
-        } else if (status && status.value === 'ticketingPeriod') {
-            body = <Fragment>
-                <BuyZone/>
-            </Fragment>
-        }
+        if (status && status.value === 'raffle') body = <Raffle/>;
+        else if (status && status.value === 'ticketingPeriod') body = <BuyZone/>;
 
         return <Fragment>
             {this.props.languageStore!.lang === 'en'

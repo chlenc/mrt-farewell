@@ -1,9 +1,16 @@
 .ticket {
-  min-height: 131px;
+  height: 100px;
+  width: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  transform: rotate(-10deg);
+
+  .svg {
+    position: absolute;
+
+  }
 
   .text {
     z-index: 10;
@@ -11,17 +18,45 @@
     overflow-wrap: break-word;
     position: absolute;
     font-family: Museo Sans Cyrl;
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 16px;
+    line-height: 16px;
     display: flex;
     align-items: center;
     text-align: center;
-    letter-spacing: 0.03em;
     color: #1A3D86;
     box-sizing: border-box;
-    padding: 0px 30px;
+    padding: 0 30px 5px 30px;
     width: 100%;
     justify-content: center;
   }
+
 }
 
+
+.tsktMany {
+  background: url("../assets/icons/tsktMany.png");
+  width: 99px;
+  height: 76px;
+  position: absolute;
+}
+
+.tsktManyGlow {
+  background: url("../assets/icons/tsktManyGlow.png");
+  width: 130px;
+  height: 106px;
+  position: absolute;
+}
+
+.tsktGlow {
+  background: url("../assets/icons/tsktGlow.png");
+  width: 121px;
+  height: 81px;
+  position: absolute;
+}
+
+.tskt {
+  background: url("../assets/icons/tskt.png");
+  width: 86px;
+  height: 46px;
+  position: absolute;
+}
