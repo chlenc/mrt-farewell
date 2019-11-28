@@ -18,31 +18,24 @@ func registerRandomRequestTx(randomRequestTx: String) ={
         then throw("You try register tx which is already in blockchain")
     else
         if contextObj.caller ==  lotteryAdminAddress then
-            WriteSet([DataEntry("randomRequestTx", randomRequestTx)])
+            WriteSet(
+            [DataEntry("randomRequestTx", randomRequestTx),
+            DataEntry("startHeight", height)]
+            )
         else
             throw("only loteryOwner can start the lottery")   
 }
 
 @Callable(contextObj)
-func checkRandom() = {
-    let randomRequestCommitedTxId= this.getStringValue("randomRequestTx")
+func defineTheWinner(ticketsInHubKey: String) = {
+    let randomRequestCommitedTxId= this.getStringValue("randomRequestTx")   
     let randomResponse = dAppRandomAddress.getStringValue(randomRequestCommitedTxId)
     let status = randomResponse.split("_")[0]
-    let randomResult = randomResponse.split("--")[1]
-    if status == "FINISHED" then
-        WriteSet([  
-            DataEntry("randomResult", parseIntValue(randomResult))
-        ])
-    else throw("Incorrect random result")
-}
-
-
-@Callable(contextObj)
-func defineTheWinner(ticketsInHubKey: String) = {
-    let randomResult = this.getIntegerValue("randomResult")
-    if lotteryTicketHub.getInteger("winningTicket" +  toString(randomResult)).isDefined() then
+    let randomResultString = randomResponse.split("--")[1]
+    let randomResult = parseIntValue(randomResultString)
+    if lotteryTicketHub.getInteger("winningTicket" +  randomResultString).isDefined() then
         let ticketAmount = lotteryTicketHub.getIntegerValue("ticketAmount")
-        let randomResultUpdate = if ((randomResult) == ticketAmount ) then 1 else randomResult +1
+        let randomResultUpdate = if (randomResult == ticketAmount ) then 1 else randomResult +1
         WriteSet([
             DataEntry("randomResult", randomResultUpdate)
         ])
@@ -53,8 +46,8 @@ func defineTheWinner(ticketsInHubKey: String) = {
             let winnerAddress = lotteryTicketHub.getStringValue(ticketsInHubKey)
             WriteSet([
                 DataEntry("winnerTicket", randomResult),
-                DataEntry("winnerAddress", winnerAddress),
-                DataEntry("winHeight", height)
+                DataEntry("winnerAddress", winnerAddress)
+                
             ])
         else throw("these tickets didn't win")
 }
@@ -62,12 +55,12 @@ func defineTheWinner(ticketsInHubKey: String) = {
 @Callable(contextObj)
 func withdraw() = {
     let winnerAddress = addressFromStringValue(this.getStringValue("winnerAddress"))
-    let winHeight = this.getIntegerValue("winHeight")
+    let startHeight = this.getIntegerValue("startHeight")
     let month = 43200
-    if (contextObj.caller == winnerAddress && height <= winHeight+month) then
+    if (contextObj.caller == winnerAddress && height <= startHeight+month) then
         TransferSet([ScriptTransfer(winnerAddress, this.wavesBalance(), unit)])
     else
-        if ((contextObj.caller == lotteryAdminAddress || contextObj.caller == ownerAddress) && height > winHeight+month) then
+        if ((contextObj.caller == lotteryAdminAddress || contextObj.caller == ownerAddress) && height > startHeight+month) then
              TransferSet([ScriptTransfer(ownerAddress, this.wavesBalance(), unit)])
         else throw("you can't withdraw the funds")
 }

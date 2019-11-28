@@ -25,23 +25,13 @@ func registerRandomRequestTx(randomRequestTx: String) ={
 }
 
 @Callable(contextObj)
-func checkRandom() = {
-    let randomRequestCommitedTxId= this.getStringValue("randomRequestTx")
+func defineTheWinner(ticketsInHubKey: String) = {
+    let randomRequestCommitedTxId= this.getStringValue("randomRequestTx")   
     let randomResponse = dAppRandomAddress.getStringValue(randomRequestCommitedTxId)
     let status = randomResponse.split("_")[0]
-    let randomResult = randomResponse.split("--")[1]
-    if status == "FINISHED" then
-        WriteSet([  
-            DataEntry("randomResult", parseIntValue(randomResult))
-        ])
-    else throw("Incorrect random result")
-}
-
-
-@Callable(contextObj)
-func defineTheWinner(ticketsInHubKey: String) = {
-    let randomResult = this.getIntegerValue("randomResult")
-    if lotteryTicketHub.getInteger("winningTicket" +  toString(randomResult)).isDefined() then
+    let randomResultString = randomResponse.split("--")[1]
+    let randomResult = parseIntValue(randomResultString)
+    if lotteryTicketHub.getInteger("winningTicket" +  randomResultString).isDefined() then
         let ticketAmount = lotteryTicketHub.getIntegerValue("ticketAmount")
         let randomResultUpdate = if (randomResult == ticketAmount ) then 1 else randomResult +1
         WriteSet([
