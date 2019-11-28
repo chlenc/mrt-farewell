@@ -11,15 +11,17 @@ import FAQ from '@src/layout/FAQ';
 import ModalStore from '@src/stores/ModalStore';
 import Notification from "@src/Components/Notification";
 import LanguageStore, { TLangs } from "@src/stores/LanguageStore";
+import DappStore from "@src/stores/DappStore";
 
 interface IProps {
     accountStore?: AccountStore
+    dappStore?: DappStore
     notificationStore?: NotificationsStore
     modalStore?: ModalStore
     languageStore?: LanguageStore
 }
 
-@inject('accountStore', 'notificationStore', 'modalStore', 'languageStore')
+@inject('accountStore', 'notificationStore', 'modalStore', 'languageStore', 'dappStore')
 @observer
 export default class App extends Component<IProps> {
 
@@ -36,7 +38,33 @@ export default class App extends Component<IProps> {
     setLanguage = (l: TLangs) => () => this.props.languageStore!.setLanguage(l);
 
     render() {
+        const status = this.props.dappStore!.dappData.find(({key}) => key === 'status');
+        //'ticketingPeriod'| 'raffle'
         const modalStore = this.props.modalStore!;
+
+        let body = null;
+
+        if (status && status.value === 'raffle') {
+            body = <Fragment>
+                <div>
+                    1 Round: 12  ×  5,000 <br/>
+                    tickets
+                </div>
+                <div>
+                    1 Round: 12  ×  5,000 <br/>
+                    tickets
+                </div>
+                <div>
+                    1 Round: 12  ×  5,000 <br/>
+                    tickets
+                </div>
+            </Fragment>
+        } else if (status && status.value === 'ticketingPeriod') {
+            body = <Fragment>
+                <BuyZone/>
+            </Fragment>
+        }
+
         return <Fragment>
             {this.props.languageStore!.lang === 'en'
                 ? <button className={styles.language} onClick={this.setLanguage('ru')}>ru</button>
@@ -45,7 +73,7 @@ export default class App extends Component<IProps> {
             {modalStore.modal && <FAQ onClose={() => this.props.modalStore!.modal = null}/>}
             <div className={styles.root}>
                 <Header/>
-                <BuyZone/>
+                {body}
                 <Bottom/>
                 <Policy/>
             </div>
