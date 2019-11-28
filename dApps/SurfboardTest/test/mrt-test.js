@@ -3,8 +3,8 @@ const wvs = 10 ** 8;
 describe('MRT test', async function () {
 
     this.timeout(100000);
-    const addressHub = "3NCjRb9DzrDYwnCjmd15tbwLgwr4ER9HF7q"
-    const addressLottery = "3NBWph6rBzt3hznKTMA2iVeuCbofAegCxCE"
+    const addressHub = "3NB8wYRPKiXfMsQPc7tCL2pdW4HaWdMe4Yp"
+    const addressLottery = "3MwpgYyAYiM3ZzadbbBwQnsuTsiw5JjwFap"
     //const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
     //const seedLottery = "inch broom wheel heavy advice window kid mistake yard good flower cinnamon viable social valley"
     const player = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
@@ -66,23 +66,9 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const registerRandomRequestTx = invokeScript(params, lotteryAdminSeed);
-        await broadcast(registerRandomRequestTx);
-        await waitForTx(registerRandomRequestTx.id);
+        //await broadcast(registerRandomRequestTx);
+        //await waitForTx(registerRandomRequestTx.id);
         console.log("successfully register tx which invoke randomizer")
-
-        params = {
-                call: {
-                args: [],
-                function: 'checkRandom',
-                },
-                payment: [],
-                dApp: addressLottery,
-                fee: 900000,
-                }
-        const checkRandom = invokeScript(params, lotteryAdminSeed);
-        await broadcast(checkRandom);
-        await waitForTx(checkRandom.id);
-        console.log("random checked and written in the lottery state")
                 
         params = {
                 call: {
