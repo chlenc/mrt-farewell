@@ -37,17 +37,84 @@ const langs = {
 
 const defaultLang = 'eng';
 
+function getCurrentBrowser() {
+    // Opera 8.0+
+    const isOpera = (!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    if (isOpera) {
+        return 'opera';
+    }
+
+    // Firefox 1.0+
+    const isFirefox = typeof window.InstallTrigger !== 'undefined';
+    if (isFirefox) {
+        return 'firefox';
+    }
+
+    // Safari 3.0+ "[object HTMLElementConstructor]"
+    const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) {
+        return p.toString() === "[object SafariRemoteNotification]";
+    })(!window['safari'] || (typeof window.safari !== 'undefined' && window.safari.pushNotification));
+    if (isSafari) {
+        return 'safari';
+    }
+
+    // Internet Explorer 6-11
+    const isIE = /*@cc_on!@*/false || !!document.documentMode;
+    if (isIE) {
+        return 'ie';
+    }
+
+    // Edge 20+
+    const isEdge = !isIE && !!window.StyleMedia;
+    if (isEdge) {
+        return 'edge';
+    }
+
+    // Chrome 1 - 71
+    const isChrome = !!window.chrome;
+    if (isChrome) {
+        return 'chrome';
+    }
+
+    return '';
+};
+
 
 $(document).ready(function () {
+    $(".invalidBrowser").fadeOut();
+    function isBrowserSupportsWavesKeeper() {
+        const browser = getCurrentBrowser();
+        let i = 0;
+        if (['chrome', 'firefox', 'opera', 'edge'].includes(browser)) {
+
+        }
+        const interval = setInterval(() => {
+            const keeper = window['WavesKeeper']
+            i++;
+            if (keeper !== undefined) clearInterval(interval);
+            if (i === 3 && keeper === undefined) {
+                showInvalidBrowserMsg();
+                clearInterval(interval)
+            }
+        }, 1000);
+
+        console.log();
+        return
+    }
+
+    function showInvalidBrowserMsg() {
+        $(".invalidBrowser").fadeIn('slow');
+    }
 
     setLang(defaultLang)
+    isBrowserSupportsWavesKeeper();
 
     function setLang(lang) {
         var r = $('.localization').each(function () {
             var el = $(this);
             var key = (el.attr('caption'));
-            $('.'+lang).hide();
-            $('.'+Object.keys(langs).find(l => l !== lang)).show();
+            $('.' + lang).hide('slow');
+            $('.' + Object.keys(langs).find(l => l !== lang)).show('slow');
 
             el.text(langs[lang][key]);
         });
