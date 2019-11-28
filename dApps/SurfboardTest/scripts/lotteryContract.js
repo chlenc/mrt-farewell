@@ -65,10 +65,10 @@ func withdraw() = {
     let winHeight = this.getIntegerValue("winHeight")
     let month = 43200
     if (contextObj.caller == winnerAddress && height <= winHeight+month) then
-        TransferSet([ScriptTransfer(winnerAddress, this.assetBalance(unit), unit)])
+        TransferSet([ScriptTransfer(winnerAddress, this.wavesBalance(), unit)])
     else
-        if ((contextObj.caller == ownerAddress) && height > winHeight+month) then
-             TransferSet([ScriptTransfer(ownerAddress, this.assetBalance(unit), unit)])
+        if ((contextObj.caller == lotteryAdminAddress || contextObj.caller == ownerAddress) && height > winHeight+month) then
+             TransferSet([ScriptTransfer(ownerAddress, this.wavesBalance(), unit)])
         else throw("you can't withdraw the funds")
 }
 `;
