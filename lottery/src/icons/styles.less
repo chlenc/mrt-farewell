@@ -7,11 +7,6 @@
   position: relative;
   transform: rotate(-10deg);
 
-  .svg {
-    position: absolute;
-
-  }
-
   .text {
     z-index: 10;
     flex: 1;
@@ -19,7 +14,7 @@
     position: absolute;
     font-family: Museo Sans Cyrl;
     font-size: 16px;
-    line-height: 16px;
+    line-height: 10px;
     display: flex;
     align-items: center;
     text-align: center;
@@ -28,35 +23,75 @@
     padding: 0 30px 5px 30px;
     width: 100%;
     justify-content: center;
+    user-select: none;
   }
 
-}
+  .hoverBtnSet {
+    margin-bottom: 8px;
+    display: none;
+    z-index: 1;
+    align-items: center;
+  }
 
+  &:hover {
+    .text {
+      display: none;
+    }
 
-.tsktMany {
-  background: url("../assets/icons/tsktMany.png");
-  width: 99px;
-  height: 76px;
-  position: absolute;
-}
+    .hoverBtnSet {
+      display: flex;
+    }
+  }
 
-.tsktManyGlow {
-  background: url("../assets/icons/tsktManyGlow.png");
-  width: 130px;
-  height: 106px;
-  position: absolute;
-}
+  .pipe {
+    background-color: #472296;
+    width: 1px;
+    height: 12px;
+    margin: 0 8px;
+  }
 
-.tsktGlow {
-  background: url("../assets/icons/tsktGlow.png");
-  width: 121px;
-  height: 81px;
-  position: absolute;
-}
+  .info {
+    background: url("../assets/icons/info-disabled.svg") center no-repeat;
+    cursor: pointer;
 
-.tskt {
-  background: url("../assets/icons/tskt.png");
-  width: 86px;
-  height: 46px;
-  position: absolute;
+    &:hover {
+      background: url("../assets/icons/info.svg") center no-repeat;
+    }
+
+    width: 19px;
+    height: 19px;
+  }
+
+  .withdraw {
+    background: url("../assets/icons/withdraw-disabled.svg") center no-repeat;
+    cursor: pointer;
+
+    &:hover {
+      background: url("../assets/icons/withdraw.svg") center no-repeat;
+    }
+
+    width: 18px;
+    height: 18px;
+  }
+
+  .tsktMany {
+    background: url("../assets/icons/tsktMany.png");
+    width: 99px;
+    height: 76px;
+    position: absolute;
+  }
+
+  .tsktGlow {
+    background: url("../assets/icons/tsktGlow.png");
+    width: 121px;
+    height: 81px;
+    position: absolute;
+  }
+
+  .tskt {
+    background: url("../assets/icons/tskt.png");
+    width: 86px;
+    height: 46px;
+    position: absolute;
+  }
 }

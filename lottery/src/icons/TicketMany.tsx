@@ -6,14 +6,13 @@ interface IProps {
     className?: string
     onClick?: () => void
     range?: string
-    glow?: boolean
 }
 
 
-const TicketMany = ({className, onClick, range, glow}: IProps) =>
+const TicketMany = ({className, onClick, range}: IProps) =>
     <div style={{cursor: onClick ? 'pointer' : 'inherit'}} onClick={onClick} className={cn(styles.ticket, className)}>
-        {range && <div class={styles.text}>{range}</div>}
-        {glow ? <div class={styles.tsktManyGlow}/> : <div class={styles.tsktMany}/>}
+        {range && <div style={{display: "flex"}} class={styles.text}>{range}</div>}
+        <div class={styles.tsktMany}/>
     </div>;
 
 export default TicketMany;

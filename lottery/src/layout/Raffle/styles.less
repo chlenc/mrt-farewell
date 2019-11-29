@@ -1,34 +1,37 @@
 @import "../../font";
 
-.raffleTitle {
-  .museo-font();
+.root {
 
-  b {
-    font-family: 'Museo Sans Cyrl 900';
+  .raffleTitle {
+    .museo-font();
+
+    b {
+      font-family: 'Museo Sans Cyrl 900';
+
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .ticketsField {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+
+    }
 
   }
 
-  .row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 16px;
+  .emptyTskt {
+    background-image: url("../../assets/icons/emptyTskt.png");
+    min-width: 86px;
+    height: 54px;
   }
-
-  .ticketsField {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-bottom: 36px;
-
-  }
-
-}
-
-.emptyTskt {
-  background-image: url("../../assets/icons/emptyTskt.png");
-  min-width: 86px;
-  height: 54px;
 }

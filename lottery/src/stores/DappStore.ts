@@ -4,12 +4,25 @@ import { computed, observable, runInAction } from 'mobx';
 import { RootStore } from '@src/stores/RootStore';
 import { DAPP, MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
 
+const lotteriesAddresses = require('../json/lotteries.json');
+
 const {accountData} = nodeInteraction;
 
+export type TLottery = {
+    randomRequestTx?: IDataEntry
+    startHeight?: IDataEntry
+    winnerAddress?: IDataEntry
+    winnerTicket?: IDataEntry
+    withdrawn?: IDataEntry
+    address: string
+}
+
+export type TLotteries = { "500": TLottery [], "1000": TLottery[], "2000": TLottery[] };
 
 class DappStore extends SubStore {
 
     @observable dappData: IDataEntry[] = [];
+    @observable lotteries: TLotteries | null = null;
 
     constructor(rootStore: RootStore) {
         super(rootStore);
@@ -28,7 +41,7 @@ class DappStore extends SubStore {
         const currentAccount = this.rootStore.accountStore.wavesKeeperAccount!;
         if (currentAccount == null) return [];
         return this.dappData
-            .filter(data => data.key.includes('ticketsFrom') &&  data.value === currentAccount.address)
+            .filter(data => data.key.includes('ticketsFrom') && data.value === currentAccount.address)
             .map(data => {
                 const [start, end] = data.key.split('_')[0]
                     .replace('ticketsFrom', '').split('To');
@@ -38,7 +51,7 @@ class DappStore extends SubStore {
             });
     }
 
-    buyTicket = ( mrtAmount: number) => {
+    buyTicket = (mrtAmount: number) => {
 
         const {accountStore} = this.rootStore;
 
@@ -58,13 +71,45 @@ class DappStore extends SubStore {
         };
 
         const tx: any = {type: 16, data: transactionData};
-console.log(tx)
+        console.log(tx)
         window['WavesKeeper'].signAndPublishTransaction(tx).then((tx: any) => {
 
             const transaction = JSON.parse(tx);
             console.log(transaction);
             this.rootStore.notificationStore
-                .notify(`Transaction sent: ${transaction.id}\n`,'success');
+                .notify(`Transaction sent: ${transaction.id}\n`, 'success');
+
+        }).catch((error: any) => {
+            console.error(error);
+            this.rootStore.notificationStore.notify(`${error.message}\n\n${error.data}`, 'error');
+        });
+    };
+
+    withdraw = (address: string) => {
+        const {accountStore} = this.rootStore;
+
+        if (!accountStore.isApplicationAuthorizedInWavesKeeper) {
+            this.rootStore.notificationStore.notify('Application is not authorized in WavesKeeper', 'warning');
+            return;
+        }
+
+        const transactionData = {
+            dApp: address,
+            call: {
+                args: [],
+                function: 'withdraw',
+            },
+            fee: {tokens: this.rootStore.accountStore.scripted ? '0.009' : '0.005', assetId: 'WAVES'},
+            payment: [],
+        };
+
+        const tx: any = {type: 16, data: transactionData};
+        console.log(tx)
+        window['WavesKeeper'].signAndPublishTransaction(tx).then((tx: any) => {
+            const transaction = JSON.parse(tx);
+            console.log(transaction);
+            this.rootStore.notificationStore
+                .notify(`Transaction sent: ${transaction.id}\n`, 'success');
 
         }).catch((error: any) => {
             console.error(error);
@@ -74,7 +119,19 @@ console.log(tx)
 
     updateDappInfo = async () => {
         const data = await accountData(DAPP, NODE_URL);
+        let lotteries: TLotteries | null = null;
+        if (data.status && data.status.value === 'raffle') {
+            const lotteriesArray = await Promise.all(
+                Object.entries(lotteriesAddresses).map((async ([key, val]: [string, string[]]) => ({
+                    key, values: await Promise.all(val.map(async (address) => ({
+                        ...await accountData(address, NODE_URL), address
+                    })))
+                })), {}));
+            lotteries = (lotteriesArray
+                .reduce((acc, {key, values}) => ({...acc, [key]: values}), {}) as TLotteries)
+        }
         runInAction(() => {
+            this.lotteries = lotteries;
             this.dappData.length = 0;
             this.dappData.push(...Object.values(data));
         })

@@ -10,7 +10,7 @@ class NotificationsStore extends SubStore {
     }
 
     notify(content: string | any,  type?: 'error' | 'info' | 'warning' | 'success') {
-        const options = {autoHideTime: 1000000, removeAllBeforeShow: false, withCloseIcon: false};
+        const options = {autoHideTime: 5*1e3, removeAllBeforeShow: false, withCloseIcon: false};
         switch (type) {
             case "warning":
                 StatusAlertService.showWarning(content, options);

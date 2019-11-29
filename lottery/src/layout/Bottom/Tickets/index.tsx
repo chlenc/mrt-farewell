@@ -31,7 +31,10 @@ const _Tickets: FunctionalComponent<IProps> = ({data, languageStore}) => {
     return <div class={styles.root}>
         <TextWithLines className={styles.text} children={languageStore!.t('yourTickets', {ticketCount})}/>
         <Scrollbars
-            style={{minHeight: 220, maxWidth: 920}}
+            style={{
+                flex: '1 0 100px',
+                flexShrink: '0',
+            }}
         >
 
             <div class={styles.tickets}>

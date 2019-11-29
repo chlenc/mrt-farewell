@@ -2,9 +2,14 @@ import { Component, FunctionComponent, h } from 'preact';
 import styles from './styles.less';
 import { inject, observer } from "mobx-preact";
 import LanguageStore from "@src/stores/LanguageStore";
+import DappStore, { TLottery } from "@src/stores/DappStore";
+import Ticket from "@src/icons/Ticket";
+import { AccountStore } from "@src/stores";
 
 interface IProps {
     languageStore?: LanguageStore
+    dappStore?: DappStore
+    accountStore?: AccountStore
 }
 
 const Coin: FunctionComponent = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -19,33 +24,46 @@ const Coin: FunctionComponent = () => <svg width="16" height="16" viewBox="0 0 1
             <stop offset="1" stop-color="#8477CE"/>
         </linearGradient>
     </defs>
-</svg>
+</svg>;
 
 
-@inject('languageStore')
+@inject('languageStore', 'dappStore', 'accountStore')
 @observer
 export default class Raffle extends Component<IProps> {
 
     render() {
-        return <div>
-            <div class={styles.raffleTitle}>
-                <div class={styles.row}>1 Round: &nbsp;<b>12 × 5,000</b> &nbsp;<Coin/></div>
-                <div class={styles.ticketsField}>
-                    {Array.from({length: 12}, (_, i) => i).map(() => <div class={styles.emptyTskt}/>)}
-                </div>
-            </div>
-            <div class={styles.raffleTitle}>
-                <div class={styles.row}>2 Round: &nbsp;<b>6 × 5,000</b> &nbsp;<Coin/></div>
-                <div class={styles.ticketsField}>
-                    {Array.from({length: 6}, (_, i) => i).map(() => <div class={styles.emptyTskt}/>)}
-                </div>
-            </div>
-            <div class={styles.raffleTitle}>
-                <div class={styles.row}>3 Round: &nbsp;<b>4 × 5,000</b> &nbsp;<Coin/></div>
-                <div class={styles.ticketsField}>
-                    {Array.from({length: 4}, (_, i) => i).map(() => <div class={styles.emptyTskt}/>)}
-                </div>
-            </div>
+        const {lotteries, withdraw} = this.props.dappStore!;
+        const {wavesKeeperAccount} = this.props.accountStore!;
+
+        return <div class={styles.root}>
+            {
+                lotteries && Object.entries(lotteries).map(([k, v], i) => {
+                        const cost = Array.from(k);
+                        cost.length === 4 && cost.splice(1, 0, ',');
+                        return <div class={styles.raffleTitle}>
+                            <div class={styles.row}>{i + 1} Round: &nbsp;<b>{v.length} × {cost.join('')}</b> &nbsp;<Coin/>
+                            </div>
+                            <div class={styles.ticketsField}>
+                                {v.map((lottery: TLottery) => {
+                                    if (lottery.winnerAddress && lottery.winnerTicket) {
+                                        const glow = wavesKeeperAccount
+                                            && lottery.withdrawn && lottery.withdrawn.value !== true
+                                            && lottery.winnerAddress.value === wavesKeeperAccount.address;
+                                        return <Ticket
+                                            name={String(lottery.winnerTicket.value)}
+                                            glow={glow}
+                                            link={`https://wavesexplorer.com/address/${lottery.address}/tx`}
+                                            onWithdraw={() => withdraw(lottery.address)}
+                                        />
+                                    }
+                                    return <div class={styles.emptyTskt}/>
+                                })}
+                            </div>
+                        </div>
+                    }
+                )
+
+            }
         </div>
     }
 }

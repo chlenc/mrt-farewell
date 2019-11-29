@@ -40,12 +40,13 @@ export default class App extends Component<IProps> {
 
     render() {
         const status = this.props.dappStore!.dappData.find(({key}) => key === 'status');
-        //'ticketingPeriod'| 'raffle'
+        // 'ticketingPeriod'| 'raffle'
         const modalStore = this.props.modalStore!;
 
         let body = null;
 
-        if (status && status.value === 'raffle') body = <Raffle/>;
+        if (status && status.value === 'raffle')
+            body = <Raffle/>;
         else if (status && status.value === 'ticketingPeriod') body = <BuyZone/>;
 
         return <Fragment>
