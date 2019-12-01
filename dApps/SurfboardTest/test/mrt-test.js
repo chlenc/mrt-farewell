@@ -3,8 +3,8 @@ const wvs = 10 ** 8;
 describe('MRT test', async function () {
 
     this.timeout(100000);
-    const addressHub = "3NB8wYRPKiXfMsQPc7tCL2pdW4HaWdMe4Yp"
-    const addressLottery = "3MwpgYyAYiM3ZzadbbBwQnsuTsiw5JjwFap"
+    const addressHub = "3N9rYmoDXsvY2dY1Ey2e44Q2BcVXSCbT2UF"
+    const addressLottery = "3MzNxkE6otE41cM8JeheYNDt7QtDJrUqh9K"
     //const seedHub = "entry monkey furnace minimum phone ostrich print group couch undo anxiety adapt reason evidence reason"
     //const seedLottery = "inch broom wheel heavy advice window kid mistake yard good flower cinnamon viable social valley"
     const player = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier"
@@ -23,12 +23,12 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const BuyTicketTx1 = invokeScript(params, player);
-        await broadcast(BuyTicketTx1);
-        await waitForTx(BuyTicketTx1.id);
-        console.log("successfully buy ticket 1")
+        //await broadcast(BuyTicketTx1);
+        //await waitForTx(BuyTicketTx1.id);
+        //console.log("successfully buy ticket 1")
 
         
-        params = {
+        params = {  
             call: {
                 args: [],
                 function: 'buyTicket',
@@ -38,9 +38,9 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const BuyTicketTx2 = invokeScript(params, player);
-        await broadcast(BuyTicketTx2);
-        await waitForTx(BuyTicketTx2.id);
-        console.log("successfully buy ticket 2")
+        //await broadcast(BuyTicketTx2);
+        //await waitForTx(BuyTicketTx2.id);
+        //console.log("successfully buy ticket 2")
 
         params = {
             call: {
@@ -52,9 +52,9 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const BuyTicketTx3 = invokeScript(params, player);
-        await broadcast(BuyTicketTx3);
-        await waitForTx(BuyTicketTx3.id);
-        console.log("successfully buy ticket 3")
+        //await broadcast(BuyTicketTx3);
+        //await waitForTx(BuyTicketTx3.id);
+        //console.log("successfully buy ticket 3")
 
         params = {
             call: {
@@ -66,8 +66,8 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const registerRandomRequestTx = invokeScript(params, lotteryAdminSeed);
-        //await broadcast(registerRandomRequestTx);
-        //await waitForTx(registerRandomRequestTx.id);
+        await broadcast(registerRandomRequestTx);
+        await waitForTx(registerRandomRequestTx.id);
         console.log("successfully register tx which invoke randomizer")
                 
         params = {
@@ -109,8 +109,8 @@ describe('MRT test', async function () {
             fee: 900000,
             }    
         const withdrawByWinner = invokeScript(params, player);
-        await broadcast(withdrawByWinner);
-        await waitForTx(withdrawByWinner.id);
+        //await broadcast(withdrawByWinner);
+        //await waitForTx(withdrawByWinner.id);
         console.log("successfully withdrawn")
     });
 });

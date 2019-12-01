@@ -3,7 +3,7 @@ const getScriptHub = (MRTid) => `
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
 let ticketPrice = 3 #100.00 MRT,
-let MRTid = base58'8afYrbDBr6Tw5JgaWUgm2GncY7rL87JvGG7aWezWMGgZ'
+let MRTid = base58'${MRTid}'
 
 func getTicketAmount() = {
     match(this.getInteger("ticketAmountTotal")) {
