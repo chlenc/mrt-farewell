@@ -58,7 +58,10 @@ func withdraw() = {
     let startHeight = this.getIntegerValue("startHeight")
     let month = 43200
     if (contextObj.caller == winnerAddress && height <= startHeight+month) then
-        TransferSet([ScriptTransfer(winnerAddress, this.wavesBalance(), unit)])
+        ScriptResult(
+            WriteSet([DataEntry("withdrawn", true)]),
+            TransferSet([ScriptTransfer(winnerAddress, this.wavesBalance(), unit)]) 
+        )
     else
         if ((contextObj.caller == lotteryAdminAddress || contextObj.caller == ownerAddress) && height > startHeight+month) then
              TransferSet([ScriptTransfer(ownerAddress, this.wavesBalance(), unit)])
