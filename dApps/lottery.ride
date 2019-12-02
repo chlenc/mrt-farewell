@@ -26,7 +26,7 @@ func registerRandomRequestTx(randomRequestTx: String) ={
 
 @Callable(contextObj)
 func defineTheWinner(ticketsInHubKey: String) = {
-    let randomRequestCommitedTxId= this.getStringValue("randomRequestTx")   
+    let randomRequestCommitedTxId = this.getStringValue("randomRequestTx")
     let randomResponse = dAppRandomAddress.getStringValue(randomRequestCommitedTxId)
     let status = randomResponse.split("_")[0]
     let randomResultString = randomResponse.split("--")[1]
@@ -56,7 +56,10 @@ func withdraw() = {
     let startHeight = this.getIntegerValue("startHeight")
     let month = 43200
     if (contextObj.caller == winnerAddress && height <= startHeight+month) then
-        TransferSet([ScriptTransfer(winnerAddress, this.wavesBalance(), unit)])
+        ScriptResult(
+            WriteSet([DataEntry("withdrawn", true)]),
+            TransferSet([ScriptTransfer(winnerAddress, this.wavesBalance(), unit)]) 
+        )
     else
         if ((contextObj.caller == lotteryAdminAddress || contextObj.caller == ownerAddress) && height > startHeight+month) then
              TransferSet([ScriptTransfer(ownerAddress, this.wavesBalance(), unit)])
