@@ -5,11 +5,17 @@
 let ticketHub = Address(fromBase58String(this.getStringValue("address_hub")))
 let ownerAddress = Address(fromBase58String(ticketHub.getStringValue("address_owner")))
 let lotteryAdminAddress = Address(fromBase58String(ticketHub.getStringValue("address_admin")))
-let ownerAddress = Address(base58'3MrC1oqVCoLkfHabhJtrLJS6GxcooQwRWuP')
-let lotteryTicketHub = Address(base58'3MrC1oqVCoLkfHabhJtrLJS6GxcooQwRWuP')
-let lotteryAdminAddress = Address(base58'3MxtzncKM9x1kKpLP3sp8WZPvg1cza8jHGm')
-let dAppRandomAddress = Address(base58'3Mt1uo5ieYK8Pk9XyVZp88HBLMfprrq515z')
-let withdrawPeriod = ticketHub.getIntegerValue("withdraw_period")
+let dAppRandomAddress = Address(fromBase58String(ticketHub.getStringValue("address_oracle")))
+let withdrawPeriod = 43200
+
+func extractRandomValue() = {
+    let requestCommitedTxId = this.getStringValue("randomRequestTx")
+    let oracleResponse = dAppRandomAddress.getStringValue(requestCommitedTxId)
+    match this.getString("randomResult") {
+        case s: String => s
+        case _ => oracleResponse.split("--")[1]
+    }
+}
 
 @Callable(contextObj)
 func registerRandomRequestTx(randomRequestTx: String) = {
@@ -27,12 +33,8 @@ func registerRandomRequestTx(randomRequestTx: String) = {
 
 @Callable(contextObj)
 func defineTheWinner(ticketsInHubKey: String) = {
-    let randomRequestCommitedTxId = this.getStringValue("randomRequestTx")
-    let randomResponse = dAppRandomAddress.getStringValue(randomRequestCommitedTxId)
-    let status = randomResponse.split("_")[0]
-    let randomResultString = randomResponse.split("--")[1]
+    let randomResultString = extractRandomValue()
     let randomResult = parseIntValue(randomResultString)
-    
     if this.getInteger("winnerTicket").isDefined() then
         throw("winner is already defined")
     else if ticketHub.getInteger("winningTicket" + randomResultString).isDefined() then
