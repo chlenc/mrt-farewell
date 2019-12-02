@@ -1,10 +1,13 @@
 import { SubStore } from '@src/stores/SubStore';
 import { RootStore } from '@src/stores/RootStore';
-import { action, observable } from "mobx";
+import { action, computed, observable } from "mobx";
 
 const resources = require('../json/languages.json');
 
 export type TLangs = 'ru' | 'en';
+
+export type TFaqItem = { question?: string, answer?: string }
+
 
 class LanguageStore extends SubStore {
 
@@ -23,6 +26,21 @@ class LanguageStore extends SubStore {
         Object.entries(opts).forEach(([k, v]) => out = out.replace(`{{${k}}}`, String(v)));
         return out
     };
+
+    @computed
+    get faqItems(): TFaqItem[] {
+        const out: TFaqItem[] = [];
+        Object.entries(resources[this.lang])
+            .filter(([k]) => k.includes('faqTitle') || k.includes('faqText'))
+            .forEach(([k, v]) => {
+                const index = k[k.length - 1];
+                if (!isNaN(+index))
+                    out[+index] = !out[+index]
+                        ? {[k.includes('faqTitle') ? 'question' : 'answer']: v}
+                        : {...out[+index], [k.includes('faqTitle') ? 'question' : 'answer']: v}
+            });
+        return out;
+    }
 
 }
 
