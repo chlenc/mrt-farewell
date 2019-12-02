@@ -1,4 +1,3 @@
-
 /// <reference path="../node_modules/@waves/js-test-env/index.d.ts" />
 const fs = require("fs");
 const lotteryInfo = []
@@ -8,59 +7,57 @@ const comissinForSetScript = 100000
 
 
 //create Accounts
-seedHub = wavesCrypto.randomSeed();
-addressHub = wavesCrypto.address(seedHub, 'T');
+const seedHub = wavesCrypto.randomSeed();
+const addressHub = wavesCrypto.address(seedHub, 'T');
 let hub = {
     address: addressHub,
-    seed :seedHub
+    seed: seedHub
 }
 
 for (i = 0; i < 12; i++) {
-    seedLottery = wavesCrypto.randomSeed();
-    addressLottery = wavesCrypto.address(seedLottery, 'T');
+    const seedLottery = wavesCrypto.randomSeed();
+    const addressLottery = wavesCrypto.address(seedLottery, 'T');
     let lottery = {
         address: addressLottery,
-        sum : 500,
-        seed :seedLottery
+        sum: 500,
+        seed: seedLottery
     }
     lotteryInfo.push(lottery)
 }
-    
+
 for (i = 0; i < 6; i++) {
-        seedLottery = wavesCrypto.randomSeed();
-        addressLottery = wavesCrypto.address(seedLottery, 'T');
-        let lottery = {
-            address: addressLottery,
-            sum : 1000,
-            seed :seedLottery
-        }
-        lotteryInfo.push(lottery)
+    const seedLottery = wavesCrypto.randomSeed();
+    const addressLottery = wavesCrypto.address(seedLottery, 'T');
+    let lottery = {
+        address: addressLottery,
+        sum: 1000,
+        seed: seedLottery
+    }
+    lotteryInfo.push(lottery)
 }
 for (i = 0; i < 4; i++) {
-    seedLottery = wavesCrypto.randomSeed();
-    addressLottery = wavesCrypto.address(seedLottery, 'T');
+    const seedLottery = wavesCrypto.randomSeed();
+    const addressLottery = wavesCrypto.address(seedLottery, 'T');
     let lottery = {
         address: addressLottery,
-        sum : 2000,
-        seed :seedLottery
+        sum: 2000,
+        seed: seedLottery
     }
     lotteryInfo.push(lottery)
-  }
-fs.writeFileSync("hubInfo.json", JSON.stringify(hub,null,4)) 
-fs.writeFileSync("lotteryInfo.json", JSON.stringify(lotteryInfo,null,4))
+}
+fs.writeFileSync("hubInfo.json", JSON.stringify(hub, null, 4))
+fs.writeFileSync("lotteryInfo.json", JSON.stringify(lotteryInfo, null, 4))
 fs.writeFileSync("../../lottery/src/json/hub.json", JSON.stringify({address: hub.address}))
-fs.writeFileSync("../../lottery/src/json/lotteries.json", JSON.stringify(lotteryInfo.map(({address,sum}) => ({address,sum}))))
+fs.writeFileSync("../../lottery/src/json/lotteries.json", JSON.stringify(lotteryInfo.map(({address, sum}) => ({
+    address,
+    sum
+}))))
 
-const paramsForMassTransfer = {
-    transfers: [
-      {
-        amount: 100000,
-        recipient: '3P23fi1qfVw6RVDn4CH2a5nNouEtWNQ4THs',
-      },
-      {
-        amount: 200,
-        recipient: '3PPnqZznWJbPG2Z1Y35w8tZzskiq5AMfUXr',
-      },
-    ],
+(async () => {
+    const amount = 100000;
+    const paramsForMassTransfer = {transfers: lotteryInfo.map((({address: recipient}) => ({recipient, amount})))};
+    const massTx = massTransfer(paramsForMassTransfer, seedWithMoney)
+    await broadcast(massTx);
+    await waitForTx(massTx.id)
+})();
 
-  }

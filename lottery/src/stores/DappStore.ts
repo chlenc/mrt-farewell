@@ -2,8 +2,8 @@ import { SubStore } from './SubStore';
 import { IDataEntry, nodeInteraction } from '@waves/waves-transactions';
 import { computed, observable, runInAction } from 'mobx';
 import { RootStore } from '@src/stores/RootStore';
-import { DAPP, MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
-
+import {  MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
+const DAPP = require('@src/json/hub.json').address;
 const lotteriesAddresses = require('../json/lotteries.json');
 
 const {accountData} = nodeInteraction;
@@ -122,13 +122,17 @@ class DappStore extends SubStore {
         let lotteries: TLotteries | null = null;
         if (data.status && data.status.value === 'raffle') {
             const lotteriesArray = await Promise.all(
-                Object.entries(lotteriesAddresses).map((async ([key, val]: [string, string[]]) => ({
-                    key, values: await Promise.all(val.map(async (address) => ({
-                        ...await accountData(address, NODE_URL), address
-                    })))
-                })), {}));
-            lotteries = (lotteriesArray
-                .reduce((acc, {key, values}) => ({...acc, [key]: values}), {}) as TLotteries)
+                lotteriesAddresses.map(async ({address, sum: key}: { address: string, sum: string }) => ({
+                    key,
+                    value: {...await accountData(address, NODE_URL), address}
+                }))
+            );
+            lotteries = {"500": [], "1000": [], "2000": []};
+            lotteriesArray.forEach(({key, value}: { key: "500" | "1000" | "2000", value: TLottery }) => {
+                if (lotteries === null) return;
+                lotteries[key] = lotteries[key] ? [...lotteries[key], value] : [value]
+            });
+            console.log(lotteries)
         }
         runInAction(() => {
             this.lotteries = lotteries;
