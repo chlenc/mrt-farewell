@@ -6,6 +6,7 @@ let ticketHub = Address(fromBase58String(this.getStringValue("address_hub")))
 let ownerAddress = Address(fromBase58String(ticketHub.getStringValue("address_owner")))
 let lotteryAdminAddress = Address(fromBase58String(ticketHub.getStringValue("address_admin")))
 let dAppRandomAddress = Address(fromBase58String(ticketHub.getStringValue("address_oracle")))
+let withdrawPeriod = ticketHub.getIntegerValue("withdraw_period")
 
 @Callable(contextObj)
 func registerRandomRequestTx(randomRequestTx: String) = {
@@ -28,16 +29,19 @@ func defineTheWinner(ticketsInHubKey: String) = {
     let status = randomResponse.split("_")[0]
     let randomResultString = randomResponse.split("--")[1]
     let randomResult = parseIntValue(randomResultString)
-    if ticketHub.getInteger("winningTicket" + randomResultString).isDefined() then
+    
+    if this.getInteger("winnerTicket").isDefined() then
+        throw("winner is already defined")
+    else if ticketHub.getInteger("winningTicket" + randomResultString).isDefined() then
         let ticketAmount = ticketHub.getIntegerValue("ticketAmountTotal")
-        let randomResultUpdate = if (randomResult == ticketAmount ) then 1 else randomResult + 1
+        let randomResultUpdate = if randomResult == ticketAmount then 1 else randomResult + 1
         WriteSet([
             DataEntry("randomResult", randomResultUpdate)
         ])
     else
         let ticketFrom = parseIntValue(ticketsInHubKey.split("To")[0].split("ticketsFrom")[1])
         let ticketTo= parseIntValue(ticketsInHubKey.split("To")[1])
-        if ( randomResult >= ticketFrom && randomResult <= ticketTo) then
+        if randomResult >= ticketFrom && randomResult <= ticketTo then
             let winnerAddress = ticketHub.getStringValue(ticketsInHubKey)
             WriteSet([
                 DataEntry("winnerTicket", randomResult),
@@ -50,11 +54,11 @@ func defineTheWinner(ticketsInHubKey: String) = {
 func withdraw() = {
     let winnerAddress = addressFromStringValue(this.getStringValue("winnerAddress"))
     let startHeight = this.getIntegerValue("startHeight")
-    let month = 43200
-    if (contextObj.caller == winnerAddress && height <= startHeight+month) then
+    let month = withdrawPeriod
+    if (contextObj.caller == winnerAddress && height <= startHeight + month) then
         TransferSet([ScriptTransfer(winnerAddress, this.wavesBalance(), unit)])
     else
-        if ((contextObj.caller == lotteryAdminAddress || contextObj.caller == ownerAddress) && height > startHeight+month) then
+        if ((contextObj.caller == lotteryAdminAddress || contextObj.caller == ownerAddress) && height > startHeight + month) then
              TransferSet([ScriptTransfer(ownerAddress, this.wavesBalance(), unit)])
         else throw("you can't withdraw the funds")
 }

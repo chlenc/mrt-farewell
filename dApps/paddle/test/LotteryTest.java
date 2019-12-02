@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LotteryTest {
 
-    private Account owner, admin, oracle, hub, lottery1, player1;
+    private Account owner, admin, oracle, hub, lottery1, player1, player2;
     private String MRT;
     private String randTxId = "2vmvnr79De1Y9GtMM3NQfhzrbwt93UuUMCER6GbBTFsj";
 
@@ -25,7 +25,8 @@ class LotteryTest {
                 ()-> oracle = new Account("oracle", 1_00000000),
                 ()-> hub = new Account("hub", 1_00000000),
                 ()-> lottery1 = new Account("lottery1", 1_00000000),
-                ()-> player1 = new Account("player1", 1_00000000)
+                ()-> player1 = new Account("player1", 1_00000000),
+                ()-> player2 = new Account("player2", 1_00000000)
         );
         async(
                 () -> owner.massTransfers(t -> t.asset(MRT).recipients(to(player1, 1000000))),
@@ -35,6 +36,7 @@ class LotteryTest {
                         .string("address_admin", admin.address())
                         .string("address_oracle", oracle.address())
                         .string("status", "ticketingPeriod")
+                        .integer("withdraw_period", 3)
                         .bool("lottery_" + lottery1.address(), true)
                 ),
                 () -> lottery1.writes(d -> d.string("address_hub", hub.address())),
@@ -54,12 +56,12 @@ class LotteryTest {
         System.out.println("init balance: " + player1InitBalance);
 
         player1.invokes(i -> i.dApp(hub).function("buyTicket").payment(39999, MRT));
-        player1.invokes(i -> i.dApp(hub).function("buyTicket").payment(10000, MRT));
+        player2.invokes(i -> i.dApp(hub).function("buyTicket").payment(10000, MRT));
         player1.invokes(i -> i.dApp(hub).function("buyTicket").payment(10001, MRT));
 
         assertThat(hub.dataInt("ticketAmountTotal")).isEqualTo(5);
         assertThat(hub.dataStr("ticketsFrom1To3")).isEqualTo(player1.address());
-        assertThat(hub.dataStr("ticketsFrom4To4")).isEqualTo(player1.address());
+        assertThat(hub.dataStr("ticketsFrom4To4")).isEqualTo(player2.address());
         assertThat(hub.dataStr("ticketsFrom5To5")).isEqualTo(player1.address());
         assertThat(hub.data()).hasSize(6 + 4);
 
