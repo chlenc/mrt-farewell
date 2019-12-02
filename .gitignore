@@ -163,4 +163,5 @@ Temporary Items
 .apdisk
 .idea/
 */dist
-managerScript
+dApps/managerScript/src/
+
