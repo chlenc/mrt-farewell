@@ -10,7 +10,7 @@
     "yourTickets": "Your tickets ({{ticketCount}}):",
     "inputPlaceholder": "Number of tickets you want to buy",
     "noTicketsPlaceholder": "You don't have tickets yet",
-    "policy": "Policy",
+    "policy": "",
     "buy": "BUY TICKETS",
     "buyWithPrice": "BUY TICKETS FOR {{price}} MRT",
     "loading": "loading..."
@@ -19,15 +19,15 @@
   "ru": {
     "faq": "FAQ",
     "balance": "Баланс: {{balance}} MRT",
-    "title": "ЛОТЕРЕЯ",
+    "title": "LOTTERY",
     "ticketing": "Период продажи билетов {{period}}",
     "raffle": "Период розигрыша {{period}}",
     "login": "Войти",
-    "ticketsSold": "билеты уже проданы",
+    "ticketsSold": "билетов продано",
     "yourTickets": "Ваши билеты ({{ticketCount}}):",
     "inputPlaceholder": "Количество билетов, которые вы хотите купить",
     "noTicketsPlaceholder": "У вас еще нет билетов",
-    "policy": "Политика",
+    "policy": "",
     "buy": "КУПИТЬ БИЛЕТЫ",
     "buyWithPrice": "КУПИТЬ БИЛЕТЫ ЗА {{price}} MRT",
     "loading": "загрузка..."
