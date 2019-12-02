@@ -6,7 +6,7 @@ let ticketHub = Address(fromBase58String(this.getStringValue("address_hub")))
 let ownerAddress = Address(fromBase58String(ticketHub.getStringValue("address_owner")))
 let lotteryAdminAddress = Address(fromBase58String(ticketHub.getStringValue("address_admin")))
 let dAppRandomAddress = Address(fromBase58String(ticketHub.getStringValue("address_oracle")))
-let withdrawPeriod = 43200
+let withdrawPeriod = ticketHub.getIntegerValue("mrt_id")
 
 func extractRandomValue() = {
     let requestCommitedTxId = this.getStringValue("randomRequestTx")
