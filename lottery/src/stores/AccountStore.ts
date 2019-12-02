@@ -2,7 +2,7 @@ import { action, autorun, computed, observable, reaction, runInAction, set } fro
 import { nodeInteraction } from '@waves/waves-transactions';
 import { SubStore } from './SubStore';
 import { RootStore } from '@src/stores/RootStore';
-import { MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
+import {  mrtAssetId as MRT_ASSET_ID, nodeUrl as NODE_URL,pollInterval as POLL_INTERVAL } from '@src/json/constants.json';
 import {  getCurrentBrowser } from '@src/utils';
 
 interface IWavesKeeperAccount {

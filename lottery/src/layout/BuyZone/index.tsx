@@ -4,11 +4,10 @@ import TicketCount from './TicketCount';
 import Button from '@src/Components/Button';
 import Input from '@src/Components/Input';
 import cn from 'classnames';
-// import { libs } from '@waves/waves-transactions';
 import { inject, observer } from "mobx-preact";
 import AccountStore from '@src/stores/AccountStore';
 import DappStore from '@src/stores/DappStore';
-import { TICKET_PRICE } from '@src/constants';
+import { ticketPrice as TICKET_PRICE } from '@src/json/constants.json';
 import { LanguageStore } from "@src/stores";
 
 interface IState {
@@ -28,23 +27,6 @@ export default class BuyZone extends Component<IProps, IState> {
         ticketAmount: undefined
     };
 
-
-    // handleAddressChange = (e: any) => {
-    //     const leaseAddress: string = e.target.value;
-    //     this.setState({leaseAddress});
-    // };
-
-    // handleAmountChange = (type: 'ticket' | 'mrt') => (e: any) => {
-    //     const v = e.target.value;
-    //     if (v === '') {
-    //         this.setState({mrtAmount: undefined, ticketAmount: undefined});
-    //     } else {
-    //         const n = +e.target.value;
-    //         const mrtAmount = type === 'ticket' ? n * TICKET_PRICE : n;
-    //         const ticketNumber = type === 'mrt' ? Math.floor(n / TICKET_PRICE) : n;
-    //         this.setState({mrtAmount, ticketAmount: ticketNumber});
-    //     }
-    // };
 
     handleBuy = (amount: number) => {
         this.props.dappStore!.buyTicket(amount * TICKET_PRICE);

@@ -2,8 +2,8 @@ import { SubStore } from './SubStore';
 import { IDataEntry, nodeInteraction } from '@waves/waves-transactions';
 import { computed, observable, runInAction } from 'mobx';
 import { RootStore } from '@src/stores/RootStore';
-import {  MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
-const DAPP = require('@src/json/hub.json').address;
+import {  mrtAssetId as MRT_ASSET_ID, nodeUrl as NODE_URL,pollInterval as POLL_INTERVAL } from '@src/json/constants.json';
+const DAPP = require('@src/json/constants.json').hubAddress;
 const lotteriesAddresses = require('../json/lotteries.json');
 
 const {accountData} = nodeInteraction;
@@ -16,6 +16,8 @@ export type TLottery = {
     withdrawn?: IDataEntry
     address: string
 }
+
+const mrtPennies = 100;
 
 export type TLotteries = { "500": TLottery [], "1000": TLottery[], "2000": TLottery[] };
 
@@ -67,7 +69,7 @@ class DappStore extends SubStore {
                 args: []
             },
             fee: {tokens: this.rootStore.accountStore.scripted ? '0.009' : '0.005', assetId: 'WAVES'},
-            payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount}]
+            payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount*mrtPennies}]
         };
 
         const tx: any = {type: 16, data: transactionData};
