@@ -29,23 +29,6 @@ export default class BuyZone extends Component<IProps, IState> {
     };
 
 
-    // handleAddressChange = (e: any) => {
-    //     const leaseAddress: string = e.target.value;
-    //     this.setState({leaseAddress});
-    // };
-
-    // handleAmountChange = (type: 'ticket' | 'mrt') => (e: any) => {
-    //     const v = e.target.value;
-    //     if (v === '') {
-    //         this.setState({mrtAmount: undefined, ticketAmount: undefined});
-    //     } else {
-    //         const n = +e.target.value;
-    //         const mrtAmount = type === 'ticket' ? n * TICKET_PRICE : n;
-    //         const ticketNumber = type === 'mrt' ? Math.floor(n / TICKET_PRICE) : n;
-    //         this.setState({mrtAmount, ticketAmount: ticketNumber});
-    //     }
-    // };
-
     handleBuy = (amount: number) => {
         this.props.dappStore!.buyTicket(amount * TICKET_PRICE);
     }; //todo: implement
@@ -79,14 +62,3 @@ export default class BuyZone extends Component<IProps, IState> {
     }
 }
 
-// const validateAddress = (a: string, chainId: string): boolean => {
-//     try {
-//         const bytes = libs.crypto.base58Decode(a);
-//         const sum = bytes.slice(-4);
-//         const raw = bytes.slice(0, -4);
-//         const hash = libs.crypto.keccak(libs.crypto.blake2b(raw));
-//         return bytes[1] === chainId.charCodeAt(0) && sum.toString() === hash.slice(0, 4).toString();
-//     } catch (e) {
-//         return false;
-//     }
-// };

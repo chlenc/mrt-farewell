@@ -17,6 +17,8 @@ export type TLottery = {
     address: string
 }
 
+const mrtPennies = 100;
+
 export type TLotteries = { "500": TLottery [], "1000": TLottery[], "2000": TLottery[] };
 
 class DappStore extends SubStore {
@@ -67,7 +69,7 @@ class DappStore extends SubStore {
                 args: []
             },
             fee: {tokens: this.rootStore.accountStore.scripted ? '0.009' : '0.005', assetId: 'WAVES'},
-            payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount}]
+            payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount*mrtPennies}]
         };
 
         const tx: any = {type: 16, data: transactionData};
