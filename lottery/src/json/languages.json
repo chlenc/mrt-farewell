@@ -26,7 +26,7 @@
 
     "faqTitle3": "How do you choose the winners",
     "faqText3": "- Each of the prizes is contained in its own dApp. The random value is determined using the RSA-random https://habr.com/en/company/waves/blog/464395/",
-    "placeholder": "Ticket sales will start at 12:00 PM GMT on December 4 2019"
+    "placeholder": "Ticket sales will start at 12:00 PM GMT"
   },
   "ru": {
     "faq": "FAQ",
@@ -55,7 +55,7 @@
 
     "faqTitle3": "Как вы выбираете победителей?",
     "faqText3": "-Каждый из призов содержится в своем собственном приложении. Случайное значение определяется с помощью случайного RSA https://habr.com/en/company/waves/blog/464395/",
-    "placeholder": "Продажа билетов начнется 4 декабря в 12:00 PM GMT "
+    "placeholder": "Продажа билетов начнется 12:00 PM GMT"
 
   }
 }
