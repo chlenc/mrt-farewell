@@ -54,7 +54,7 @@ interface IAccountLottery extends IAccount {
         transfers: [hub, ...lotteryInfo]
             .map((({address: recipient}) => ({
                 recipient,
-                amount: recipient === addressHub ? replenishAmount + 500000 * 3 : replenishAmount
+                amount: recipient === addressHub ? replenishAmount + 500000 * 4 : replenishAmount
             })))
     }, adminSeed));
     console.log('Money transfer to accounts successfully');

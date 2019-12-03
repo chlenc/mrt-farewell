@@ -2,7 +2,7 @@ import { invokeScript } from "@waves/waves-transactions";
 import { broadcastAndWaitTx } from "../SurfboardTest/utils";
 
 const {hubAddress, ticketPrice, mrtAssetId} = require("../../lottery/src/json/constants.json");
-const seed = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier";
+const seedTest = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier";
 
 const tickets: number[] = [1, 3];
 
@@ -14,7 +14,7 @@ const tickets: number[] = [1, 3];
                 chainId: "T",
                 fee: 900000,
                 payment: [{assetId: mrtAssetId, amount: count * ticketPrice * 100}]
-            }, seed));
+            }, seedTest));
             console.log(`Buy ${count} tickets`);
         }
     }

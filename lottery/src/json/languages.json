@@ -13,25 +13,25 @@
     "policy": "",
     "buy": "BUY TICKETS",
     "buyWithPrice": "BUY TICKETS FOR {{price}} MRT",
-    "loading": "We're looking forward to the start",
+    "loading": "We’re looking forward to the first draw",
 
-    "faqTitle0": "What is the lottery",
-    "faqText0": "two lotteries will be held on December 13th and January 13th. On each of these days, 20,000 WAVES will be raffled off between the addresses that bought the tickets",
+    "faqTitle0": "What is a lottery?",
+    "faqText0": "A lottery is a form of gambling game that involves drawing numbers at random for a prize. Waves’ lotteries are based on a decentralized randomizer – a provably fair number-generation service on the Waves Platform open protocol.",
 
-    "faqTitle1": "Distribution of prize sizes",
-    "faqText1": "12 prizes of 500 WAVES, 6 prizes of 1000 WAVES and 4 prizes of 2000 WAVES will be drawn each day",
+    "faqTitle1": "Distribution of prizes",
+    "faqText1": "Two lotteries will be held, on December 13 and January 13. Оn each of these days, the following prizes will be drawn: 12 prizes of 500 WAVES, 6 prizes of 1,000 WAVES and 4 prizes of 2,000 WAVES.",
 
-    "faqTitle2": "How much does it cost to get involved",
-    "faqText2": "one ticket costs 100 MRT.",
+    "faqTitle2": "How much does it cost to play?",
+    "faqText2": "Each ticket costs 100 MRT. There is no limit to the number of tickets a player can purchase.",
 
-    "faqTitle3": "How do you choose the winners",
-    "faqText3": "- Each of the prizes is contained in its own dApp. The random value is determined using the RSA-random https://habr.com/en/company/waves/blog/464395/",
+    "faqTitle3": "How do you choose the winners?",
+    "faqText3": "The winners are determined by an RSA-based randomizer. You can find out how it works here: https://habr.com/en/company/waves/blog/464395/.",
     "placeholder": "Ticket sales will start at 12:00 PM GMT"
   },
   "ru": {
     "faq": "FAQ",
     "balance": "Баланс: {{balance}} MRT",
-    "title": "LOTTERY",
+    "title": "Лотерея",
     "ticketing": "Период продажи билетов {{period}}",
     "raffle": "Период розигрыша {{period}}",
     "login": "Войти",
