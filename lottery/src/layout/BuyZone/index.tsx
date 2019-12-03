@@ -4,7 +4,6 @@ import TicketCount from './TicketCount';
 import Button from '@src/Components/Button';
 import Input from '@src/Components/Input';
 import cn from 'classnames';
-// import { libs } from '@waves/waves-transactions';
 import { inject, observer } from "mobx-preact";
 import AccountStore from '@src/stores/AccountStore';
 import DappStore from '@src/stores/DappStore';
