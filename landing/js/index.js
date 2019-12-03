@@ -1,6 +1,6 @@
 const langs = {
     rus: {
-        subtitleChunk1: "В течении двух месяцев разиграем",
+        subtitleChunk1: "В течении двух месяцев разыграем",
         subtitleChunk2: "70,000 WAVES",
         subtitleChunk3: "",
         fomoSubtitleChunk1: "Кто купил",
