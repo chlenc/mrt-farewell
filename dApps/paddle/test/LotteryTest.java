@@ -1,8 +1,11 @@
 import im.mak.paddle.Account;
+import im.mak.paddle.api.StateChanges;
+import im.mak.paddle.api.deser.ScriptTransfer;
 import im.mak.paddle.exceptions.NodeError;
 import org.junit.jupiter.api.*;
 
 import static im.mak.paddle.Async.async;
+import static im.mak.paddle.Node.node;
 import static im.mak.paddle.actions.invoke.Arg.arg;
 import static im.mak.paddle.actions.mass.Recipient.to;
 import static im.mak.paddle.util.Script.fromFile;
@@ -17,7 +20,8 @@ class LotteryTest {
     private String MRT;
     private String randTxId1 = "2vmvnr79De1Y9GtMM3NQfhzrbwt93UuUMCER6GbBTFsj";
     private String randTxId2 = "jsFTBbG6RECMUuU39twbrzhfQN3MMtG9Y1eD97rnvmv2";
-    private long player1InitBalance, player2InitBalance;
+    private int regTx1Height, regTx2Height;
+    private int withdrawPeriod = 3;
 
     @BeforeAll
     void before() {
@@ -42,7 +46,7 @@ class LotteryTest {
                         .string("address_owner", owner.address())
                         .string("address_admin", admin.address())
                         .string("address_oracle", oracle.address())
-                        .integer("withdraw_period", 3)
+                        .integer("withdraw_period", withdrawPeriod)
                         .bool("lottery_" + lottery1.address(), true)
                         .bool("lottery_" + lottery2.address(), true)
                 ),
@@ -57,18 +61,13 @@ class LotteryTest {
                 () -> lottery1.setsScript(s -> s.script(fromFile("../lottery.ride"))),
                 () -> lottery2.setsScript(s -> s.script(fromFile("../lottery.ride")))
         );
-
-        player1InitBalance = player1.balance();
-        player2InitBalance = player2.balance();
-        System.out.println("init player1 balance: " + player1InitBalance);
-        System.out.println("init player2 balance: " + player2InitBalance);
     }
 
     @Test @Order(0)
     @DisplayName("Users can't buy tickets before the Hub status")
     void cantBuyTicketsBeforeStart() {
-        assertThat(assertThrows(NodeError.class,
-                () -> player1.invokes(i -> i.dApp(hub).function("buyTicket").payment(39999, MRT))
+        assertThat(assertThrows(NodeError.class, () ->
+                player1.invokes(i -> i.dApp(hub).function("buyTicket").payment(39999, MRT))
         )).hasMessageContaining("extract() called on unit value");
     }
 
@@ -91,8 +90,8 @@ class LotteryTest {
     @Test @Order(2)
     @DisplayName("Hub can't buy own tickets")
     void hubCantBuyTickets() {
-        assertThat(assertThrows(NodeError.class,
-                () -> hub.invokes(i -> i.dApp(hub).function("buyTicket").payment(10000, MRT))
+        assertThat(assertThrows(NodeError.class, () ->
+                hub.invokes(i -> i.dApp(hub).function("buyTicket").payment(10000, MRT))
         )).hasMessageContaining("ticket hub can't call this function");
     }
 
@@ -101,15 +100,15 @@ class LotteryTest {
     void cantBuyTicketsAfterStatus() {
         hub.writes(d -> d.string("status", "finished"));
 
-        assertThat(assertThrows(NodeError.class,
-                () -> player1.invokes(i -> i.dApp(hub).function("buyTicket").payment(10000, MRT))
+        assertThat(assertThrows(NodeError.class, () ->
+                player1.invokes(i -> i.dApp(hub).function("buyTicket").payment(10000, MRT))
         )).hasMessageContaining("It isn't ticketing period");
     }
 
     @Test @Order(4)
     @DisplayName("Admin can register each random only once")
     void eachRandomOnlyOnce() {
-        int regTx1Height = admin.invokes(i -> i
+        regTx1Height = admin.invokes(i -> i
                 .dApp(lottery1).function("registerRandomRequestTx", arg(randTxId1))
         ).getHeight();
 
@@ -117,11 +116,11 @@ class LotteryTest {
         assertThat(lottery1.dataInt("startHeight")).isEqualTo(regTx1Height);
         assertThat(lottery1.data()).hasSize(1 + 2);
 
-        assertThat(assertThrows(NodeError.class,
-                () -> admin.invokes(i -> i.dApp(lottery1).function("registerRandomRequestTx", arg(randTxId2)))
+        assertThat(assertThrows(NodeError.class, () ->
+                admin.invokes(i -> i.dApp(lottery1).function("registerRandomRequestTx", arg(randTxId2)))
         )).hasMessageContaining("randomRequestTx is already in the state");
 
-        int regTx2Height = admin.invokes(i -> i
+        regTx2Height = admin.invokes(i -> i
                 .dApp(lottery2).function("registerRandomRequestTx", arg(randTxId2))
         ).getHeight();
 
@@ -130,7 +129,15 @@ class LotteryTest {
         assertThat(lottery2.data()).hasSize(1 + 2);
     }
 
-    @Test @Order(5) //TODO can't before reveal
+    @Test @Order(5)
+    @DisplayName("can't define a winner before random reveal")
+    void cantDefineWinnerBeforeReveal() {
+        assertThat(assertThrows(NodeError.class, () ->
+                admin.invokes(i -> i.dApp(lottery1).function("defineTheWinner", arg("ticketsFrom1To3")))
+        )).hasMessageContaining("Index 1 out of bounds for length 1");
+    }
+
+    @Test @Order(6)
     @DisplayName("can define first winner")
     void define1stWinner() {
         oracle.writes(d -> d.string(randTxId1, "FINISHED_3BQLGEqFWbtpDHVcqpRm77CB8kLiv9toxx6CJNmXX4qn_0_1_--3"));
@@ -142,21 +149,70 @@ class LotteryTest {
         assertThat(lottery1.data()).hasSize(3 + 2);
     }
 
-    @Test @Order(6)
-    @DisplayName("can define second winner")
-    void define2ndWinner() {
-        //TODO wip
-        oracle.writes(d -> d.string(randTxId2, "FINISHED_3BQLGEqFWbtpDHVcqpRm77CB8kLiv9toxx6CJNmXX4qn_0_1_--3"));
-
+    @Test @Order(7)
+    @DisplayName("can register the first winner in Hub")
+    void canRegister1stWinnerInHub() {
         admin.invokes(i -> i.dApp(hub).function("addWinner", arg(lottery1.address())));
 
         assertThat(hub.dataStr("winningTicket" + 3)).isEqualTo(player1.address());
         assertThat(hub.data()).hasSize(12 + 1);
+    }
 
-        player2.invokes(i -> i.dApp(lottery2).function("withdraw"));
+    @Test @Order(8)
+    @DisplayName("can define second winner")
+    void define2ndWinner() {
+        oracle.writes(d -> d.string(randTxId2, "FINISHED_3BQLGEqFWbtpDHVcqpRm77CB8kLiv9toxx6CJNmXX4qn_0_1_--3"));
 
-        System.out.println("result balance: " + player1.balance());
-        assertThat(player1.balance()).isGreaterThan(player1InitBalance);
+        admin.invokes(i -> i.dApp(lottery2).function("defineTheWinner", arg("ticketsFrom1To3")));
+
+        assertThat(lottery2.dataInt("randomResult")).isEqualTo(4);
+        assertThat(lottery2.data()).hasSize(3 + 1);
+
+        admin.invokes(i -> i.dApp(lottery2).function("defineTheWinner", arg("ticketsFrom4To4")));
+
+        assertThat(lottery2.dataInt("winnerTicket")).isEqualTo(4);
+        assertThat(lottery2.dataStr("winnerAddress")).isEqualTo(player2.address());
+        assertThat(lottery2.data()).hasSize(4 + 2);
+    }
+
+    @Test @Order(9)
+    @DisplayName("can register the second winner in Hub")
+    void canRegister2ndWinnerInHub() {
+        admin.invokes(i -> i.dApp(hub).function("addWinner", arg(lottery2.address())));
+
+        assertThat(hub.dataStr("winningTicket" + 4)).isEqualTo(player2.address());
+        assertThat(hub.data()).hasSize(13 + 1);
+    }
+
+    @Test @Order(9)
+    @DisplayName("winner can withdraw money")
+    void winnerCanWithdrawMoney() {
+        long lotteryBalance = lottery1.balance();
+
+        StateChanges changes = node().api.stateChanges(
+                player1.invokes(i -> i.dApp(lottery1).function("withdraw")).getId().toString());
+
+        assertThat(changes.transfers.get(0).address).isEqualTo(player1.address());
+        assertThat(changes.transfers.get(0).amount).isEqualTo(lotteryBalance);
+        assertThat(changes.transfers.get(0).asset).isNull();
+    }
+
+    @Test @Order(10)
+    @DisplayName("after withdraw period only admin or owner can get money")
+    void onlyAdminCanWithdrawAfterPeriod() {
+        long lotteryBalance = lottery2.balance();
+
+        node().waitForHeight(regTx2Height + withdrawPeriod + 1);
+        assertThat(assertThrows(NodeError.class, () ->
+                player2.invokes(i -> i.dApp(lottery2).function("withdraw"))
+        )).hasMessageContaining("you can't withdraw the funds");
+
+        StateChanges changes = node().api.stateChanges(
+                admin.invokes(i -> i.dApp(lottery2).function("withdraw")).getId().toString());
+
+        assertThat(changes.transfers.get(0).address).isEqualTo(owner.address());
+        assertThat(changes.transfers.get(0).amount).isEqualTo(lotteryBalance);
+        assertThat(changes.transfers.get(0).asset).isNull();
     }
 
 }
