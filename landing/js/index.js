@@ -1,6 +1,6 @@
 const langs = {
     rus: {
-        subtitleChunk1: "В течении двух месяцев будут разыграны",
+        subtitleChunk1: "В течении двух месяцев разиграем",
         subtitleChunk2: "70,000 WAVES",
         subtitleChunk3: "",
         fomoSubtitleChunk1: "Кто купил",
@@ -8,7 +8,7 @@ const langs = {
         fomoSubtitleChunk3: "раунд",
         fomoText: "Один билет = 100 MRT. Вы выигрываете раунд, если после Вас никто не купил билет в течение 15 минут. В конце раунда выигрывает последний купленный билет. Раунд длится один день, последний раунд - 13 января",
         lotterySubtitle: "Два розыгрыша пройдут 13 декабря и 13 января. Один билет = 100 MRT. В каждый из этих дней будут разыграны следующие суммы: ",
-        littleRhombusTextChunk1: "Выбрерите как участвовать",
+        littleRhombusTextChunk1: "Выбрерите игру",
         littleRhombusTextChunk2: "",
         noKeeperChunk1: "Для участия в розыгрышах используйте",
         noKeeperChunk2: "браузер с плагином",
@@ -23,8 +23,8 @@ const langs = {
         fomoSubtitleChunk1: 'Who bought the',
         fomoSubtitleChunk2: 'last ticket won',
         fomoSubtitleChunk3: 'the round',
-        fomoText: 'One ticket costs 100 MRT. You win a round if no one has bought a ticket within 15 minutes after you. At the end of the round, the last ticket bought wins. The round lasts one day, the last round is January 13th',
-        lotterySubtitle: 'Two lotteries will be held on 13 December and 13 January. One ticket costs 100 MRT.The following amounts will be drawn in each lottery',
+        fomoText: 'One ticket costs 100 MRT. You win a round if no one has bought a ticket within 15 minutes after you. At the end of the round, the last ticket bought wins. The round lasts one day, the last round is scheduled January 13th',
+        lotterySubtitle: 'Two lotteries will be held on 13 December and 13 January. One ticket costs 100 MRT. The following amounts will be drawn in each lottery',
         littleRhombusTextChunk1: 'Choose how to participate',
         littleRhombusTextChunk2: '',
         noKeeperChunk1: 'To participatese in activities, use',
@@ -120,6 +120,11 @@ $(document).ready(function () {
             el.text(langs[lang][key]);
         });
     }
+
+    $('.closeIcon').on('click', function () {
+        $(".invalidBrowser").fadeOut('slow');
+    });
+
 
     $('.rus').on('click', function () {
         setLang('rus')

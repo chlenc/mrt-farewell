@@ -163,5 +163,5 @@ Temporary Items
 .apdisk
 .idea/
 */dist
-dApps/managerScript/src/
+dApps/managerScript/src/*.json
 

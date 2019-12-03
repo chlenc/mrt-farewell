@@ -93,8 +93,26 @@ const {accountDataByKey, accountData} = nodeInteraction;
             const [from, to] = key.replace('ticketsFrom', '').split('To');
             return from >= randomNumber && to <= randomNumber
         });
-        console.log(`Winner: ${winnerButch[1].key} ${winnerButch[1].value}`)
+        console.log(`Winner: ${winnerButch[1].key} ${winnerButch[1].value}`);
 
+        let i = 0;
+        // while (true) {
+        //     i++;
+        //     if (i > 5) {
+        //         const defineTheWinnerTx = invokeScript({
+        //             fee: 500000,
+        //             dApp: lotteryAddress,
+        //             call: {
+        //                 function: "defineTheWinner",
+        //                 args: [{"type": "string", "value": winnerButch.key}]
+        //             },
+        //             payment: null
+        //         }, adminSeedTest);
+        //
+        //         await timeout(1e3);
+        //     }
+        //     break;
+        // }
 
     }
 
