@@ -13,25 +13,25 @@
     "policy": "",
     "buy": "BUY TICKETS",
     "buyWithPrice": "BUY TICKETS FOR {{price}} MRT",
-    "loading": "We're looking forward to the start",
+    "loading": "We’re looking forward to the first draw",
 
     "faqTitle0": "What is a lottery?",
-    "faqText0": "A lottery is a form of gambling that involves the drawing of numbers at random for a prize. Waves’ lotteries are based on a decentralized randomizer, a number-generation service with proof of honesty on the Waves Platform open protocol",
+    "faqText0": "A lottery is a form of gambling game that involves drawing numbers at random for a prize. Waves’ lotteries are based on a decentralized randomizer – a provably fair number-generation service on the Waves Platform open protocol.",
 
     "faqTitle1": "Distribution of prizes",
-    "faqText1": "Two lotteries will be held on December 13 and January 13. Оn each of these days, the following prizes will be drawn: 12 prizes of 500 WAVES, 6 prizes of 1000 WAVES and 4 prizes of 2000 WAVES",
+    "faqText1": "Two lotteries will be held, on December 13 and January 13. Оn each of these days, the following prizes will be drawn: 12 prizes of 500 WAVES, 6 prizes of 1,000 WAVES and 4 prizes of 2,000 WAVES.",
 
-    "faqTitle2": "How much does it cost to get involved",
-    "faqText2": "One ticket costs 100 MRT. There is no limit to the number of purchased tickets",
+    "faqTitle2": "How much does it cost to play?",
+    "faqText2": "Each ticket costs 100 MRT. There is no limit to the number of tickets a player can purchase.",
 
     "faqTitle3": "How do you choose the winners?",
-    "faqText3": "The winners are determined by the RSA-based randomizer. You can find out how it works here https://habr.com/en/company/waves/blog/464395/",
-    "placeholder": "Ticket sales will start at 12:00 PM GMT on December 4"
+    "faqText3": "The winners are determined by an RSA-based randomizer. You can find out how it works here: https://habr.com/en/company/waves/blog/464395/.",
+    "placeholder": "Ticket sales will start at 12:00 PM GMT"
   },
   "ru": {
     "faq": "FAQ",
     "balance": "Баланс: {{balance}} MRT",
-    "title": "LOTTERY",
+    "title": "Лотерея",
     "ticketing": "Период продажи билетов {{period}}",
     "raffle": "Период розигрыша {{period}}",
     "login": "Войти",
