@@ -13,7 +13,7 @@
     "policy": "",
     "buy": "BUY TICKETS",
     "buyWithPrice": "BUY TICKETS FOR {{price}} MRT",
-    "loading": "loading...",
+    "loading": "We're looking forward to the start",
 
     "faqTitle0": "What is the lottery",
     "faqText0": "two lotteries will be held on December 13th and January 13th. On each of these days, 20,000 WAVES will be raffled off between the addresses that bought the tickets",
@@ -25,7 +25,8 @@
     "faqText2": "one ticket costs 100 MRT.",
 
     "faqTitle3": "How do you choose the winners",
-    "faqText3": "- Each of the prizes is contained in its own dApp. The random value is determined using the RSA-random https://habr.com/en/company/waves/blog/464395/"
+    "faqText3": "- Each of the prizes is contained in its own dApp. The random value is determined using the RSA-random https://habr.com/en/company/waves/blog/464395/",
+    "placeholder": "Ticket sales will start at 12:00 PM GMT"
   },
   "ru": {
     "faq": "FAQ",
@@ -41,7 +42,7 @@
     "policy": "",
     "buy": "КУПИТЬ БИЛЕТЫ",
     "buyWithPrice": "КУПИТЬ БИЛЕТЫ ЗА {{price}} MRT",
-    "loading": "загрузка...",
+    "loading": "Ожидаем старта ",
 
     "faqTitle0": "Что такое лотерея",
     "faqText0": "13 декабря и 13 января пройдут две лотереи, в каждый из которых будет разыграно 20000 волн между адресами, которые купили билеты",
@@ -53,6 +54,8 @@
     "faqText2": "Один билет стоит 100 МРТ.",
 
     "faqTitle3": "Как вы выбираете победителей?",
-    "faqText3": "-Каждый из призов содержится в своем собственном приложении. Случайное значение определяется с помощью случайного RSA https://habr.com/en/company/waves/blog/464395/"
+    "faqText3": "-Каждый из призов содержится в своем собственном приложении. Случайное значение определяется с помощью случайного RSA https://habr.com/en/company/waves/blog/464395/",
+    "placeholder": "Продажа билетов начнется 12:00 PM GMT"
+
   }
 }

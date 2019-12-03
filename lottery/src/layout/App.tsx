@@ -43,7 +43,7 @@ export default class App extends Component<IProps> {
         // 'ticketingPeriod'| 'raffle'
         const modalStore = this.props.modalStore!;
 
-        let body = null;
+        let body = <div class={styles.placeholder}>{this.props.languageStore!.t("placeholder")}</div>;
 
         if (status && status.value === 'raffle')
             body = <Raffle/>;
@@ -58,7 +58,7 @@ export default class App extends Component<IProps> {
             <div className={styles.root}>
                 <Header/>
                 {body}
-                <Bottom/>
+                {status && (status.value === 'ticketingPeriod' || status.value === 'raffle') &&  <Bottom/>}
                 <Policy/>
             </div>
             <Notification/>

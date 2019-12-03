@@ -1,8 +1,8 @@
-import { broadcast, data, massTransfer, setScript, TTx, WithId } from "@waves/waves-transactions";
+import { data, IDataEntry, IDataTransaction, massTransfer, setScript, WithId } from "@waves/waves-transactions";
 import { address, randomSeed } from '@waves/ts-lib-crypto'
-import { waitForTx } from "waves-transactions/generic";
 import { compile } from "@waves/ride-js";
 import * as fs from 'fs';
+import { broadcastAndWaitTx } from "../SurfboardTest/utils";
 
 
 const {
@@ -20,8 +20,7 @@ const
     nodeUrl = 'https://testnodes.wavesnodes.com',
     ticketPrice = 100,
     replenishAmount = 1000000,
-    lotteryInfo: IAccountLottery[] = [],
-    sec = 1e3;
+    lotteryInfo: IAccountLottery[] = [];
 
 interface IAccount {
     address: string
@@ -32,24 +31,14 @@ interface IAccountLottery extends IAccount {
     sum: number
 }
 
-export const broadcastAndWaitTx = async (tx: TTx & WithId) => {
-    try {
-        await broadcast(tx, nodeUrl);
-        await waitForTx(tx.id, 30 * sec, nodeUrl)
-    } catch (e) {
-        console.error(e)
-        throw e
-    }
-};
-
 (async () => {
     const seedHub: string = randomSeed();
     const addressHub: string = address(seedHub, 'T');
     const hub: IAccount = {address: addressHub, seed: seedHub};
 
     //create Accounts
-    ([{sum: 500, length: 12}, {sum: 1000, length: 6}, {sum: 2000, length: 4}] as { sum: number, length: number }[])
-    // ([{sum: 500, length: 1}, {sum: 1000, length: 1}, {sum: 2000, length: 1}] as { sum: number, length: number }[])
+    // ([{sum: 500, length: 12}, {sum: 1000, length: 6}, {sum: 2000, length: 4}] as { sum: number, length: number }[])
+    ([{sum: 500, length: 1}, {sum: 1000, length: 1}, {sum: 2000, length: 1}] as { sum: number, length: number }[])
         .forEach(({sum, length}) => {
             Array.from({length}, (_, i) => i).forEach(() => {
                 const seedLottery = randomSeed();
@@ -65,10 +54,10 @@ export const broadcastAndWaitTx = async (tx: TTx & WithId) => {
         transfers: [hub, ...lotteryInfo]
             .map((({address: recipient}) => ({
                 recipient,
-                amount: recipient === addressHub ? replenishAmount + 500000 * 3 + 400000 * 2 : replenishAmount
+                amount: recipient === addressHub ? replenishAmount + 500000 * 3 : replenishAmount
             })))
     }, adminSeed));
-    console.log('Money credited to accounts successfully');
+    console.log('Money transfer to accounts successfully');
 
     //compile hub dApp and set script
     const compiledHub = compile(getScriptHub(mrtAssetId, ticketPrice));
@@ -87,16 +76,14 @@ export const broadcastAndWaitTx = async (tx: TTx & WithId) => {
     console.log("All lotteries successfully scripted");
 
     //register lotteries in hub
-    await broadcastAndWaitTx(data({ //todo fix
-        data: lotteryInfo.map(({address: key}) => ({key, value: true})),
-        fee: 500000
+    await broadcastAndWaitTx(data({
+        data: lotteryInfo.map(({address: key}) => ({key, value: true})), fee: 500000
     }, seedHub));
     console.log("All lotteries successfully registered in hub");
 
     // turn on ticketing period
     await broadcastAndWaitTx(data({
-        data: [{key: "status", value: "ticketingPeriod"}],
-        fee: 500000
+        data: [{key: "status", value: "ticketingPeriod"}], fee: 500000
     }, seedHub));
     console.log("Ticketing period successfully turned on");
 
