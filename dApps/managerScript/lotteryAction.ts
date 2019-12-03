@@ -35,7 +35,7 @@ const {accountDataByKey, accountData} = nodeInteraction;
             },
             payment: [{amount: 16700000}]
         }, adminSeed);
-        console.log(`InitDraw transaction id ${initDrawTx.id}`)
+        console.log(`InitDraw transaction id ${initDrawTx.id}`);
 
         //Broadcast register random request
         await broadcastAndWaitTx(invokeScript({
@@ -95,71 +95,33 @@ const {accountDataByKey, accountData} = nodeInteraction;
         });
         console.log(`Winner: ${winnerButch[1].key} ${winnerButch[1].value}`);
 
-        let i = 0;
-        // while (true) {
-        //     i++;
-        //     if (i > 5) {
-        //         const defineTheWinnerTx = invokeScript({
-        //             fee: 500000,
-        //             dApp: lotteryAddress,
-        //             call: {
-        //                 function: "defineTheWinner",
-        //                 args: [{"type": "string", "value": winnerButch.key}]
-        //             },
-        //             payment: null
-        //         }, adminSeedTest);
-        //
-        //         await timeout(1e3);
-        //     }
-        //     break;
-        // }
+        //Define the winner
+        while (true) {
+            await broadcastAndWaitTx(invokeScript({
+                fee: 500000,
+                chainId: "T",
+                dApp: lotteryAddress,
+                call: {function: "defineTheWinner", args: [{"type": "string", "value": winnerButch[1].key}]},
+            }, adminSeedTest));
 
+            await timeout(1e3);
+            const winnerAddress = await accountDataByKey('winnerAddress', lotteryAddress, testNodeUrl);
+            if (!('error' in winnerAddress)) {
+                break;
+            }
+        }
+        console.log('Winner was defined');
+
+
+        //Add the winner
+        await broadcastAndWaitTx(invokeScript({
+            call: {args: [{type: "string", value: lotteryAddress}], function: 'addWinner',},
+            dApp: addressHub,
+            chainId: "T",
+            fee: 900000,
+        }, adminSeedTest));
+        console.log('Winner was added');
     }
-
-
-    //
-    //         const urlWinnerAddress = `https://nodes.wavesnodes.com/addresses/data/${lotteryAddress}/winnerAddress`;
-    //
-    //
-    //         promise = new Promise(async function (resolve, reject) {
-    //             const defineTheWinnerTx = invokeScript({
-    //                 fee: 500000,
-    //                 dApp: lotteryAddress,
-    //                 call: {
-    //                     function: "defineTheWinner",
-    //                     args: [{"type": "string", "value": winnerButch.key}]
-    //                 },
-    //                 payment: null
-    //             }, adminSeedTest);
-    //
-    //             console.log('defineTheWinner timeout')
-    //
-    //             await broadcast(defineTheWinnerTx, nodeUrl);
-    //             await waitForTx(defineTheWinnerTx.id);
-    //             const resp = await (await fetch(urlWinnerAddress)).json();
-    //             if (!resp.error) {
-    //                 resolve('winner defined')
-    //             }
-    //         });
-    //
-    //         result = await promise
-    //
-    //         console.log(result)
-    //
-    //         const addWinner = invokeScript({
-    //             call: {
-    //                 args: [{type: "string", value: lotteryAddress}],
-    //                 function: 'addWinner',
-    //             },
-    //             dApp: hubAddress,
-    //             payment: null,
-    //             fee: 900000,
-    //         }, adminSeedTest);
-    //         await broadcast(addWinner, nodeUrl);
-    //         await waitForTx(addWinner.id);
-    //         console.log('done')
-    //
-    // }
 
 })();
 
