@@ -6,13 +6,13 @@ let ticketHub = Address(fromBase58String(this.getStringValue("address_hub")))
 let ownerAddress = Address(fromBase58String(ticketHub.getStringValue("address_owner")))
 let lotteryAdminAddress = Address(fromBase58String(ticketHub.getStringValue("address_admin")))
 let dAppRandomAddress = Address(fromBase58String(ticketHub.getStringValue("address_oracle")))
-let withdrawPeriod = 43200
+let withdrawPeriod = ticketHub.getIntegerValue("withdraw_period")
 
 func extractRandomValue() = {
     let requestCommitedTxId = this.getStringValue("randomRequestTx")
     let oracleResponse = dAppRandomAddress.getStringValue(requestCommitedTxId)
-    match this.getString("randomResult") {
-        case s: String => s
+    match this.getInteger("randomResult") {
+        case s: Int => s.toString()
         case _ => oracleResponse.split("--")[1]
     }
 }
@@ -37,7 +37,7 @@ func defineTheWinner(ticketsInHubKey: String) = {
     let randomResult = parseIntValue(randomResultString)
     if this.getInteger("winnerTicket").isDefined() then
         throw("winner is already defined")
-    else if ticketHub.getInteger("winningTicket" + randomResultString).isDefined() then
+    else if ticketHub.getString("winningTicket" + randomResultString).isDefined() then
         let ticketAmount = ticketHub.getIntegerValue("ticketAmountTotal")
         let randomResultUpdate = if randomResult == ticketAmount then 1 else randomResult + 1
         WriteSet([

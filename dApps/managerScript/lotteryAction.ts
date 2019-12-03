@@ -95,7 +95,6 @@ const {accountDataByKey, accountData} = nodeInteraction;
             return +from >= +randomNumber && +randomNumber <= +to
         });
         console.log(`Winner: ${winnerButch[1].key} ${winnerButch[1].value}`);
-            // console.log(+from >= +randomNumber && +randomNumber <= +to)
 
         //Define the winner
         while (true) {
@@ -103,7 +102,7 @@ const {accountDataByKey, accountData} = nodeInteraction;
                 fee: 500000,
                 chainId: "T",
                 dApp: lotteryAddress,
-                call: {function: "defineTheWinner", args: [{"type": "string", "value": winnerButch[1].value}]},
+                call: {function: "defineTheWinner", args: [{type: 'string', value: winnerButch[1].key}]},
             }, adminSeedTest));
 
             await timeout(1e3);

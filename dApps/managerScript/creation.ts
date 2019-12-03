@@ -9,7 +9,7 @@ const {
     adminSeedTest: adminSeed,
     addressRandomizerTest: addressRandomizer,
     addressAdminLottery
-} = require('./src/secureJson');//todo change to adminSeed
+} = require('./src/secureJson.json');//todo change to adminSeed
 
 const getScriptLottery = require("./src/lotteryContract");
 const getScriptHub = require("./src/hubContract");
