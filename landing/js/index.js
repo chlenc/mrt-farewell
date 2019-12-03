@@ -21,7 +21,7 @@ const langs = {
         fomoSubtitleChunk1: 'Who bought the',
         fomoSubtitleChunk2: 'last ticket won',
         fomoSubtitleChunk3: 'the round',
-        fomoText: 'Each ticket costs 100 MRT. Each round lasts one day, and the winner is the last to buy a ticket. You can also win the round if no one has bought a ticket 15 minutes after your purchase. The final round will be held on January 13.',
+        fomoText: 'Each ticket costs 100 MRT. Each round lasts one day, and the winner is the last to buy a ticket. You can also win the round if no one has bought a ticket 15 minutes after your purchase. The final round will be held on January 13',
         lotterySubtitle: 'Two lotteries will be held on 13 December and 13 January. Each ticket costs 100 MRT, with the following prizes:',
         littleRhombusTextChunk1: 'Choose how to participate',
         littleRhombusTextChunk2: '',
