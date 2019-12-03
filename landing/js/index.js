@@ -13,8 +13,6 @@ const langs = {
         noKeeperChunk1: "Для участия в розыгрышах используйте",
         noKeeperChunk2: "браузер с плагином",
         noKeeperChunk3: "WavesKeeper",
-        //noKeeperChunk4: "Хранитель волн",
-        //noKeeperChunk5: "плагин",
     },
     eng: {
         subtitleChunk1: '',
