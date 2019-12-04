@@ -25,7 +25,11 @@
     "faqText2": "Each ticket costs 100 MRT. There is no limit to the number of tickets a player can purchase.",
 
     "faqTitle3": "How do you choose the winners?",
-    "faqText3": "The winners are determined by an RSA-based randomizer. You can find out how it works here: https://habr.com/en/company/waves/blog/464395/.",
+    "faqText3": "The winners are determined by an RSA-based randomizer. You can find out how it works [here](https://habr.com/en/company/waves/blog/464395/).",
+
+    "faqTitle4": "Test",
+    "faqText4":  "* This is markdown.\n* It is fun\n* Love it or leave it.",
+
     "placeholder": "Ticket sales will start at 12:00 PM GMT on December 4"
   },
   "ru": {
@@ -55,7 +59,12 @@
 
     "faqTitle3": "Выбор победителей",
     "faqText3": " Каждый из призов содержится на отдельном децентрализованном приложении. Случайная величина определяется с использованием RSA-рандома https://forklog.com/random/",
+
+    "faqTitle4": "Используемые децентрализованные приложения",
+    "faqText4":  "* Билеты покупаются в хабе.\n*  Каждый приз хранится на приложении со следующим скриптом\n* Love it or leave it.",
+
     "placeholder": "Продажа билетов начнется 4 декабря в 15:00(МСК) "
+
 
   }
 }

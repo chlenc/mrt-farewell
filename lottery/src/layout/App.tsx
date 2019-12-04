@@ -54,7 +54,9 @@ export default class App extends Component<IProps> {
                 ? <button className={styles.language} onClick={this.setLanguage('ru')}>ru</button>
                 : <button className={styles.language} onClick={this.setLanguage('en')}>en</button>
             }
-            {modalStore.modal && <FAQ onClose={() => this.props.modalStore!.modal = null}/>}
+            {modalStore.modal &&
+            <FAQ onClose={() => this.props.modalStore!.modal = null}/>
+            }
             <div className={styles.root}>
                 <Header/>
                 {body}
