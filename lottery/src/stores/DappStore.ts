@@ -2,7 +2,8 @@ import { SubStore } from './SubStore';
 import { IDataEntry, nodeInteraction } from '@waves/waves-transactions';
 import { computed, observable, runInAction } from 'mobx';
 import { RootStore } from '@src/stores/RootStore';
-import {  MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
+import { MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
+
 const DAPP = require('@src/json/hub.json').address;
 const lotteriesAddresses = require('../json/lotteries.json');
 
@@ -53,7 +54,7 @@ class DappStore extends SubStore {
             });
     }
 
-    buyTicket = (mrtAmount: number) => {
+    buyTicket = async (mrtAmount: number) => {
 
         const {accountStore} = this.rootStore;
 
@@ -69,7 +70,7 @@ class DappStore extends SubStore {
                 args: []
             },
             fee: {tokens: this.rootStore.accountStore.scripted ? '0.009' : '0.005', assetId: 'WAVES'},
-            payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount*mrtPennies}]
+            payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount * mrtPennies}]
         };
 
         const tx: any = {type: 16, data: transactionData};
@@ -83,7 +84,10 @@ class DappStore extends SubStore {
 
         }).catch((error: any) => {
             console.error(error);
-            this.rootStore.notificationStore.notify(`${error.message}\n\n${error.data}`, 'error');
+            this.rootStore.notificationStore.notify(
+                `${error.message}\n\n${'data' in error && String(error.data) != 'null' ? error.data : ''}`
+                , 'error'
+            );
         });
     };
 
@@ -115,7 +119,10 @@ class DappStore extends SubStore {
 
         }).catch((error: any) => {
             console.error(error);
-            this.rootStore.notificationStore.notify(`${error.message}\n\n${error.data}`, 'error');
+            this.rootStore.notificationStore.notify(
+                `${error.message}\n\n${'data' in error && String(error.data) != 'null' ? error.data : ''}`,
+                'error'
+            );
         });
     };
 

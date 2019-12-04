@@ -27,8 +27,8 @@
     "faqTitle3": "How do you choose the winners?",
     "faqText3": "The winners are determined by an RSA-based randomizer. You can find out how it works [here](https://habr.com/en/company/waves/blog/464395/).",
 
-    "faqTitle4": "Test",
-    "faqText4":  "* This is markdown.\n* It is fun\n* Love it or leave it.",
+    "faqTitle4": "dApps",
+    "faqText4":  "* Tickets are bought at [hub](https://wavesexplorer.com/address/3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3/tx).\n* Each prize is stored in a separate account with the script",
 
     "placeholder": "Ticket sales will start at 12:00 PM GMT on December 4"
   },
@@ -58,10 +58,10 @@
     "faqText2": "Один билет стоит 100 MRT.",
 
     "faqTitle3": "Выбор победителей",
-    "faqText3": " Каждый из призов содержится на отдельном децентрализованном приложении. Случайная величина определяется с использованием RSA-рандома https://forklog.com/random/",
+    "faqText3": " Каждый из призов содержится на отдельном децентрализованном приложении. Случайная величина определяется с использованием [RSA-рандома](https://forklog.com/random/)",
 
     "faqTitle4": "Используемые децентрализованные приложения",
-    "faqText4":  "* Билеты покупаются в хабе.\n*  Каждый приз хранится на приложении со следующим скриптом\n* Love it or leave it.",
+    "faqText4":  "* Билеты покупаются в [хабе](https://wavesexplorer.com/address/3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3/tx)\n*  Каждый приз хранится на отдельном аккаунте со скриптом",
 
     "placeholder": "Продажа билетов начнется 4 декабря в 15:00(МСК) "
 

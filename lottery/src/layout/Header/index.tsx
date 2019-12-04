@@ -43,7 +43,7 @@ const _Header: FunctionComponent<IProps> = ({accountStore, modalStore, languageS
                     <Avatar size={20} address={account.address}/>
                     <div className={styles.addressBalance}>
                         <div className={styles.address}>{account.address}</div>
-                        <div className={styles.balance}>{t('balance', {balance})}</div>
+                        <div className={styles.balance}>{t('balance', {balance: balance})}</div>
                     </div>
                     <div className={styles.icn} onClick={logout}/>
                 </div>
