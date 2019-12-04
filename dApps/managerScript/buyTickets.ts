@@ -1,5 +1,5 @@
 import { invokeScript } from "@waves/waves-transactions";
-import { broadcastAndWaitTx } from "../SurfboardTest/utils";
+import { broadcastAndWaitTx } from "./utils";
 
 const {hubAddress, ticketPrice, mrtAssetId} = require("../../lottery/src/json/constants.json");
 const seedTest = "shift never same denial female matrix student stand body hello lady crucial essay scale soldier";

@@ -1,5 +1,5 @@
 import { data, IDataEntry, invokeScript, nodeInteraction } from '@waves/waves-transactions'
-import { broadcastAndWaitTx, testNodeUrl, timeout } from "../SurfboardTest/utils";
+import { broadcastAndWaitTx, testNodeUrl, timeout } from "./utils";
 
 const {address: addressHub, seed: seedHub} = require("./src/hubInfo.json");
 const {adminSeed, addressRandomizer, seedRandomizerTest, adminSeedTest}: { [k: string]: string } = require('./src/secureJson');

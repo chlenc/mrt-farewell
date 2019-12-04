@@ -1,7 +1,7 @@
 import { setScript, transfer } from "@waves/waves-transactions";
-import { broadcastAndWaitTx } from "../SurfboardTest/utils";
 import { compile } from "@waves/ride-js";
 import { address, randomSeed } from "@waves/ts-lib-crypto";
+import { broadcastAndWaitTx } from "./utils";
 
 const getScriptHub = require("./src/hubContract");
 

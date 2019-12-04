@@ -2,7 +2,7 @@ import { data, IDataEntry, IDataTransaction, massTransfer, setScript, WithId } f
 import { address, randomSeed } from '@waves/ts-lib-crypto'
 import { compile } from "@waves/ride-js";
 import * as fs from 'fs';
-import { broadcastAndWaitTx } from "../SurfboardTest/utils";
+import { broadcastAndWaitTx } from "./utils";
 
 
 const {
