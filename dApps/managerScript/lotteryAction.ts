@@ -1,22 +1,21 @@
 import { data, IDataEntry, invokeScript, nodeInteraction } from '@waves/waves-transactions'
-import { broadcastAndWaitTx, testNodeUrl, timeout } from "./utils";
+import { broadcastAndWaitTx, mainNodeUrl, testNodeUrl, timeout } from "./utils";
+import { defineTheWinner } from "./lotteryAction.utils";
 
 const {address: addressHub, seed: seedHub} = require("./src/hubInfo.json");
-const {adminSeed, addressRandomizer, seedRandomizerTest, adminSeedTest}: { [k: string]: string } = require('./src/secureJson');
+const {adminSeed, addressRandomizer, seedRandomizerTest, adminSeedTest}: { [k: string]: string } = require('./src/secureJson.json');
 const lotteryInfo = require("../../lottery/src/json/lotteries");
-const nodeUrl = 'https://testnodes.wavesnodes.com';
-const mainNodeUrl = 'https://testnodes.wavesnodes.com';
 const {accountDataByKey, accountData} = nodeInteraction;
 
 (async () => {
 
     //get ticketAmountTotal
-    const {value: ticketAmount} = await accountDataByKey('ticketAmountTotal', addressHub, nodeUrl);
+    const {value: ticketAmount} = await accountDataByKey('ticketAmountTotal', addressHub, testNodeUrl);
     console.log(`ticketAmountTotal is ${ticketAmount}`);
 
     // turn on raffle period
-    await broadcastAndWaitTx(data({data: [{key: "status", value: "raffle"}], fee: 500000}, seedHub));
-    console.log("Ticketing period successfully turned on");
+    await broadcastAndWaitTx(data({data: [{key: "status", value: "raffle"}], fee: 600000}, seedHub));
+    console.log("Raffle period successfully turned on\n");
 
     for (const {address: lotteryAddress} of lotteryInfo) {
 
@@ -53,17 +52,17 @@ const {accountDataByKey, accountData} = nodeInteraction;
         console.log(`Broadcast register random request success`);
 
         //Broadcast and wait initDrawTx
-        // await broadcastAndWaitTx(initDrawTx, "mainnet");
+        await broadcastAndWaitTx(initDrawTx, "mainnet");
         console.log('Broadcast and wait initDrawTx success');
 
         //Broadcast and wait ready
-        // await broadcastAndWaitTx(invokeScript({
-        //     fee: 500000,
-        //     dApp: addressRandomizer,
-        //     chainId: 'W',
-        //     call: {function: "ready", args: [{"type": "string", "value": initDrawTx.id}]}
-        // }, adminSeed));
-        // console.log(`Ready transaction success`);
+        await broadcastAndWaitTx(invokeScript({
+            fee: 500000,
+            dApp: addressRandomizer,
+            chainId: 'W',
+            call: {function: "ready", args: [{"type": "string", "value": initDrawTx.id}]}
+        }, adminSeed), 'mainnet');
+        console.log(`Ready transaction success`);
 
         //Sleep 20 sec
         console.log('Start sleep 20 sec');
@@ -71,8 +70,8 @@ const {accountDataByKey, accountData} = nodeInteraction;
         console.log('Wake up after 20 sec sleeping');
 
         //Get random value from state
-        //const randomData = await accountDataByKey(initDrawTx.id, addressRandomizer, mainNodeUrl);
-        const randomData = {key: "data", value: "1--2", type: "string"};
+        const randomData = await accountDataByKey(initDrawTx.id, addressRandomizer, mainNodeUrl);
+        // const randomData = {key: initDrawTx.id, value: `1--${Math.floor(1 + Math.random() * ((+ticketAmount+1) + 1 - 1))}`, type: "string"};
         console.log(`Random data:${randomData.key}: ${randomData.value}`);
 
         //Send random data to test randomizer
@@ -81,34 +80,21 @@ const {accountDataByKey, accountData} = nodeInteraction;
 
         //Parse random data
         if (randomData.type !== "string") throw "invalid random data";
-        const randomNumber = (randomData.value as string).split('--').pop();
+        let randomNumber = (randomData.value as string).split('--').pop();
         console.log(`Random data was parsed: ${randomNumber}`);
 
         //Get hub state
         const hubState: Record<string, IDataEntry> = await accountData(addressHub, testNodeUrl);
         console.log('Get hub state success');
 
-        //Find winner
-        const winnerButch = Object.entries(hubState).find(([key]) => {
-            if (!key.includes('ticketsFrom')) return false;
-            const [from, to] = key.replace('ticketsFrom', '').split('To');
-            return +from >= +randomNumber && +randomNumber <= +to
-        });
-        console.log(`Winner: ${winnerButch[1].key} ${winnerButch[1].value}`);
-
         //Define the winner
         while (true) {
-            await broadcastAndWaitTx(invokeScript({
-                fee: 500000,
-                chainId: "T",
-                dApp: lotteryAddress,
-                call: {function: "defineTheWinner", args: [{type: 'string', value: winnerButch[1].key}]},
-            }, adminSeedTest));
-
-            await timeout(1e3);
-            const winnerAddress = await accountDataByKey('winnerAddress', lotteryAddress, testNodeUrl);
-            if (!('error' in winnerAddress)) {
-                break;
+            const success = await defineTheWinner(hubState, randomNumber, lotteryAddress);
+            if (success) break;
+            else {
+                const {value} = await accountDataByKey('randomResult', lotteryAddress, testNodeUrl);
+                if(typeof value === "number") randomNumber = String(value);
+                else throw 'invalid random number'
             }
         }
         console.log('Winner was defined');
@@ -121,7 +107,7 @@ const {accountDataByKey, accountData} = nodeInteraction;
             chainId: "T",
             fee: 900000,
         }, adminSeedTest));
-        console.log('Winner was added');
+        console.log('Winner was added\n');
     }
 
 })();

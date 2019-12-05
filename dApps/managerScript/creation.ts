@@ -19,7 +19,7 @@ const
     mrtAssetId = '3pZgFJLNfUey8rnyG6zrTVwvXdptnUZdkmpYu3wY5CuR',
     nodeUrl = 'https://testnodes.wavesnodes.com',
     ticketPrice = 100,
-    replenishAmount = 1000000,
+    replenishAmount = 1000001,
     lotteryInfo: IAccountLottery[] = [];
 
 interface IAccount {
@@ -38,7 +38,7 @@ interface IAccountLottery extends IAccount {
 
     //create Accounts
     // ([{sum: 500, length: 12}, {sum: 1000, length: 6}, {sum: 2000, length: 4}] as { sum: number, length: number }[])
-    ([{sum: 500, length: 1}, {sum: 1000, length: 1}, {sum: 2000, length: 1}] as { sum: number, length: number }[])
+    ([{sum: 500, length: 1}, {sum: 1000, length: 0}, {sum: 2000, length: 0}] as { sum: number, length: number }[])
         .forEach(({sum, length}) => {
             Array.from({length}, (_, i) => i).forEach(() => {
                 const seedLottery = randomSeed();
@@ -54,7 +54,7 @@ interface IAccountLottery extends IAccount {
         transfers: [hub, ...lotteryInfo]
             .map((({address: recipient}) => ({
                 recipient,
-                amount: recipient === addressHub ? replenishAmount + 500000 * 4 : replenishAmount
+                amount: recipient === addressHub ? replenishAmount + 600000 * 4 : replenishAmount
             })))
     }, adminSeed));
     console.log('Money transfer to accounts successfully');
@@ -77,13 +77,13 @@ interface IAccountLottery extends IAccount {
 
     //register lotteries in hub
     await broadcastAndWaitTx(data({
-        data: lotteryInfo.map(({address: key}) => ({key, value: true})), fee: 500000
+        data: lotteryInfo.map(({address}) => ({ key: "lottery_" + address, value: true})), fee: 600000
     }, seedHub));
     console.log("All lotteries successfully registered in hub");
 
     // turn on ticketing period
     await broadcastAndWaitTx(data({
-        data: [{key: "status", value: "ticketingPeriod"}], fee: 500000
+        data: [{key: "status", value: "ticketingPeriod"}], fee: 600000
     }, seedHub));
     console.log("Ticketing period successfully turned on");
 

@@ -46,9 +46,9 @@ export default class Raffle extends Component<IProps> {
                             <div class={styles.ticketsField}>
                                 {v.map((lottery: TLottery) => {
                                     if (lottery.winnerAddress && lottery.winnerTicket) {
-                                        const glow = wavesKeeperAccount
-                                            && lottery.withdrawn && lottery.withdrawn.value !== true
-                                            && lottery.winnerAddress.value === wavesKeeperAccount.address;
+                                        const glow = wavesKeeperAccount &&
+                                            lottery.winnerAddress.value === wavesKeeperAccount.address &&
+                                            lottery.balance != 0;
                                         return <Ticket
                                             name={String(lottery.winnerTicket.value)}
                                             glow={glow}
