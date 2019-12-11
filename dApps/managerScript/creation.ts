@@ -5,20 +5,16 @@ import * as fs from 'fs';
 import { broadcastAndWaitTx } from "./utils";
 
 
-const {
-    adminSeedTest: adminSeed,
-    addressRandomizerTest: addressRandomizer,
-    addressAdminLottery
-} = require('./src/secureJson.json');//todo change to adminSeed
+const {adminSeed, addressRandomizer, addressAdminLottery} = require('./src/secureJson.json');
 
 const getScriptLottery = require("./src/lotteryContract");
 const getScriptHub = require("./src/hubContract");
 
 const
-    addressOwner = '3Ms4ovcT1Rtq2BExHqRbBMUeKCYmDSSGGV2',
-    mrtAssetId = '3pZgFJLNfUey8rnyG6zrTVwvXdptnUZdkmpYu3wY5CuR',
-    nodeUrl = 'https://testnodes.wavesnodes.com',
-    ticketPrice = 100,
+    addressOwner = addressAdminLottery,
+    mrtAssetId = '4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC',
+    nodeUrl = 'https://nodes.wavesnodes.com',
+    ticketPrice = 1,
     replenishAmount = 1000001,
     lotteryInfo: IAccountLottery[] = [];
 
@@ -33,16 +29,16 @@ interface IAccountLottery extends IAccount {
 
 (async () => {
     const seedHub: string = randomSeed();
-    const addressHub: string = address(seedHub, 'T');
+    const addressHub: string = address(seedHub, 'W');
     const hub: IAccount = {address: addressHub, seed: seedHub};
 
     //create Accounts
     // ([{sum: 500, length: 12}, {sum: 1000, length: 6}, {sum: 2000, length: 4}] as { sum: number, length: number }[])
-    ([{sum: 500, length: 1}, {sum: 1000, length: 0}, {sum: 2000, length: 0}] as { sum: number, length: number }[])
+     ([{sum: 500, length: 4}, {sum: 1000, length: 1}, {sum: 2000, length: 1}] as { sum: number, length: number }[])
         .forEach(({sum, length}) => {
             Array.from({length}, (_, i) => i).forEach(() => {
                 const seedLottery = randomSeed();
-                const addressLottery = address(seedLottery, 'T');
+                const addressLottery = address(seedLottery, 'W');
                 let lottery = {sum, address: addressLottery, seed: seedLottery};
                 lotteryInfo.push(lottery)
             })
@@ -62,7 +58,7 @@ interface IAccountLottery extends IAccount {
     //compile hub dApp and set script
     const compiledHub = compile(getScriptHub(mrtAssetId, ticketPrice));
     if (!('result' in compiledHub)) throw 'incorrect hub dApp';
-    await broadcastAndWaitTx(setScript({script: compiledHub.result.base64, chainId: 'T'}, seedHub));
+    await broadcastAndWaitTx(setScript({script: compiledHub.result.base64, chainId: 'W'}, seedHub));
     console.log("Hub successfully scripted");
 
 
@@ -70,7 +66,7 @@ interface IAccountLottery extends IAccount {
     const compiledLottery = compile(getScriptLottery(addressHub, addressAdminLottery, addressRandomizer, addressOwner));
     if (!('result' in compiledLottery)) throw 'incorrect lottery dApp';
     for (const {address, seed} of lotteryInfo) {
-        await broadcastAndWaitTx(setScript({script: compiledLottery.result.base64, chainId: 'T'}, seed));
+        await broadcastAndWaitTx(setScript({script: compiledLottery.result.base64, chainId: 'W'}, seed));
         console.log(`Lottery ${address} successfully scripted`);
     }
     console.log("All lotteries successfully scripted");

@@ -1,17 +1,15 @@
 import { broadcast, waitForTx } from "@waves/waves-transactions";
 
-export const testNodeUrl = 'https://testnodes.wavesnodes.com';
 export const mainNodeUrl = 'https://nodes.wavesnodes.com';
 export const sec = 1e3;
 
-export const broadcastAndWaitTx = async (tx, node: "testnet" | "mainnet" = 'testnet', iterations = 3) => {
-    const apiBase = node === 'testnet' ? testNodeUrl : mainNodeUrl;
+export const broadcastAndWaitTx = async (tx, iterations = 3) => {
     let success = true;
     const go = async (): Promise<boolean> => {
         try {
-            await broadcast(tx, apiBase);
+            await broadcast(tx, mainNodeUrl);
             await timeout(15 * sec);
-            await waitForTx(tx.id, {apiBase});
+            await waitForTx(tx.id, {apiBase: mainNodeUrl});
             return true
         } catch (e) {
             console.error(JSON.stringify(e, null, 4));
