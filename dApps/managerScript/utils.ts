@@ -29,8 +29,10 @@ export const broadcastAndWaitTx = async (tx, iterations = 3) => {
         }
     }
     if (!success) {
-        console.error("Script was stopped. Please push ⌘ + c to exit.");
-        while (true) {}
+        console.log(JSON.stringify(tx, null, 4))
+        console.error("Script was stopped. Please push control + c to exit.");
+        while (true) {
+        }
     }
 };
 

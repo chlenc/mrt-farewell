@@ -5,13 +5,12 @@ import * as fs from 'fs';
 import { broadcastAndWaitTx } from "./utils";
 
 
-const {adminSeed, addressRandomizer, addressAdminLottery} = require('./src/secureJson.json');
+const {adminSeed, addressRandomizer, addressAdminLottery,addressOwner,seedWithMoney} = require('./src/secureJson.json');
 
 const getScriptLottery = require("./src/lotteryContract");
 const getScriptHub = require("./src/hubContract");
 
 const
-    addressOwner = addressAdminLottery,
     mrtAssetId = '4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC',
     nodeUrl = 'https://nodes.wavesnodes.com',
     ticketPrice = 1,
@@ -33,8 +32,8 @@ interface IAccountLottery extends IAccount {
     const hub: IAccount = {address: addressHub, seed: seedHub};
 
     //create Accounts
-    // ([{sum: 500, length: 12}, {sum: 1000, length: 6}, {sum: 2000, length: 4}] as { sum: number, length: number }[])
-     ([{sum: 500, length: 4}, {sum: 1000, length: 1}, {sum: 2000, length: 1}] as { sum: number, length: number }[])
+    ([{sum: 500, length: 12}, {sum: 1000, length: 6}, {sum: 2000, length: 4}] as { sum: number, length: number }[])
+    //([{sum: 500, length: 4}, {sum: 1000, length: 1}, {sum: 2000, length: 1}] as { sum: number, length: number }[])
         .forEach(({sum, length}) => {
             Array.from({length}, (_, i) => i).forEach(() => {
                 const seedLottery = randomSeed();
@@ -52,7 +51,7 @@ interface IAccountLottery extends IAccount {
                 recipient,
                 amount: recipient === addressHub ? replenishAmount + 600000 * 4 : replenishAmount
             })))
-    }, adminSeed));
+    }, seedWithMoney));
     console.log('Money transfer to accounts successfully');
 
     //compile hub dApp and set script

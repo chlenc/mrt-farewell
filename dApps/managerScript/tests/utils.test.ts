@@ -1,15 +1,9 @@
-import { defineTheWinner } from "../lotteryAction.utils";
-import { IDataEntry } from "@waves/waves-transactions";
-import { testNodeUrl } from "../utils";
-import { accountData } from "@waves/waves-transactions/dist/nodeInteraction";
+import { mainNodeUrl } from "../utils";
+import { accountDataByKey } from "@waves/waves-transactions/dist/nodeInteraction";
 
 test('test define winner', async () => {
 
-    const hubState: Record<string, IDataEntry> = await accountData('3NCiCF2jBHM32GweYHjKG8ptb2ZLpwGgAHw', testNodeUrl);
-    const randomNumber = '1';
-    const lottery = '3NBKavh2dZ6VYioVmHuN3xEcykuXDU9Qp2b';
-
-    await defineTheWinner(hubState, randomNumber,lottery);
-
+    console.log(await accountDataByKey('winnerAddress', '3PAo9fetgN4XiwWMj7Kqpz9r3tgZtcUigUi', mainNodeUrl))
+    console.log(await accountDataByKey('winnerAddress', '3PNBHVNaU3tmfJaEQ9y4TvziPUqteX8jJRF', mainNodeUrl))
 });
 

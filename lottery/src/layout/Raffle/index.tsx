@@ -5,6 +5,8 @@ import LanguageStore from "@src/stores/LanguageStore";
 import DappStore, { TLottery } from "@src/stores/DappStore";
 import Ticket from "@src/icons/Ticket";
 import { AccountStore } from "@src/stores";
+import TicketCount from "@src/layout/BuyZone/TicketCount";
+import cn from "classnames";
 
 interface IProps {
     languageStore?: LanguageStore
@@ -32,10 +34,11 @@ const Coin: FunctionComponent = () => <svg width="16" height="16" viewBox="0 0 1
 export default class Raffle extends Component<IProps> {
 
     render() {
-        const {lotteries, withdraw} = this.props.dappStore!;
+        const {lotteries, withdraw, totalAmountSold} = this.props.dappStore!;
         const {wavesKeeperAccount} = this.props.accountStore!;
 
         return <div class={styles.root}>
+            <TicketCount className={cn(styles.count)} totalTickets={totalAmountSold}/>
             {
                 lotteries && Object.entries(lotteries).map(([k, v], i) => {
                         const cost = Array.from(k);
