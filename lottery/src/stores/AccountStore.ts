@@ -152,7 +152,7 @@ class AccountStore extends SubStore {
         const mrtBalance = await nodeInteraction.assetBalance(MRT_ASSET_ID, address, NODE_URL);
         const scripted = (await nodeInteraction.scriptInfo(address, NODE_URL)).script != null;
         runInAction(() => {
-            this.mrtBalance = mrtBalance;
+            this.mrtBalance = mrtBalance/100;
             this.scripted = scripted;
         });
     };

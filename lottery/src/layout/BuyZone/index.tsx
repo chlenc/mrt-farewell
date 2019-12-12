@@ -38,6 +38,8 @@ export default class BuyZone extends Component<IProps, IState> {
         const address = accountStore!.wavesKeeperAccount && accountStore!.wavesKeeperAccount.address;
         const mrtBalance = accountStore!.mrtBalance;
         const isInsufficientFunds = mrtBalance < (ticketAmount || 0) * TICKET_PRICE;
+        const isIncorrectInput = ((ticketAmount || 1) ^ 0) !== ticketAmount;
+        const isNegativeInput = Math.sign(ticketAmount || 1) === -1;
 
         return <div class={styles.root}>
             <TicketCount className={cn(styles.count)}
@@ -50,7 +52,7 @@ export default class BuyZone extends Component<IProps, IState> {
                    error={isInsufficientFunds && this.state.ticketAmount !== undefined}
                    onInput={(e) => this.setState({ticketAmount: e.target.value && +e.target.value})}/>
             <Button onClick={() => this.handleBuy(ticketAmount || 0)}
-                    disabled={accountStore!.wavesKeeperAccount == null || isInsufficientFunds || !ticketAmount}
+                    disabled={accountStore!.wavesKeeperAccount == null || isInsufficientFunds || !ticketAmount || isIncorrectInput || isNegativeInput}
                     className={styles.button}
                     title={!ticketAmount
                         ? languageStore!.t('buy')
@@ -61,14 +63,3 @@ export default class BuyZone extends Component<IProps, IState> {
     }
 }
 
-// const validateAddress = (a: string, chainId: string): boolean => {
-//     try {
-//         const bytes = libs.crypto.base58Decode(a);
-//         const sum = bytes.slice(-4);
-//         const raw = bytes.slice(0, -4);
-//         const hash = libs.crypto.keccak(libs.crypto.blake2b(raw));
-//         return bytes[1] === chainId.charCodeAt(0) && sum.toString() === hash.slice(0, 4).toString();
-//     } catch (e) {
-//         return false;
-//     }
-// };

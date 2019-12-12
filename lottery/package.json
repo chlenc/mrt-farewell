@@ -14,10 +14,12 @@
     "@waves/waves-transactions": "^3.24.0",
     "classnames": "^2.2.6",
     "identity-img": "^2.0.0",
+    "markdown": "^0.5.0",
     "mobx": "^5.15.0",
     "mobx-preact": "^3.0.0",
     "preact": "^10.0.5",
     "preact-custom-scrollbars": "^4.0.4",
+    "preact-markup": "^1.6.0",
     "preact-status-alert": "^0.2.7"
   },
   "devDependencies": {

@@ -90,7 +90,10 @@ class DappStore extends SubStore {
 
         }).catch((error: any) => {
             console.error(error);
-            this.rootStore.notificationStore.notify(`${error.message}\n\n${error.data}`, 'error');
+            this.rootStore.notificationStore.notify(
+                `${error.message}\n\n${'data' in error && String(error.data) != 'null' ? error.data : ''}`
+                , 'error'
+            );
         });
     };
 
@@ -122,7 +125,10 @@ class DappStore extends SubStore {
 
         }).catch((error: any) => {
             console.error(error);
-            this.rootStore.notificationStore.notify(`${error.message}\n\n${error.data}`, 'error');
+            this.rootStore.notificationStore.notify(
+                `${error.message}\n\n${'data' in error && String(error.data) != 'null' ? error.data : ''}`,
+                'error'
+            );
         });
     };
 

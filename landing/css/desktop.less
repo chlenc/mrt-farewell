@@ -1,6 +1,5 @@
 @import (reference) "./vars.less";
 
-
 .invalidBrowser {
   height: 25vh;
   width: 100%;
@@ -469,6 +468,20 @@
       opacity: 0;
       transition: opacity @transition-duration;
       z-index: -1;
+
+      @keyframes pulse {
+        from {
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      animation: pulse 5s infinite ease-in-out;
     }
 
     &:hover {
@@ -478,7 +491,9 @@
 
     &:hover::before {
       opacity: 1;
+      animation: unset;
     }
+
 
     & .arrow {
       z-index: 3;
