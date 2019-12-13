@@ -7,7 +7,7 @@ import cn from 'classnames';
 import { inject, observer } from "mobx-preact";
 import AccountStore from '@src/stores/AccountStore';
 import DappStore from '@src/stores/DappStore';
-import { TICKET_PRICE } from '@src/constants';
+import { ticketPrice as TICKET_PRICE } from '@src/json/constants.json';
 import { LanguageStore } from "@src/stores";
 
 interface IState {

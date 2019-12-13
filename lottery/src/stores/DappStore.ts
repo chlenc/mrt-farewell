@@ -2,9 +2,14 @@ import { SubStore } from './SubStore';
 import { IDataEntry, nodeInteraction } from '@waves/waves-transactions';
 import { computed, observable, runInAction } from 'mobx';
 import { RootStore } from '@src/stores/RootStore';
-import { MRT_ASSET_ID, NODE_URL, POLL_INTERVAL } from '@src/constants';
+import {
+    mrtAssetId as MRT_ASSET_ID,
+    nodeUrl as NODE_URL,
+    pollInterval as POLL_INTERVAL
+} from '@src/json/constants.json';
+import { balance as getLotteryBalance } from "@waves/waves-transactions/dist/nodeInteraction";
 
-const DAPP = require('@src/json/hub.json').address;
+const DAPP = require('@src/json/constants.json').hubAddress;
 const lotteriesAddresses = require('../json/lotteries.json');
 
 const {accountData} = nodeInteraction;
@@ -16,6 +21,7 @@ export type TLottery = {
     winnerTicket?: IDataEntry
     withdrawn?: IDataEntry
     address: string
+    balance: number
 }
 
 const mrtPennies = 100;
@@ -54,7 +60,7 @@ class DappStore extends SubStore {
             });
     }
 
-    buyTicket = async (mrtAmount: number) => {
+    buyTicket = (mrtAmount: number) => {
 
         const {accountStore} = this.rootStore;
 
@@ -131,17 +137,19 @@ class DappStore extends SubStore {
         let lotteries: TLotteries | null = null;
         if (data.status && data.status.value === 'raffle') {
             const lotteriesArray = await Promise.all(
-                lotteriesAddresses.map(async ({address, sum: key}: { address: string, sum: string }) => ({
-                    key,
-                    value: {...await accountData(address, NODE_URL), address}
-                }))
+                lotteriesAddresses.map(async ({address, sum: key}: { address: string, sum: string }) => {
+                    const balance = await getLotteryBalance(address, NODE_URL);
+                    return {
+                        key,
+                        value: {...await accountData(address, NODE_URL), address, balance}
+                    }
+                })
             );
             lotteries = {"500": [], "1000": [], "2000": []};
             lotteriesArray.forEach(({key, value}: { key: "500" | "1000" | "2000", value: TLottery }) => {
                 if (lotteries === null) return;
                 lotteries[key] = lotteries[key] ? [...lotteries[key], value] : [value]
             });
-            console.log(lotteries)
         }
         runInAction(() => {
             this.lotteries = lotteries;

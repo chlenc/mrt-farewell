@@ -1,8 +1,8 @@
-const getScriptHub = (MRTid) => `
+const getScriptHub = (MRTid, ticketPrice) => `
 {-# STDLIB_VERSION 3 #-}
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
-let ticketPrice = 3 #100.00 MRT,
+let ticketPrice = ${ticketPrice} * 100 
 let MRTid = base58'${MRTid}'
 
 func getTicketAmount() = {
