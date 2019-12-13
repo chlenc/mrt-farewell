@@ -30,7 +30,7 @@
     "faqTitle4": "dApps",
     "faqText4":  "* Tickets are bought at [hub](https://wavesexplorer.com/address/3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3/tx).\n* Each prize is stored in a separate account with the script",
 
-    "placeholder": "Ticket sales will start at 12:00 PM GMT on December 4"
+    "placeholder": "Loading..."
   },
   "ru": {
     "faq": "FAQ",
@@ -63,7 +63,7 @@
     "faqTitle4": "Используемые децентрализованные приложения",
     "faqText4":  "* Билеты покупаются в [хабе](https://wavesexplorer.com/address/3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3/tx)\n*  Каждый приз хранится на отдельном аккаунте со скриптом",
 
-    "placeholder": "Продажа билетов начнется 4 декабря в 15:00(МСК) "
+    "placeholder": "Loading..."
 
 
   }

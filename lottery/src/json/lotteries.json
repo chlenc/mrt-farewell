@@ -1,1 +1,24 @@
-[{"address":"3PKyhMKZVBt3yoTuDRH8eev2Suf5kLnzwYZ","sum":500},{"address":"3P5xx5jzoT3Q8py82BCHhUurPno1LhxmfD8","sum":500},{"address":"3PPn2zG9i4oTEncEBNhEdBKZiSecMUKwYF4","sum":500},{"address":"3P8a2EBdtPifsuB2AY8JmfJ5zPs1v7UYkKo","sum":500},{"address":"3PAo9fetgN4XiwWMj7Kqpz9r3tgZtcUigUi","sum":500},{"address":"3PLqiXeLxoaKQNgjKJUx8Uu39GPScKw3vq8","sum":500},{"address":"3P44yHATaUCv2YL3LBu9KoQ56XPdgEYrtBb","sum":500},{"address":"3PEqWXHAFWjXZtPTLHoGqBFuC9ufZKzoqst","sum":500},{"address":"3P67FS81HQprQXVke6ygchWptsmepKaDLVw","sum":500},{"address":"3P6kqAhWydJaTqPJg4zFj342Eo3PLMgxDUL","sum":500},{"address":"3PQsLSFyw8C1adAsGJqmXzBSnkx9XQ4vCe1","sum":500},{"address":"3P75Jiy5RoYY2UEsF3shkZe29Mw1PWDXJi3","sum":500},{"address":"3PA78XZzJBt4TM8h9mx5dcyiNNAy8D9Ks3g","sum":1000},{"address":"3PBDJznMr65XhTfvVQUqVyDq8hSNGE5D2EW","sum":1000},{"address":"3P2w4gPsUkorEERY7FdJ4RnQNP1VdHvTa7T","sum":1000},{"address":"3P5L6TQAaBffsUCXUU4BRjbmDJvTTwLnMBM","sum":1000},{"address":"3PH3nYdfV7demjaa21mft8WHKSdYq8K6TPE","sum":1000},{"address":"3PLnJPjpG3RSoi8LW2znnAi1ed5cjntKhcp","sum":1000},{"address":"3P69EmAEq4SEvsVQFh7vkAXuSg1h67Jqwje","sum":2000},{"address":"3PM1jeHaR5VjN6Cefts3xR8EkjQJ5kP7BwH","sum":2000},{"address":"3PJ1Me8t6g6XKAsEPNjuczDus8yP713T7dV","sum":2000},{"address":"3PNBHVNaU3tmfJaEQ9y4TvziPUqteX8jJRF","sum":2000}]
+[
+  {"address":"3P6m34w16eYcTicniWenPyQ5tNXkH2qxqgF","sum":500},
+  {"address":"3PJCNAt9D827qidnkbPS98adVngzsEW1Wre","sum":500},
+  {"address":"3PKRBQr9gcHdQWSD9R22P8oWYKkc4DmTqbu","sum":500},
+  {"address":"3PDuZSmNa1aPQPUcDKTe4W2Rxofgbno7uA6","sum":500},
+  {"address":"3P7Fm8cHBJMxZv2w927VvjsUHdBeybcbKEq","sum":500},
+  {"address":"3P6XgbKAXGFu5swMLH9PYxBk6u1wyB2d9Dt","sum":500},
+  {"address":"3PGTaCpS7hkHyNi14ZHFkvgB1mSLXBd45p5","sum":500},
+  {"address":"3P8XTsRkYeRivW1YzFegALDUC3vfQ6zJqLR","sum":500},
+  {"address":"3PAzMiQgGisgqMP9GGDtAhrioaX524goPeW","sum":500},
+  {"address":"3P6bcWP6e7Z2Dv7ic6PK3rThjoV48jMgDUb","sum":500},
+  {"address":"3P5XegN4S2yH9e5StrhmbWcGmjL5Y5HrxT7","sum":500},
+  {"address":"3PGfWc8zftpgzFpndpEprYkxdYrKRXgr25q","sum":500},
+  {"address":"3PCGoRdQoFfSKJnhHNiFoNmwyA8hHAkeUrS","sum":1000},
+  {"address":"3PFEaYBYKRtNbjifWTP1UqRc4KyUPVjGbv9","sum":1000},
+  {"address":"3PCCp8CPkRkH7Gf57qu6DJQ46YDeAywJS38","sum":1000},
+  {"address":"3P9iny1hyio6GyUofwYBcJeHE4hVyk7w4yY","sum":1000},
+  {"address":"3P9UhH33ABWQUJVd6RGBDot5YsFX8dFvAgZ","sum":1000},
+  {"address":"3P9MBDYtx55zFt29ycS5tAZPJLvfTDfmEzg","sum":1000},
+  {"address":"3PGjpdzsxBwg83TwCZp4e7PUkgcW7b5tbG8","sum":2000},
+  {"address":"3P8CjtfXyDU9Rt5W1ZxW3oCiFjhUmEEijhP","sum":2000},
+  {"address":"3PHR65nLeBfV18toZcJjt6vDAKLwm1XM5ac","sum":2000},
+  {"address":"3PMv22r6d7JDWZZQSgPvF6spm5TPipDANRL","sum":2000}
+]

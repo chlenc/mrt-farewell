@@ -1,1 +1,7 @@
-{"hubAddress":"3P6xjqbGoYy8Qssd3W8wJWvFEMrApbuGirq","mrtAssetId":"4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC","nodeUrl":"https://nodes.wavesnodes.com","ticketPrice":1,"pollInterval":5}
+{
+  "hubAddress": "3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3",
+  "mrtAssetId": "4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC",
+  "nodeUrl": "https://nodes.wavesnodes.com",
+  "ticketPrice": 100,
+  "pollInterval": 5
+}
