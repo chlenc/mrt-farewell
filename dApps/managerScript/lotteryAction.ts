@@ -1,4 +1,4 @@
-import { IDataEntry, invokeScript, nodeInteraction } from '@waves/waves-transactions'
+import { data, IDataEntry, invokeScript, nodeInteraction } from '@waves/waves-transactions'
 import { broadcastAndWaitTx, mainNodeUrl, timeout } from "./utils";
 import { defineTheWinner } from "./lotteryAction.utils";
 
@@ -13,7 +13,7 @@ const {accountDataByKey, accountData} = nodeInteraction;
     console.log(`ticketAmountTotal is ${ticketAmount}`);
 
     // turn on raffle period
-    //await broadcastAndWaitTx(data({data: [{key: "status", value: "raffle"}], fee: 600000}, seedHub));
+    await broadcastAndWaitTx(data({data: [{key: "status", value: "raffle"}], fee: 600000}, seedHub));
     console.log("Raffle period successfully turned on\n");
 
     for (const {address: lotteryAddress} of lotteryInfo) {
@@ -76,10 +76,10 @@ const {accountDataByKey, accountData} = nodeInteraction;
         }
 
         //Sleep 20 sec
-        console.log('Start sleep 85 sec');
+        console.log('Start sleep 20 sec');
         await timeout(20 * 1e3);
         // await timeout(85 * 1e3);
-        console.log('Wake up after 85 sec sleeping');
+        console.log('Wake up after 20 sec sleeping');
 
         let randomNumber = null;
         while (true) {
