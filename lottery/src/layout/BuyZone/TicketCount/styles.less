@@ -1,6 +1,26 @@
 @import "../../../font";
 
 .root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: -10px;
+
+
+  & > * {
+    margin: 10px;
+  }
+
+  .flex {
+    flex: 1 0;
+    display: flex;
+  }
+
+  .countAndButtonsWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   & > .countRow {
     display: flex;
@@ -44,11 +64,69 @@
     }
   }
 
-  & > .text {
-    margin-top: 16px;
-    margin-bottom: 32px;
-    .museo-font();
+
+}
+
+.text {
+  margin-top: 16px;
+  margin-bottom: 32px;
+  .museo-font();
+}
+
+.button {
+  .museo-font();
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  width: 228px;
+  align-items: center;
+  flex: 0 1 230px;
+  height: 50px;
+  border-radius: 60px;
+  box-sizing: border-box;
+  border: 1px solid #7746F8;
+  background: transparent;
+  padding: 0 30px;
+  justify-content: space-between;
+
+
+  .text_left{
+    text-align: left;
+  }
+  .text_right{
+    text-align: right;
+  }
+
+  .arrow {
+    background: url("./arrow.svg") center no-repeat;
+
+      width: 24px;
+      height: 24px;
+    &-left {
+    }
+
+    &-right {
+      transform: rotate(180deg);
+    }
   }
 
 
+  &:hover {
+    background: #6637E2;
+    border-color: #6637E2;
+    .arrow {
+
+      background: url("./arrowHov.svg") center no-repeat;
+
+      &-right {
+        transform: rotate(0);
+      }
+
+      &-left {
+        transform: rotate(180deg);
+      }
+
+    }
+  }
 }

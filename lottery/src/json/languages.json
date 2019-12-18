@@ -30,7 +30,7 @@
     "faqTitle4": "dApps",
     "faqText4":  "* Tickets are bought at [hub](https://wavesexplorer.com/address/3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3/tx).\n* Each prize is stored in a separate account with the [script](https://wavesexplorer.com/address/3P5XegN4S2yH9e5StrhmbWcGmjL5Y5HrxT7/tx)",
 
-    "placeholder": "Loading..."
+    "placeholder": "Loading"
   },
   "ru": {
     "faq": "FAQ",
@@ -63,7 +63,7 @@
     "faqTitle4": "Используемые децентрализованные приложения",
     "faqText4":  "* Билеты покупаются в [хабе](https://wavesexplorer.com/address/3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3/tx)\n*  Каждый приз хранится на отдельном аккаунте со [скриптом](https://wavesexplorer.com/address/3P5XegN4S2yH9e5StrhmbWcGmjL5Y5HrxT7/tx)",
 
-    "placeholder": "Loading..."
+    "placeholder": "Загрузка"
 
 
   }

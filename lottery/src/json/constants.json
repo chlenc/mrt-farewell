@@ -1,5 +1,6 @@
 {
-  "hubAddress": "3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3",
+  "oldHubAddress": "3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3",
+  "newHubAddress": "3PNgMkd1vSjY2mWmEqYFHZEm1ppSyKHv9Kr",
   "mrtAssetId": "4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC",
   "nodeUrl": "https://nodes.wavesnodes.com",
   "ticketPrice": 100,

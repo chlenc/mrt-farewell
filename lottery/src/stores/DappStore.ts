@@ -9,9 +9,6 @@ import {
 } from '@src/json/constants.json';
 import { balance as getLotteryBalance } from "@waves/waves-transactions/dist/nodeInteraction";
 
-const DAPP = require('@src/json/constants.json').hubAddress;
-const lotteriesAddresses = require('../json/lotteries.json');
-
 const {accountData} = nodeInteraction;
 
 export type TLottery = {
@@ -62,39 +59,23 @@ class DappStore extends SubStore {
 
     buyTicket = (mrtAmount: number) => {
 
-        const {accountStore} = this.rootStore;
+        const {accountStore, lotteriesStore: {lottery: {hub: dApp}}} = this.rootStore;
 
         if (!accountStore.isApplicationAuthorizedInWavesKeeper) {
             this.rootStore.notificationStore.notify('Application is not authorized in WavesKeeper', 'warning');
             return;
         }
 
-        const transactionData = {
-            dApp: DAPP,
+        this.sendTx({
+            dApp,
             call: {
                 function: 'buyTicket',
                 args: []
             },
             fee: {tokens: this.rootStore.accountStore.scripted ? '0.009' : '0.005', assetId: 'WAVES'},
             payment: [{assetId: MRT_ASSET_ID, coins: mrtAmount * mrtPennies}]
-        };
-
-        const tx: any = {type: 16, data: transactionData};
-        console.log(tx)
-        window['WavesKeeper'].signAndPublishTransaction(tx).then((tx: any) => {
-
-            const transaction = JSON.parse(tx);
-            console.log(transaction);
-            this.rootStore.notificationStore
-                .notify(`Transaction sent: ${transaction.id}\n`, 'success');
-
-        }).catch((error: any) => {
-            console.error(error);
-            this.rootStore.notificationStore.notify(
-                `${error.message}\n\n${'data' in error && String(error.data) != 'null' ? error.data : ''}`
-                , 'error'
-            );
         });
+
     };
 
     withdraw = (address: string) => {
@@ -104,8 +85,7 @@ class DappStore extends SubStore {
             this.rootStore.notificationStore.notify('Application is not authorized in WavesKeeper', 'warning');
             return;
         }
-
-        const transactionData = {
+        this.sendTx({
             dApp: address,
             call: {
                 args: [],
@@ -113,37 +93,24 @@ class DappStore extends SubStore {
             },
             fee: {tokens: this.rootStore.accountStore.scripted ? '0.009' : '0.005', assetId: 'WAVES'},
             payment: [],
-        };
-
-        const tx: any = {type: 16, data: transactionData};
-        console.log(tx)
-        window['WavesKeeper'].signAndPublishTransaction(tx).then((tx: any) => {
-            const transaction = JSON.parse(tx);
-            console.log(transaction);
-            this.rootStore.notificationStore
-                .notify(`Transaction sent: ${transaction.id}\n`, 'success');
-
-        }).catch((error: any) => {
-            console.error(error);
-            this.rootStore.notificationStore.notify(
-                `${error.message}\n\n${'data' in error && String(error.data) != 'null' ? error.data : ''}`,
-                'error'
-            );
-        });
+        })
     };
 
     updateDappInfo = async () => {
-        const data = await accountData(DAPP, NODE_URL);
+        const {lotteriesStore: {lottery: {hub, lotteriesList}}} = this.rootStore;
+
+        const data = await accountData(hub, NODE_URL);
         let lotteries: TLotteries | null = null;
         if (data.status && data.status.value === 'raffle') {
             const lotteriesArray = await Promise.all(
-                lotteriesAddresses.map(async ({address, sum: key}: { address: string, sum: string }) => {
-                    const balance = await getLotteryBalance(address, NODE_URL);
-                    return {
-                        key,
-                        value: {...await accountData(address, NODE_URL), address, balance}
-                    }
-                })
+                lotteriesList
+                    .map(async ({address, sum: key}: { address: string, sum: string }) => {
+                        const balance = await getLotteryBalance(address, NODE_URL);
+                        return {
+                            key,
+                            value: {...await accountData(address, NODE_URL), address, balance}
+                        }
+                    })
             );
             lotteries = {"500": [], "1000": [], "2000": []};
             lotteriesArray.forEach(({key, value}: { key: "500" | "1000" | "2000", value: TLottery }) => {
@@ -158,6 +125,23 @@ class DappStore extends SubStore {
         })
     }
 
+    sendTx = async (data: any) => {
+        const tx: any = {type: 16, data};
+        console.log(tx)
+        window['WavesKeeper'].signAndPublishTransaction(tx).then((tx: any) => {
+            const transaction = JSON.parse(tx);
+            console.log(transaction);
+            this.rootStore.notificationStore
+                .notify(`Transaction sent: ${transaction.id}\n`, 'success');
+
+        }).catch((error: any) => {
+            console.error(error);
+            this.rootStore.notificationStore.notify(
+                `${error.message}\n\n${'data' in error && String(error.data) != 'null' ? error.data : ''}`,
+                'error'
+            );
+        });
+    }
 }
 
 

@@ -1,28 +1,44 @@
-import { h, FunctionComponent } from 'preact';
+import { FunctionComponent, h } from 'preact';
 import styles from './styles.less';
 import cn from 'classnames'
 import { inject, observer } from "mobx-preact";
-import AccountStore from "@src/stores/AccountStore";
-import ModalStore from "@src/stores/ModalStore";
 import LanguageStore from "@src/stores/LanguageStore";
+import LotteriesStore from "@src/stores/LotteriesStore";
 
 interface IInjectedProps {
     languageStore?: LanguageStore
+    lotteriesStore?: LotteriesStore
 }
 
-interface IProps extends IInjectedProps{
+interface IProps extends IInjectedProps {
     totalTickets: number
     className?: string
 }
 
-const _TicketCount: FunctionComponent<IProps> = ({totalTickets, className, languageStore}) => {
+const _TicketCount: FunctionComponent<IProps> = ({totalTickets, className, languageStore, lotteriesStore}) => {
     const digitsArray = totalTickets.toString().split('');
-    return <div className={cn(styles.root, className)}>
-        <div class={styles.countRow}>
-            {digitsArray.map((d, i) => <Digit key={i} digit={d}/>)}
+
+    const handleSwitchLottery = () => lotteriesStore!.switchLottery()
+
+    return <div style="width: 100%">
+        <div className={cn(styles.root, className)}>
+            <div class={styles.flex}>
+               {!lotteriesStore!.isLastLottery && <div onClick={handleSwitchLottery} class={styles.button}>
+                    <div class={cn(styles.arrow, styles['arrow-left'])}/>
+                    <div class={styles.text_left}>Prev lottery draw<br/>10 December 2019</div>
+                </div>}
+            </div>
+            <div class={styles.countRow}>{digitsArray.map((d, i) => <Digit key={i} digit={d}/>)}</div>
+            <div class={styles.flex} style="justify-content: flex-end;">
+               {lotteriesStore!.isLastLottery && <div onClick={handleSwitchLottery} class={styles.button}>
+                    <div class={styles.text_right}>Next lottery draw<br/>23 December 2019</div>
+                    <div class={cn(styles.arrow, styles['arrow-right'])}/>
+                </div>}
+            </div>
         </div>
+
         <div class={styles.text}>{languageStore!.t('ticketsSold')}</div>
-    </div>;
+    </div>
 };
 
 interface IDigitProps {
@@ -34,7 +50,7 @@ const Digit: FunctionComponent<IDigitProps> = ({digit}) => (<div class={styles.d
     <div class={styles.line}/>
 </div>);
 
-const TicketCount = inject('languageStore')(observer(_TicketCount));
+const TicketCount = inject('languageStore', 'lotteriesStore')(observer(_TicketCount));
 
 
 export default TicketCount;

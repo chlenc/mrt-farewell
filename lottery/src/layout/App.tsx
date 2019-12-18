@@ -1,4 +1,4 @@
-import { Component, Fragment, h } from 'preact';
+import { Component, h, Fragment } from 'preact';
 import styles from './styles.less';
 import BuyZone from './BuyZone';
 import Bottom from './Bottom';
@@ -43,8 +43,7 @@ export default class App extends Component<IProps> {
         // 'ticketingPeriod'| 'raffle'
         const modalStore = this.props.modalStore!;
 
-        let body = <div class={styles.placeholder}>{this.props.languageStore!.t("placeholder")}</div>;
-
+        let body = <Loading text={this.props.languageStore!.t("placeholder")}/>;
         if (status && status.value === 'raffle')
             body = <Raffle/>;
         else if (status && status.value === 'ticketingPeriod') body = <BuyZone/>;
@@ -65,5 +64,33 @@ export default class App extends Component<IProps> {
             </div>
             <Notification/>
         </Fragment>;
+    }
+}
+
+class Loading extends Component<{ text: string }, { length: number }> {
+
+    interval: ReturnType<typeof setInterval> | null = null;
+
+    constructor(props: any) {
+        super(props);
+        this.state = {length: 3};
+
+        this.interval = setInterval(() => {
+            let length = this.state.length + 1;
+            if (this.state.length === 3) length = 1;
+            this.setState({length})
+        }, 500);
+    }
+
+    componentWillUnmount(): void {
+        this.interval && clearInterval(this.interval)
+    }
+
+    render() {
+        return <div class={styles.placeholder}>
+            <div class={styles.text}>{this.props.text}
+            </div>
+                <div class={styles.dots}>{Array.from(this.state, () => ".")}</div>
+        </div>
     }
 }
