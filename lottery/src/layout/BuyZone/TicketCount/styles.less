@@ -74,6 +74,7 @@
 }
 
 .button {
+  cursor: pointer;
   .museo-font();
   font-weight: 300;
   font-size: 12px;
@@ -91,18 +92,22 @@
   justify-content: space-between;
 
 
-  .text_left{
+  .text_left {
     text-align: left;
+    width: 105px;
   }
-  .text_right{
+
+  .text_right {
     text-align: right;
+    width: 105px;
   }
 
   .arrow {
     background: url("./arrow.svg") center no-repeat;
 
-      width: 24px;
-      height: 24px;
+    width: 24px;
+    height: 24px;
+
     &-left {
     }
 
@@ -115,6 +120,7 @@
   &:hover {
     background: #6637E2;
     border-color: #6637E2;
+
     .arrow {
 
       background: url("./arrowHov.svg") center no-repeat;

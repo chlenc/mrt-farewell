@@ -23,21 +23,21 @@ const _TicketCount: FunctionComponent<IProps> = ({totalTickets, className, langu
     return <div style="width: 100%">
         <div className={cn(styles.root, className)}>
             <div class={styles.flex}>
-               {!lotteriesStore!.isLastLottery && <div onClick={handleSwitchLottery} class={styles.button}>
+                {!lotteriesStore!.isLastLottery && <div onClick={handleSwitchLottery} class={styles.button}>
                     <div class={cn(styles.arrow, styles['arrow-left'])}/>
-                    <div class={styles.text_left}>Prev lottery draw<br/>10 December 2019</div>
+                    <div class={styles.text_left}>{languageStore!.t('prevLottery')}</div>
                 </div>}
             </div>
             <div class={styles.countRow}>{digitsArray.map((d, i) => <Digit key={i} digit={d}/>)}</div>
             <div class={styles.flex} style="justify-content: flex-end;">
-               {lotteriesStore!.isLastLottery && <div onClick={handleSwitchLottery} class={styles.button}>
-                    <div class={styles.text_right}>Next lottery draw<br/>23 December 2019</div>
+                {lotteriesStore!.isLastLottery && <div onClick={handleSwitchLottery} class={styles.button}>
+                    <div class={styles.text_right}>{languageStore!.t('nextLottery')}</div>
                     <div class={cn(styles.arrow, styles['arrow-right'])}/>
                 </div>}
             </div>
         </div>
 
-        <div class={styles.text}>{languageStore!.t('ticketsSold')}</div>
+        <div class={styles.text}>{languageStore!.t(lotteriesStore!.isLastLottery ? 'ticketsSold' : 'ticketsSoldNext')}</div>
     </div>
 };
 

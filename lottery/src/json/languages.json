@@ -7,6 +7,7 @@
     "raffle": "Raffle period {{period}}",
     "login": "Log in",
     "ticketsSold": "Sold tickets to the lottery on December 13th",
+    "ticketsSoldNext": "Sold tickets to the lottery on January 13th",
     "yourTickets": "Your tickets ({{ticketCount}}):",
     "inputPlaceholder": "Number of tickets you want to buy",
     "noTicketsPlaceholder": "You don't have tickets yet",
@@ -30,7 +31,13 @@
     "faqTitle4": "dApps",
     "faqText4":  "* Tickets are bought at [hub](https://wavesexplorer.com/address/3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3/tx).\n* Each prize is stored in a separate account with the [script](https://wavesexplorer.com/address/3P5XegN4S2yH9e5StrhmbWcGmjL5Y5HrxT7/tx)",
 
-    "placeholder": "Loading"
+    "placeholder": "Loading",
+
+    "prevLottery": "Prev lottery draw\n13 December 2019",
+    "nextLottery": "Next lottery draw\n13 January 2020"
+
+
+
   },
   "ru": {
     "faq": "FAQ",
@@ -40,6 +47,7 @@
     "raffle": "Период розыгрыша {{period}}",
     "login": "Войти",
     "ticketsSold": "Продано билетов на лотерею 13-го декабря",
+    "ticketsSoldNext": "Продано билетов на лотерею 13-го января",
     "yourTickets": "Ваши билеты ({{ticketCount}}):",
     "inputPlaceholder": "Количество билетов, которые вы хотите купить",
     "noTicketsPlaceholder": "У вас еще нет билетов",
@@ -63,8 +71,10 @@
     "faqTitle4": "Используемые децентрализованные приложения",
     "faqText4":  "* Билеты покупаются в [хабе](https://wavesexplorer.com/address/3PKWxdApkgGM3Aau6Snrt4xzBjySvZdx7T3/tx)\n*  Каждый приз хранится на отдельном аккаунте со [скриптом](https://wavesexplorer.com/address/3P5XegN4S2yH9e5StrhmbWcGmjL5Y5HrxT7/tx)",
 
-    "placeholder": "Загрузка"
+    "placeholder": "Загрузка",
 
+    "prevLottery": "К лотерее\n13 декабря 2019",
+    "nextLottery": "К лотерее\n13 января 2020"
 
   }
 }
