@@ -1,7 +1,7 @@
 import { Component, h } from 'preact';
 import styles from './styles.less';
 import TicketCount from './TicketCount';
-import Button from '@src/Components/Button';
+import Button, { ExchangeLink } from '@src/Components/Button';
 import Input from '@src/Components/Input';
 import cn from 'classnames';
 import { inject, observer } from "mobx-preact";
@@ -59,6 +59,7 @@ export default class BuyZone extends Component<IProps, IState> {
                         : languageStore!.t('buyWithPrice', {price: (ticketAmount || 1) * TICKET_PRICE})
                     }
                     action/>
+            <ExchangeLink/>
         </div>;
     }
 }

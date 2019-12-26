@@ -59,6 +59,7 @@ export default class App extends Component<IProps> {
             <div className={styles.root}>
                 <Header/>
                 {body}
+
                 {status && (status.value === 'ticketingPeriod' || status.value === 'raffle') &&  <Bottom/>}
                 <Policy/>
             </div>

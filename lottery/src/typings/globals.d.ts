@@ -8,3 +8,6 @@ declare namespace JSX {
     }
 }
 
+declare interface Window {
+    dataLayer?: Array<any>
+}

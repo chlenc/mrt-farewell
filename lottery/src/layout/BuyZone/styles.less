@@ -1,18 +1,26 @@
 @import (reference) "../../font";
+
 @duration: 1s;
 
 .root {
-  margin-top: 30px;
+  padding-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
 
+  margin: -10px 0;
+
+  * > {
+    margin: 10px 0;
+  }
+
   .input, .button {
     outline: none;
     width: 100%;
     max-width: 300px;
+
     &:last-child {
       margin-top: 1vh;
     }
