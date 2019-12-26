@@ -31,7 +31,7 @@ const exchangeClickHandler = () => {
     setTimeout(function () {
         (window as any).location = "https://waves.exchange/";
     }, 25);
-    (window as any).location = "appname://";
+    (window as any).location = "waves://";
 }
 
 export const ExchangeLink = () => <div class={cn(styles.root, styles.link)}
