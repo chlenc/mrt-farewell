@@ -36,7 +36,6 @@ export default class App extends Component<IProps> {
         }
     }
 
-    setLanguage = (l: TLangs) => () => this.props.languageStore!.setLanguage(l);
 
     render() {
         const status = this.props.dappStore!.dappData.find(({key}) => key === 'status');
@@ -49,10 +48,7 @@ export default class App extends Component<IProps> {
         else if (status && status.value === 'ticketingPeriod') body = <BuyZone/>;
 
         return <Fragment>
-            {this.props.languageStore!.lang === 'en'
-                ? <button className={styles.language} onClick={this.setLanguage('ru')}>ru</button>
-                : <button className={styles.language} onClick={this.setLanguage('en')}>en</button>
-            }
+
             {modalStore.modal &&
             <FAQ onClose={() => this.props.modalStore!.modal = null}/>
             }

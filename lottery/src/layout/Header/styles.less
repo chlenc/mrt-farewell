@@ -21,6 +21,15 @@
   //    margin-right: 110px;
   //}
 
+  .buttonSet{
+    display: flex;
+    margin: -8px;
+
+    & > * {
+      margin: 0 8px;
+    }
+  }
+
   .buttonWrapper {
     display: flex;
     min-width: 230px;
@@ -54,7 +63,8 @@
       height: 50px;
       border-radius: 60px;
       box-sizing: border-box;
-      border: 1px solid #7746F8;
+      //border: 1px solid #7746F8;
+      border: none;
       background: transparent;
       padding: 0 30px;
       justify-content: space-around;
