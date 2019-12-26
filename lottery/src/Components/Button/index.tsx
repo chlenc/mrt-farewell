@@ -29,8 +29,8 @@ const ExchangeSvg = () => <svg width="14" height="14" viewBox="0 0 14 14" fill="
 const exchangeClickHandler = () => {
     logToTagManager({event: 'lotteryGoToExchange'})
     setTimeout(function () {
-        (window as any).location = "https://waves.exchange/";
-    }, 25);
+        (window as any).open("https://waves.exchange/", '_blank')
+    }, 2000);
     (window as any).location = "waves://";
 }
 
